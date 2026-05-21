@@ -1,0 +1,2559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>外研社高中英语单词表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+        .apple-glass {
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            background-color: rgba(255, 255, 255, 0.75);
+        }
+        .apple-card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 28px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            border: 0.5px solid rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .apple-card:hover {
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+        }
+        .mode-tab-active {
+            background-color: #ffffff;
+            color: #0071e3;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .mode-tab-inactive {
+            background-color: transparent;
+            color: #86868b;
+        }
+        .answer-reveal {
+            background: #f5f5f7;
+            border-radius: 48px;
+            transition: all 0.2s;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        /* 词性标签 - 明显增大 */
+        .part-of-speech {
+            background-color: #e8e8ed;
+            padding: 0.35rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            color: #1d1d1f;
+            display: inline-block;
+            box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.02);
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e8e8ed;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c6c6c8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <header class="apple-glass border-b border-black/5 sticky top-0 z-50 transition-all">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <div class="flex gap-1.5">
+                    <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                    <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                </div>
+                <h1 class="text-lg font-semibold tracking-tight ml-1">📖 外研社高中英语单词表</h1>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-[#86868b]">
+                <i class="fa-solid fa-head-side-goggles"></i>
+                <span>东北师范大学附属中学深圳学校·黄文伟·试用版</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto px-5 py-7 flex flex-col gap-7">
+        <!-- 筛选栏 -->
+        <div class="apple-card p-4 flex flex-wrap items-center gap-5 justify-between bg-white/90">
+            <div class="flex flex-wrap items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-[#0071e3] text-sm"></i>
+                    <span class="text-xs font-semibold text-[#86868b] tracking-wide">选择教材</span>
+                    <select id="select-book" class="bg-[#f5f5f7] hover:bg-[#e8e8ed] text-sm font-medium rounded-full px-4 py-2 border-0 focus:ring-2 focus:ring-[#0071e3] cursor-pointer transition-all">
+                        <option value="book1">📙 必修一</option>
+                        <option value="book2">📗 必修二</option> 
+                        <option value="book3">📘 必修三</option>
+                        <option value="book4">📕 选择性必修一</option>
+                        <option value="book5">📚 选择性必修二</option>
+                        <option value="book6">📖 选择性必修三</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-[#0071e3] text-sm"></i>
+                    <span class="text-xs font-semibold text-[#86868b] tracking-wide">教学单元</span>
+                    <select id="select-unit" class="bg-[#f5f5f7] hover:bg-[#e8e8ed] text-sm font-medium rounded-full px-4 py-2 border-0 focus:ring-2 focus:ring-[#0071e3] cursor-pointer">
+                        <option value="unit1">UNIT 1</option>
+                        <option value="unit2">UNIT 2</option>
+                        <option value="unit3">UNIT 3</option>
+                        <option value="unit4">UNIT 4</option>
+                        <option value="unit5">UNIT 5</option>
+                        <option value="unit6">UNIT 6</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-xs bg-[#f5f5f7] px-3 py-1.5 rounded-full font-medium text-[#1d1d1f]">
+                <i class="fa-regular fa-rectangle-list mr-1"></i> 当前词库: <span id="word-counter">0</span> 个核心词条
+            </div>
+        </div>
+
+        <!-- 四大核心模式选项卡 -->
+        <div class="flex bg-[#e8e8ed]/70 p-1.5 rounded-2xl w-full max-w-md mx-auto shadow-inner">
+            <button data-mode="cn2en" class="mode-btn flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 mode-tab-active">
+                <i class="fa-solid fa-language"></i> ① 汉译英
+            </button>
+            <button data-mode="en2cn" class="mode-btn flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 mode-tab-inactive">
+                <i class="fa-solid fa-microphone-lines"></i> ② 英译汉
+            </button>
+            <button data-mode="repeat" class="mode-btn flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 mode-tab-inactive">
+                <i class="fa-solid fa-head-side-vr"></i> ③ 跟读模仿
+            </button>
+            <button data-mode="wordlist" class="mode-btn flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 mode-tab-inactive">
+                <i class="fa-solid fa-table-list"></i> ④ 单词表
+            </button>
+        </div>
+
+        <!-- 动态内容区域：卡片听写区（前三个模式） -->
+        <div id="card-area" class="flex flex-col items-center gap-7 w-full transition-all duration-300">
+            <div class="apple-card w-full max-w-2xl p-8 md:p-10 relative overflow-hidden">
+                <div class="absolute top-4 right-5 text-xs font-mono bg-white/60 px-3 py-1 rounded-full text-[#86868b]" id="card-progress">0 / 0</div>
+                <div class="flex flex-col items-center text-center gap-7 min-h-[280px] justify-center">
+                    <div id="card-prompt-area" class="w-full"></div>
+                    <div id="pronounce-btn-area" class="mt-2"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center gap-4 w-full max-w-xl">
+                <button id="reveal-answer-btn" class="answer-reveal px-6 py-3 w-full sm:w-auto bg-[#f5f5f7] hover:bg-[#e9e9ef] text-[#1d1d1f] font-medium rounded-full transition-all flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-regular fa-lightbulb"></i> 揭晓答案 / 参考译文
+                </button>
+                <div id="answer-display" class="text-base font-medium text-[#0071e3] bg-[#f0f9ff] px-5 py-2 rounded-full min-h-[48px] flex items-center justify-center w-full">
+                    ✨ 点击「揭晓答案」查看
+                </div>
+                <div class="flex items-center gap-5 mt-2">
+                    <button id="prev-card" class="w-12 h-12 rounded-full bg-white border border-black/10 shadow-sm text-[#1d1d1f] hover:bg-[#f5f5f7] transition flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-left text-base"></i>
+                    </button>
+                    <button id="next-card" class="w-12 h-12 rounded-full bg-white border border-black/10 shadow-sm text-[#1d1d1f] hover:bg-[#f5f5f7] transition flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-right text-base"></i>
+                    </button>
+                </div>
+                <div class="text-xs text-[#86868b] flex gap-3 mt-1">
+                    <span><i class="fa-regular fa-keyboard"></i> ←/→ 切词 | 空格揭晓 | Enter 发音(英译汉/跟读)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 单词表区域 (列表模式) -->
+        <div id="wordlist-area" class="hidden w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="wordlist-container"></div>
+        </div>
+    </main>
+
+    <script>
+        // ======================= 必修三 · 全单元完整词库（严格按照教材顺序） ======================
+const unit1WordsBook3 = [
+    { word: "agony", type: "n.", meaning: "痛楚，苦难" },
+    { word: "agony aunt", type: "phr.", meaning: "知心阿姨" },
+    { word: "help out", type: "phr.", meaning: "帮一把" },
+    { word: "let down", type: "phr.", meaning: "使失望，辜负" },
+    { word: "steam", type: "n.", meaning: "蒸汽，水蒸气" },
+    { word: "let off steam", type: "phr.", meaning: "发泄怒火，宣泄情绪" },
+    { word: "loose", type: "adj.", meaning: "控制不严的" },
+    { word: "lip", type: "n.", meaning: "(嘴)唇" },
+    { word: "sink", type: "v.", meaning: "使(船)沉没" },
+    { word: "loose lips sink ships", type: "proverb", meaning: "祸从口出" },
+    { word: "fault", type: "n.", meaning: "责任，过错" },
+    { word: "resolve", type: "v.", meaning: "解决(问题、困难)" },
+    { word: "strategy", type: "n.", meaning: "计谋，策略；行动计划" },
+    { word: "signal", type: "n.", meaning: "信号；暗号" },
+    { word: "breath", type: "n.", meaning: "呼出的气" },
+    { word: "take a breath", type: "phr.", meaning: "吸一口气" },
+    { word: "pull one's weight", type: "phr.", meaning: "做好分内事，尽责" },
+    { word: "concern", type: "n.", meaning: "忧虑，担心" },
+    { word: "annoyed", type: "adj.", meaning: "恼怒的，烦恼的" },
+    { word: "adjust", type: "v.", meaning: "适应，(使)习惯" },
+    { word: "duty", type: "n.", meaning: "职责，义务；责任" },
+    { word: "accident", type: "n.", meaning: "意外事件，偶然因素" },
+    { word: "by accident", type: "phr.", meaning: "偶然，意外地" },
+    { word: "core", type: "adj.", meaning: "核心的(课程、团体等)" },
+    { word: "ensure", type: "v.", meaning: "确保，保证" },
+    { word: "complexity", type: "n.", meaning: "复杂性，错综复杂" },
+    { word: "forgive", type: "v.", meaning: "原谅，宽恕" },
+    { word: "criticise", type: "v.", meaning: "批评，指责" },
+    { word: "embarrassment", type: "n.", meaning: "尴尬，难为情" },
+    { word: "boxing", type: "n.", meaning: "拳击(运动)" },
+    { word: "tangled", type: "adj.", meaning: "纠结的；复杂的" },
+    { word: "web", type: "n.", meaning: "蜘蛛网；错综复杂的事物" },
+    { word: "weave", type: "v.", meaning: "编，织" },
+    { word: "deceive", type: "v.", meaning: "欺骗" },
+    { word: "justify", type: "v.", meaning: "证明(别人认为不合理的事)有道理；为……辩护" },
+    { word: "frank", type: "adj.", meaning: "坦率的，坦诚的，直言不讳的" },
+    { word: "tear", type: "n.", meaning: "眼泪，泪水" },
+    { word: "latter", type: "n.", meaning: "后者" },
+    { word: "moreover", type: "adv.", meaning: "此外，而且" },
+    { word: "independent", type: "adj.", meaning: "独立的" },
+    { word: "apart", type: "adv.", meaning: "分离，分开" },
+    { word: "fence", type: "n.", meaning: "栅栏，围栏，篱笆" }
+];
+
+const unit2WordsBook3 = [
+    { word: "contribution", type: "n.", meaning: "贡献" },
+    { word: "relief", type: "n.", meaning: "减轻，缓解" },
+    { word: "shortage", type: "n.", meaning: "短缺，不足，缺乏" },
+    { word: "internal", type: "adj.", meaning: "内部的" },
+    { word: "effective", type: "adj.", meaning: "有效的，产生预期效果的" },
+    { word: "fund", type: "v.", meaning: "为……提供资金，资助" },
+    { word: "recycle", type: "v.", meaning: "再利用，回收利用" },
+    { word: "fountain", type: "n.", meaning: "喷水池" },
+    { word: "earn", type: "v.", meaning: "挣(钱)" },
+    { word: "donate", type: "v.", meaning: "捐赠，捐献" },
+    { word: "break into a smile", type: "phr.", meaning: "突然笑起来" },
+    { word: "foundation", type: "n.", meaning: "基金会" },
+    { word: "insight", type: "n.", meaning: "顿悟，猛醒" },
+    { word: "perseverance", type: "n.", meaning: "不屈不挠，坚持不懈" },
+    { word: "reality", type: "n.", meaning: "真实，现实" },
+    { word: "extend", type: "v.", meaning: "持续；延伸" },
+    { word: "mission", type: "n.", meaning: "职责；使命" },
+    { word: "disease", type: "n.", meaning: "疾病，病" },
+    { word: "disability", type: "n.", meaning: "残疾，残障" },
+    { word: "territory", type: "n.", meaning: "地区，地方" },
+    { word: "sensitive", type: "adj.", meaning: "敏感的，容易生气的" },
+    { word: "generous", type: "adj.", meaning: "慷慨的，大方的" },
+    { word: "hesitate", type: "v.", meaning: "迟疑，犹豫" },
+    { word: "cancer", type: "n.", meaning: "癌症" },
+    { word: "royal", type: "adj.", meaning: "王室的，皇家的" },
+    { word: "institution", type: "n.", meaning: "机构，团体" },
+    { word: "assistance", type: "n.", meaning: "帮助，援助" },
+    { word: "registration", type: "n.", meaning: "登记，注册" },
+    { word: "confirmation", type: "n.", meaning: "证实，证明" },
+    { word: "Nazi", type: "n.", meaning: "纳粹党员，纳粹分子" },
+    { word: "Jewish", type: "adj.", meaning: "犹太人的，犹太教的" },
+    { word: "aid", type: "v.", meaning: "帮助，援助" },
+    { word: "temporary", type: "adj.", meaning: "短期的，短暂的；临时的" },
+    { word: "military", type: "n.", meaning: "军队" },
+    { word: "rise to one's feet", type: "phr.", meaning: "站起身来" },
+    { word: "achievement", type: "n.", meaning: "成绩，成就" },
+    { word: "knighthood", type: "n.", meaning: "(英国的)爵士封号或头衔" },
+    { word: "chief", type: "adj.", meaning: "最高级别的，首席的" },
+    { word: "major", type: "adj.", meaning: "重要的，主要的" },
+    { word: "treatment", type: "n.", meaning: "治疗；疗法" },
+    { word: "obtain", type: "v.", meaning: "获得，得到" },
+    { word: "drug", type: "n.", meaning: "药物，药材" },
+    { word: "certificate", type: "n.", meaning: "证明书，证书" },
+    { word: "ministry", type: "n.", meaning: "(政府的)部" },
+    { word: "further", type: "adj.", meaning: "更多的，附加的" }
+];
+
+const unit3WordsBook3 = [
+    { word: "press", type: "v.", meaning: "按" },
+    { word: "shoot", type: "v.", meaning: "射出(光、亮等)，放射" },
+    { word: "gunpowder", type: "n.", meaning: "火药" },
+    { word: "compass", type: "n.", meaning: "指南针，罗盘" },
+    { word: "virtual", type: "adj.", meaning: "虚拟的，模拟的" },
+    { word: "virtual reality", type: "phr.", meaning: "虚拟现实" },
+    { word: "wearable tech", type: "n.", meaning: "可穿戴技术" },
+    { word: "flexible", type: "adj.", meaning: "易弯曲的，柔韧的" },
+    { word: "battery", type: "n.", meaning: "电池" },
+    { word: "in addition", type: "phr.", meaning: "除此之外，另外" },
+    { word: "compute", type: "v.", meaning: "计算" },
+    { word: "capable", type: "adj.", meaning: "有能力的" },
+    { word: "stuff", type: "n.", meaning: "东西，物品" },
+    { word: "desire", type: "n.", meaning: "渴望，欲望" },
+    { word: "never say never", type: "phr.", meaning: "别轻易说决不" },
+    { word: "passive", type: "adj.", meaning: "被动的" },
+    { word: "beyond", type: "prep.", meaning: "无法……" },
+    { word: "instance", type: "n.", meaning: "例子，实例" },
+    { word: "significant", type: "adj.", meaning: "重要的，影响深远的" },
+    { word: "injure", type: "v.", meaning: "使受伤，弄伤" },
+    { word: "chemist", type: "n.", meaning: "化学家" },
+    { word: "astronomer", type: "n.", meaning: "天文学家" },
+    { word: "biologist", type: "n.", meaning: "生物学家" },
+    { word: "accurate", type: "adj.", meaning: "精确的" },
+    { word: "Gregorian calendar", type: "n.", meaning: "公历，阳历(自1582年起在西方使用的历法)" },
+    { word: "minor", type: "adj.", meaning: "小的" },
+    { word: "origin", type: "n.", meaning: "起源，起因" },
+    { word: "species", type: "n.", meaning: "物种" },
+    { word: "natural selection", type: "phr.", meaning: "自然选择" },
+    { word: "field research", type: "phr.", meaning: "实地研究，实地调研" },
+    { word: "stream", type: "n.", meaning: "小河，小溪" },
+    { word: "extraordinary", type: "adj.", meaning: "非凡的，出色的" },
+    { word: "brilliant", type: "adj.", meaning: "聪颖的，才华横溢的" },
+    { word: "radium", type: "n.", meaning: "镭(一种化学元素)" },
+    { word: "Goldbach's Conjecture", type: "n.", meaning: "哥德巴赫猜想" },
+    { word: "theory", type: "n.", meaning: "学说，理论" },
+    { word: "mental", type: "adj.", meaning: "精神的；精神健康的" },
+    { word: "cure", type: "n.", meaning: "药剂；疗法" },
+    { word: "draft", type: "v.", meaning: "起草，草拟" },
+    { word: "declaration", type: "n.", meaning: "声明，宣告" },
+    { word: "experiment", type: "n.", meaning: "(科学)实验" },
+    { word: "lightning", type: "n.", meaning: "闪电" },
+    { word: "fiction", type: "n.", meaning: "虚构的事，想象的事" },
+    { word: "metal", type: "n.", meaning: "金属" },
+    { word: "attach", type: "v.", meaning: "系，绑；贴" },
+    { word: "flash", type: "n.", meaning: "闪光" },
+    { word: "conduct", type: "v.", meaning: "传导(热、电)" },
+    { word: "scientific", type: "adj.", meaning: "科学(上)的" },
+    { word: "entirely", type: "adv.", meaning: "完全地，彻底地" },
+    { word: "gravity", type: "n.", meaning: "重力，引力" },
+    { word: "account", type: "n.", meaning: "记述，描述" },
+    { word: "proof", type: "n.", meaning: "证明，证据" },
+    { word: "procedure", type: "n.", meaning: "程序，步骤，手续" }
+];
+
+const unit4WordsBook3 = [
+    { word: "greet", type: "v.", meaning: "问候，迎接，招呼" },
+    { word: "broadcast", type: "n.", meaning: "广播节目，电视节目" },
+    { word: "stair", type: "n.", meaning: "楼梯" },
+    { word: "load", type: "n.", meaning: "某物的量" },
+    { word: "get a load of", type: "phr.", meaning: "注意，仔细看(常用于表示惊讶或羡慕)" },
+    { word: "battle", type: "n.", meaning: "战斗，战役" },
+    { word: "fold", type: "v.", meaning: "折起" },
+    { word: "sculptor", type: "n.", meaning: "雕刻家，雕塑家" },
+    { word: "portrait", type: "n.", meaning: "人物照片；肖像" },
+    { word: "selfie", type: "n.", meaning: "自拍照" },
+    { word: "exhibition", type: "n.", meaning: "展出，展览" },
+    { word: "neighbourhood", type: "n.", meaning: "社区，街坊" },
+    { word: "embroidery", type: "n.", meaning: "刺绣图案，刺绣品" },
+    { word: "seal", type: "n.", meaning: "印章，图章" },
+    { word: "seal cutting", type: "phr.", meaning: "篆刻" },
+    { word: "calligraphy", type: "n.", meaning: "书法" },
+    { word: "porcelain", type: "n.", meaning: "瓷器" },
+    { word: "demonstrate", type: "v.", meaning: "示范，演示" },
+    { word: "vividly", type: "adv.", meaning: "生动地" },
+    { word: "needle", type: "n.", meaning: "缝衣针" },
+    { word: "elegant", type: "adj.", meaning: "高雅的，优美的" },
+    { word: "carve", type: "v.", meaning: "刻(图形或字母)" },
+    { word: "contemporary", type: "adj.", meaning: "当代的" },
+    { word: "cigarette", type: "n.", meaning: "香烟" },
+    { word: "lack", type: "v.", meaning: "没有，缺乏" },
+    { word: "stimulate", type: "v.", meaning: "刺激，促使，促进" },
+    { word: "magnificent", type: "adj.", meaning: "宏伟的，壮丽的" },
+    { word: "bare", type: "v.", meaning: "使暴露，露出" },
+    { word: "hoof", type: "n.", meaning: "蹄" },
+    { word: "wine", type: "n.", meaning: "葡萄酒" },
+    { word: "dirt", type: "n.", meaning: "灰尘，尘土" },
+    { word: "sponsor", type: "v.", meaning: "资助" },
+    { word: "emperor", type: "n.", meaning: "皇帝" },
+    { word: "fond", type: "adj.", meaning: "喜爱的" },
+    { word: "be fond of", type: "phr.", meaning: "喜欢……" },
+    { word: "frequent", type: "adj.", meaning: "经常发生的，频繁的" },
+    { word: "majesty", type: "n.", meaning: "陛下" },
+    { word: "gallop", type: "v.", meaning: "(马)飞奔，疾驰" },
+    { word: "vase", type: "n.", meaning: "花瓶" },
+    { word: "mostly", type: "adv.", meaning: "大部分；主要地" },
+    { word: "shade", type: "n.", meaning: "(色彩的)浓淡，深浅，色度" }
+];
+
+const unit5WordsBook3 = [
+    { word: "initial", type: "adj.", meaning: "开始的，最初的" },
+    { word: "thus", type: "adv.", meaning: "因此，从而" },
+    { word: "zone", type: "n.", meaning: "地区，地带" },
+    { word: "oxygen", type: "n.", meaning: "氧气" },
+    { word: "border", type: "n.", meaning: "国界，边界" },
+    { word: "confirm", type: "v.", meaning: "证实，证明" },
+    { word: "crowd", type: "n.", meaning: "人群" },
+    { word: "sheer", type: "adj.", meaning: "纯粹的，十足的" },
+    { word: "bring...into focus", type: "phr.", meaning: "使……成为焦点" },
+    { word: "attempt", type: "n.", meaning: "努力，尝试" },
+    { word: "failure", type: "n.", meaning: "失败" },
+    { word: "psychologist", type: "n.", meaning: "心理学家" },
+    { word: "thrill", type: "n.", meaning: "惊险，刺激" },
+    { word: "port", type: "n.", meaning: "港，港口" },
+    { word: "unaware", type: "adj.", meaning: "未觉察到的，未意识到的" },
+    { word: "alcohol", type: "n.", meaning: "酒精" },
+    { word: "bandage", type: "n.", meaning: "绷带" },
+    { word: "plaster", type: "n.", meaning: "创可贴" },
+    { word: "thermometer", type: "n.", meaning: "体温计" },
+    { word: "rubber", type: "n.", meaning: "橡胶，合成橡胶" },
+    { word: "cotton", type: "n.", meaning: "棉布，棉纱" },
+    { word: "wool", type: "n.", meaning: "羊毛，毛织物" },
+    { word: "cotton wool", type: "n.", meaning: "药棉，脱脂棉" },
+    { word: "guideline", type: "n.", meaning: "指导方针，指导原则" },
+    { word: "cloth", type: "n.", meaning: "布" },
+    { word: "bleeding", type: "n.", meaning: "流血，失血" },
+    { word: "liquid", type: "n.", meaning: "液体，液态物" },
+    { word: "injury", type: "n.", meaning: "伤，损害" },
+    { word: "stretch", type: "v.", meaning: "延伸，绵延" },
+    { word: "league", type: "n.", meaning: "里格(旧时长度单位，相当于3英里或3海里)" },
+    { word: "servant", type: "n.", meaning: "仆人，佣人" },
+    { word: "submarine", type: "n.", meaning: "潜(水)艇" },
+    { word: "charge", type: "n.", meaning: "主管，负责" },
+    { word: "captain", type: "n.", meaning: "船长" },
+    { word: "ahead", type: "adv.", meaning: "在前面" },
+    { word: "permit", type: "v.", meaning: "允许，准许，许可" },
+    { word: "fascinated", type: "adj.", meaning: "被迷住的，被吸引住的" },
+    { word: "chapter", type: "n.", meaning: "章节" },
+    { word: "relate", type: "v.", meaning: "相联系，有关联；讲述" },
+    { word: "helmet", type: "n.", meaning: "头盔，钢盔" },
+    { word: "nut", type: "n.", meaning: "坚果(仁)" },
+    { word: "astonish", type: "v.", meaning: "使吃惊，使惊讶" },
+    { word: "ray", type: "n.", meaning: "光线，光束" },
+    { word: "consume", type: "v.", meaning: "消耗" },
+    { word: "distinguish", type: "v.", meaning: "看清；认出" },
+    { word: "gradually", type: "adv.", meaning: "逐渐地，逐步地" },
+    { word: "surround", type: "v.", meaning: "环绕，围绕" },
+    { word: "wrinkled", type: "adj.", meaning: "有皱褶的" },
+    { word: "shore", type: "n.", meaning: "岸，滨" },
+    { word: "carpet", type: "n.", meaning: "地毯" },
+    { word: "intensity", type: "n.", meaning: "(光、声等的)强度" },
+    { word: "vibration", type: "n.", meaning: "震颤，震动" },
+    { word: "atom", type: "n.", meaning: "原子" },
+    { word: "depth", type: "n.", meaning: "深，深度" },
+    { word: "broad", type: "adj.", meaning: "宽的，阔的" },
+    { word: "in broad daylight", type: "phr.", meaning: "在大白天" },
+    { word: "beneath", type: "prep.", meaning: "在……之下，在……正下方" },
+    { word: "resident", type: "n.", meaning: "居民，住户" },
+    { word: "male", type: "n.", meaning: "雄性动物" }
+];
+
+const unit6WordsBook3 = [
+    { word: "disaster", type: "n.", meaning: "灾难，灾祸" },
+    { word: "tube", type: "n.", meaning: "管子" },
+    { word: "the Tube", type: "n.", meaning: "(伦敦的)地下铁道，地铁" },
+    { word: "plus", type: "adj.", meaning: "(用于数字后面表示)多，余" },
+    { word: "erupt", type: "v.", meaning: "(火山)爆发，喷发" },
+    { word: "immediately", type: "adv.", meaning: "即刻，马上" },
+    { word: "hurricane", type: "n.", meaning: "飓风" },
+    { word: "landslide", type: "n.", meaning: "山崩，滑坡" },
+    { word: "occur", type: "v.", meaning: "发生" },
+    { word: "announcement", type: "n.", meaning: "通告，公告" },
+    { word: "forecast", type: "v.", meaning: "预测，预报" },
+    { word: "grab", type: "v.", meaning: "攫取，抓住" },
+    { word: "tsunami", type: "n.", meaning: "海啸" },
+    { word: "reliable", type: "adj.", meaning: "可信赖的，可靠的" },
+    { word: "rescue", type: "v.", meaning: "营救，解救" },
+    { word: "emergency", type: "n.", meaning: "紧急情况，不测事件" },
+    { word: "typhoon", type: "n.", meaning: "台风" },
+    { word: "blizzard", type: "n.", meaning: "暴风雪" },
+    { word: "avalanche", type: "n.", meaning: "雪崩" },
+    { word: "exceptionally", type: "adv.", meaning: "极其，非常" },
+    { word: "claim", type: "v.", meaning: "(战争、事故等)夺去(生命)" },
+    { word: "crisis", type: "n.", meaning: "危机" },
+    { word: "threaten", type: "v.", meaning: "威胁到，危及" },
+    { word: "satellite", type: "n.", meaning: "人造卫星" },
+    { word: "precisely", type: "adv.", meaning: "精确地，准确地" },
+    { word: "billion", type: "num.", meaning: "十亿" },
+    { word: "lap", type: "n.", meaning: "(坐着时的)大腿部" },
+    { word: "nowhere", type: "adv.", meaning: "什么地方都不，无处" },
+    { word: "otherwise", type: "adv.", meaning: "否则，要不然" },
+    { word: "helicopter", type: "n.", meaning: "直升机" },
+    { word: "mosquito", type: "n.", meaning: "蚊子" },
+    { word: "midnight", type: "n.", meaning: "子夜，午夜" },
+    { word: "the Big Dipper", type: "n.", meaning: "北斗七星" },
+    { word: "the Little Dipper", type: "n.", meaning: "小北斗七星" },
+    { word: "the Milky Way", type: "n.", meaning: "银河" },
+    { word: "county", type: "n.", meaning: "(美国等国家的)县；(英国的)郡" },
+    { word: "have yet to", type: "phr.", meaning: "还没有" },
+    { word: "threat", type: "n.", meaning: "威胁，可能会带来危险的人(事)" },
+    { word: "property", type: "n.", meaning: "所有物，资产，财产" },
+    { word: "sufficient", type: "adj.", meaning: "足够的，充足的" },
+    { word: "shelter", type: "n.", meaning: "庇护，掩蔽" }
+];// ======================= 必修二 · 全单元完整词库 ======================
+const unit1WordsBook2 = [
+    { word: "maple", type: "n.", meaning: "枫树，槭树" },
+    { word: "pudding", type: "n.", meaning: "布丁" },
+    { word: "black pudding", type: "n.", meaning: "血肠，黑香肠" },
+    { word: "snack", type: "n.", meaning: "(正餐以外的)小吃，点心" },
+    { word: "cuisine", type: "n.", meaning: "烹饪(法)" },
+    { word: "spicy", type: "adj.", meaning: "(食物)加有香料的，辛辣的" },
+    { word: "hot pot", type: "n.", meaning: "火锅" },
+    { word: "dare", type: "modal verb", meaning: "胆敢，敢于" },
+    { word: "marriage", type: "n.", meaning: "婚姻" },
+    { word: "wedding", type: "n.", meaning: "婚礼" },
+    { word: "sort", type: "n.", meaning: "种，类" },
+    { word: "butcher", type: "n.", meaning: "肉贩" },
+    { word: "super", type: "adj.", meaning: "极好的，了不起的" },
+    { word: "bacon", type: "n.", meaning: "(通常切成薄片的)咸猪肉，熏猪肉" },
+    { word: "sausage", type: "n.", meaning: "香肠" },
+    { word: "toast", type: "n.", meaning: "烤面包(片)，吐司" },
+    { word: "butter", type: "n.", meaning: "黄油，牛油" },
+    { word: "typical", type: "adj.", meaning: "典型的，有代表性的" },
+    { word: "roast", type: "n.", meaning: "大块烤肉" },
+    { word: "roast", type: "adj.", meaning: "烤好的，烤制的" },
+    { word: "suffer", type: "v.", meaning: "(身体或精神上)受苦" },
+    { word: "stinky", type: "adj.", meaning: "难闻的，有臭味的" },
+    { word: "tofu", type: "n.", meaning: "豆腐" },
+    { word: "horrible", type: "adj.", meaning: "糟糕的" },
+    { word: "gather", type: "v.", meaning: "聚集" },
+    { word: "bite", type: "n.", meaning: "咬" },
+    { word: "cheese", type: "n.", meaning: "干酪，奶酪" },
+    { word: "someday", type: "adv.", meaning: "将来会有一天，有朝一日" },
+    { word: "poison", type: "n.", meaning: "毒素，毒物，毒药" },
+    { word: "oolong", type: "n.", meaning: "乌龙茶" },
+    { word: "china", type: "n.", meaning: "瓷，瓷料" },
+    { word: "symbol", type: "n.", meaning: "象征，标志" },
+    { word: "opinion", type: "n.", meaning: "意见，看法" },
+    { word: "function", type: "n.", meaning: "(事物的)功能；作用" },
+    { word: "download", type: "v.", meaning: "下载(信息或程序)" },
+    { word: "related", type: "adj.", meaning: "有关系的，相关的" },
+    { word: "diet", type: "n.", meaning: "日常饮食" },
+    { word: "addict", type: "n.", meaning: "对……着迷的人" },
+    { word: "tip", type: "n.", meaning: "指点，建议" },
+    { word: "custom", type: "n.", meaning: "风俗，习惯，传统" },
+    { word: "manners", type: "n.", meaning: "礼貌，礼仪" },
+    { word: "in case", type: "phr.", meaning: "以防万一" },
+    { word: "trick", type: "n.", meaning: "诀窍，技巧，技法" },
+    { word: "plate", type: "n.", meaning: "盘，碟" },
+    { word: "handle", type: "n.", meaning: "柄，把手" },
+    { word: "differ", type: "v.", meaning: "不同，不一样，有区别" },
+    { word: "BBQ", type: "n.", meaning: "(barbecue的缩写)烧烤野餐" },
+    { word: "tender", type: "adj.", meaning: "嫩的，软的(尤指烹饪恰到好处)" },
+    { word: "steak", type: "n.", meaning: "牛排" },
+    { word: "sauce", type: "n.", meaning: "调味汁，酱汁" },
+    { word: "slightly", type: "adv.", meaning: "略微，稍微" },
+    { word: "incredibly", type: "adv.", meaning: "极端地，非常地" },
+    { word: "pizzeria", type: "n.", meaning: "比萨饼餐厅" },
+    { word: "vegetarian", type: "adj.", meaning: "(全是)蔬菜的，没有肉类的" },
+    { word: "bitter", type: "adj.", meaning: "苦的，有苦味的" },
+    { word: "bakery", type: "n.", meaning: "面包店，糕饼店" },
+    { word: "cheesecake", type: "n.", meaning: "干酪蛋糕" },
+    { word: "creamy", type: "adj.", meaning: "似奶油的，软厚平滑的，光滑细软的" },
+    { word: "recommend", type: "v.", meaning: "推荐" },
+    { word: "acid", type: "n.", meaning: "酸" },
+    { word: "attack", type: "v.", meaning: "侵袭，侵蚀" },
+    { word: "yoghurt", type: "n.", meaning: "酸乳，酸奶" }
+];
+
+const unit2WordsBook2 = [
+    { word: "within", type: "prep.", meaning: "在……里" },
+    { word: "lifestyle", type: "n.", meaning: "生活方式" },
+    { word: "belong", type: "v.", meaning: "属于" },
+    { word: "belong to", type: "phr.", meaning: "属于" },
+    { word: "swing", type: "v.", meaning: "(使)(前后)摆动，(使)摇摆" },
+    { word: "end up", type: "phr.", meaning: "(尤指经历一系列意外后)最终处于，到头来" },
+    { word: "honey", type: "n.", meaning: "蜂蜜" },
+    { word: "catch up", type: "phr.", meaning: "打听(不在时所发生的事情)，别后叙谈" },
+    { word: "construction", type: "n.", meaning: "建造，建筑" },
+    { word: "satisfying", type: "adj.", meaning: "令人高兴的，令人满意的" },
+    { word: "homemade", type: "adj.", meaning: "自制的，家里做的" },
+    { word: "chef", type: "n.", meaning: "厨师" },
+    { word: "convenient", type: "adj.", meaning: "方便的，便利的" },
+    { word: "identify", type: "v.", meaning: "确定，发现" },
+    { word: "recipe", type: "n.", meaning: "烹饪法，食谱" },
+    { word: "blog", type: "v.", meaning: "写博客" },
+    { word: "blog", type: "n.", meaning: "博客，网络日志" },
+    { word: "originally", type: "adv.", meaning: "原先，最初" },
+    { word: "ranking", type: "n.", meaning: "排行，排名" },
+    { word: "official", type: "n.", meaning: "官员，高级职员" },
+    { word: "reconstruct", type: "v.", meaning: "重建，再建" },
+    { word: "salty", type: "adj.", meaning: "含盐的，咸的" },
+    { word: "sour", type: "adj.", meaning: "酸(味)的" },
+    { word: "resist", type: "v.", meaning: "忍住，按捺" },
+    { word: "adapt", type: "v.", meaning: "(使)适应，(使)适合" },
+    { word: "pick up", type: "phr.", meaning: "买，购买" },
+    { word: "breast", type: "n.", meaning: "(禽类的)胸脯肉" },
+    { word: "onion", type: "n.", meaning: "洋葱(头)" },
+    { word: "honour", type: "v.", meaning: "向……表示敬意" },
+    { word: "dragon", type: "n.", meaning: "龙" },
+    { word: "lunar", type: "adj.", meaning: "月球的" },
+    { word: "poet", type: "n.", meaning: "诗人" },
+    { word: "harvest", type: "n.", meaning: "收成" },
+    { word: "decoration", type: "n.", meaning: "装饰物" },
+    { word: "freedom", type: "n.", meaning: "自由，自由权利" },
+    { word: "participate", type: "v.", meaning: "参加，参与" },
+    { word: "vote", type: "v.", meaning: "投票，表决" },
+    { word: "regardless", type: "adv.", meaning: "不管，不顾" },
+    { word: "inequality", type: "n.", meaning: "(社会上的)不平等" },
+    { word: "fantasy", type: "n.", meaning: "幻想，想象" },
+    { word: "novel", type: "n.", meaning: "(长篇)小说" },
+    { word: "limitless", type: "adj.", meaning: "无限的" },
+    { word: "regard", type: "v.", meaning: "认为，看作" },
+    { word: "regard…as…", type: "phr.", meaning: "把……视作……" },
+    { word: "literature", type: "n.", meaning: "文学" },
+    { word: "envelope", type: "n.", meaning: "信封" },
+    { word: "pole", type: "n.", meaning: "(行星的)地极，(尤指地球的)北极或南极" },
+    { word: "handwritten", type: "adj.", meaning: "手写的" },
+    { word: "regular", type: "adj.", meaning: "频繁的，经常的" },
+    { word: "polar", type: "adj.", meaning: "极地的" },
+    { word: "roof", type: "n.", meaning: "(建筑物、汽车、帐篷等的)顶，顶部" },
+    { word: "complain", type: "v.", meaning: "抱怨，不满，发牢骚" },
+    { word: "warning", type: "n.", meaning: "警告，警示，告诫" },
+    { word: "starving", type: "adj.", meaning: "挨饿的，即将饿死的" },
+    { word: "indicate", type: "v.", meaning: "表明，显示" },
+    { word: "request", type: "n.", meaning: "请求，要求" },
+    { word: "fancy", type: "adj.", meaning: "花哨的，别致的" },
+    { word: "fancy dress", type: "n.", meaning: "化装服" },
+    { word: "guy", type: "n.", meaning: "(尤指青年)男子" },
+    { word: "wave", type: "v.", meaning: "挥手，招手" },
+    { word: "lantern", type: "n.", meaning: "灯笼" },
+    { word: "dessert", type: "n.", meaning: "(饭后的)甜食，甜品，甜点" },
+    { word: "attract", type: "v.", meaning: "吸引，引起……的兴趣" },
+    { word: "firework", type: "n.", meaning: "烟火，烟花" },
+    { word: "decorate", type: "v.", meaning: "装饰，布置，美化" }
+];
+
+const unit3WordsBook2 = [
+    { word: "riddle", type: "n.", meaning: "谜，谜语" },
+    { word: "competition", type: "n.", meaning: "比赛，竞赛" },
+    { word: "formal", type: "adj.", meaning: "正式的" },
+    { word: "host", type: "n.", meaning: "东道主，主人" },
+    { word: "occasion", type: "n.", meaning: "场合，时刻" },
+    { word: "editor", type: "n.", meaning: "(报纸、杂志的)主编，编辑" },
+    { word: "embrace", type: "v.", meaning: "欣然接受，乐意采纳(新思想、意见等)" },
+    { word: "admit", type: "v.", meaning: "(不情愿地)承认" },
+    { word: "effort", type: "n.", meaning: "力气，精力" },
+    { word: "loss", type: "n.", meaning: "失去，丧失" },
+    { word: "eve", type: "n.", meaning: "前夕，前一天" },
+    { word: "software", type: "n.", meaning: "(计算机)软件" },
+    { word: "adult", type: "n.", meaning: "成人，成年人" },
+    { word: "token", type: "n.", meaning: "象征，标志" },
+    { word: "process", type: "n.", meaning: "(为达到某目标的)过程，进程" },
+    { word: "retired", type: "adj.", meaning: "退休的" },
+    { word: "exist", type: "v.", meaning: "存在，实际上有" },
+    { word: "overseas", type: "adv.", meaning: "在海外，在外国" },
+    { word: "global", type: "adj.", meaning: "全球的，全世界的" },
+    { word: "citizen", type: "n.", meaning: "公民，市民" },
+    { word: "nationality", type: "n.", meaning: "国籍；民族" },
+    { word: "audience", type: "n.", meaning: "听众，观众" },
+    { word: "interact", type: "v.", meaning: "互动" },
+    { word: "joy", type: "n.", meaning: "欢欣，愉快，喜悦" },
+    { word: "phenomenon", type: "n.", meaning: "现象" },
+    { word: "surfing", type: "n.", meaning: "冲浪(运动)" },
+    { word: "represent", type: "v.", meaning: "代表，表示" },
+    { word: "goal", type: "n.", meaning: "球门" },
+    { word: "basis", type: "n.", meaning: "基础；根据" },
+    { word: "equipment", type: "n.", meaning: "装备，设备，用具" },
+    { word: "content", type: "n.", meaning: "满意，满足" },
+    { word: "to one's heart's content", type: "phr.", meaning: "尽情地；心满意足地" },
+    { word: "plastic", type: "adj.", meaning: "塑料制的" },
+    { word: "factor", type: "n.", meaning: "因素，要素" },
+    { word: "defend", type: "v.", meaning: "(在比赛中)防守，防卫" },
+    { word: "twist", type: "n.", meaning: "(形势或事态的)意外转折" },
+    { word: "soldier", type: "n.", meaning: "士兵，军人" },
+    { word: "conflict", type: "n.", meaning: "武装冲突，战斗，战争" },
+    { word: "death", type: "n.", meaning: "死，死亡" },
+    { word: "assure", type: "v.", meaning: "向……保证，使确信" },
+    { word: "chart", type: "v.", meaning: "记录，跟踪(变化或进展)" },
+    { word: "ideal", type: "adj.", meaning: "理想的，最好的" },
+    { word: "display", type: "n.", meaning: "显示器" },
+    { word: "monitor", type: "v.", meaning: "监视，监测" },
+    { word: "setting", type: "n.", meaning: "(机器、仪器等调控装置的)设定位置，调节点" },
+    { word: "adjustable", type: "adj.", meaning: "可调整的，可调节的" },
+    { word: "available", type: "adj.", meaning: "可用的，可获得的" },
+    { word: "skip", type: "v.", meaning: "跳绳" },
+    { word: "plank", type: "n.", meaning: "平板支撑" },
+    { word: "balance", type: "n.", meaning: "平衡" },
+    { word: "bar", type: "n.", meaning: "横木" },
+    { word: "upper", type: "adj.", meaning: "(位置)较上的，较高的，上面的" },
+    { word: "bone", type: "n.", meaning: "骨头，骨" },
+    { word: "involve", type: "v.", meaning: "包含，需要" },
+    { word: "master", type: "n.", meaning: "大师，能手" },
+    { word: "response", type: "n.", meaning: "回答，答复" },
+    { word: "interpret", type: "v.", meaning: "理解，了解，解释" },
+    { word: "data", type: "n.", meaning: "资料，数据" },
+    { word: "label", type: "n.", meaning: "标签，标记" },
+    { word: "asthma", type: "n.", meaning: "哮喘(病)" },
+    { word: "lung", type: "n.", meaning: "肺" },
+    { word: "power", type: "n.", meaning: "力量" },
+    { word: "network", type: "n.", meaning: "人际关系网，联络网" },
+    { word: "tension", type: "n.", meaning: "紧张，焦虑" },
+    { word: "disappear", type: "v.", meaning: "消失，不见" }
+];
+
+const unit4WordsBook2 = [
+    { word: "gorilla", type: "n.", meaning: "大猩猩" },
+    { word: "die out", type: "phr.", meaning: "消失，绝迹，灭绝" },
+    { word: "sweaty", type: "adj.", meaning: "满是汗的，被汗水湿透的" },
+    { word: "ache", type: "v.", meaning: "(持续而隐隐地)作痛" },
+    { word: "inspire", type: "v.", meaning: "鼓舞，激励" },
+    { word: "am", type: "n.", meaning: "午前，上午" },
+    { word: "persuade", type: "v.", meaning: "说服，劝服" },
+    { word: "champion", type: "n.", meaning: "(尤指体育比赛中的)冠军，第一名" },
+    { word: "ultimate", type: "adj.", meaning: "(目标等)最终的" },
+    { word: "opera", type: "n.", meaning: "歌剧" },
+    { word: "movement", type: "n.", meaning: "运动，动作" },
+    { word: "aspect", type: "n.", meaning: "方面" },
+    { word: "revenge", type: "n.", meaning: "报复，报仇" },
+    { word: "prince", type: "n.", meaning: "王子" },
+    { word: "version", type: "n.", meaning: "版本" },
+    { word: "string", type: "n.", meaning: "(乐器的)弦" },
+    { word: "exaggerated", type: "adj.", meaning: "(声音或动作)夸张的" },
+    { word: "mime", type: "n.", meaning: "(演戏等时的)做手势(或其他示意动作)" },
+    { word: "get across", type: "phr.", meaning: "解释清楚，传达" },
+    { word: "female", type: "adj.", meaning: "女(性)的" },
+    { word: "whip", type: "n.", meaning: "鞭子" },
+    { word: "technique", type: "n.", meaning: "技巧，手法" },
+    { word: "transform", type: "v.", meaning: "使改观，使变形，使转化" },
+    { word: "universe", type: "n.", meaning: "宇宙，天地，万物" },
+    { word: "backflip", type: "n.", meaning: "直体后空翻" },
+    { word: "incredible", type: "adj.", meaning: "难以置信的" },
+    { word: "dazzling", type: "adj.", meaning: "令人印象深刻的，特别吸引人的" },
+    { word: "energetic", type: "adj.", meaning: "精力充沛的，充满活力的" },
+    { word: "clap", type: "v.", meaning: "拍(手)，鼓(掌)" },
+    { word: "edge", type: "n.", meaning: "边缘" },
+    { word: "on the edge of one's seat", type: "phr.", meaning: "极为激动" },
+    { word: "emotion", type: "n.", meaning: "强烈的情感" },
+    { word: "anger", type: "n.", meaning: "愤怒，怒火" },
+    { word: "grief", type: "n.", meaning: "悲痛" },
+    { word: "combine", type: "v.", meaning: "(使)结合，(使)组合" },
+    { word: "poetry", type: "n.", meaning: "诗，诗歌" },
+    { word: "explosive", type: "adj.", meaning: "爆炸(式)的，爆发的" },
+    { word: "tick all the right boxes", type: "phr.", meaning: "事情发展如人所愿，一切顺利" },
+    { word: "applaud", type: "v.", meaning: "(为……)鼓掌" },
+    { word: "grateful", type: "adj.", meaning: "感谢的，感激的" },
+    { word: "extremely", type: "adv.", meaning: "极度，极其" },
+    { word: "overcome", type: "v.", meaning: "控制(感情)，克服(困难)" },
+    { word: "ballet", type: "n.", meaning: "芭蕾舞剧，芭蕾舞表演" },
+    { word: "absorbed", type: "adj.", meaning: "专心致志的" },
+    { word: "romantic", type: "adj.", meaning: "浪漫的" },
+    { word: "comedy", type: "n.", meaning: "喜剧" },
+    { word: "documentary", type: "n.", meaning: "纪录片" },
+    { word: "absolutely", type: "adv.", meaning: "完全地，绝对地" },
+    { word: "episode", type: "n.", meaning: "(电视连续剧或广播连载节目中的)一集" },
+    { word: "put on", type: "phr.", meaning: "表演(节目)" },
+    { word: "appealing", type: "adj.", meaning: "有吸引力的，有趣的" },
+    { word: "definitely", type: "adv.", meaning: "确切地，肯定地" },
+    { word: "plot", type: "n.", meaning: "(书、电影、戏剧的)情节" },
+    { word: "rude", type: "adj.", meaning: "粗鲁的，无礼的" },
+    { word: "transport", type: "n.", meaning: "交通运输系统，运输方式" },
+    { word: "arrangement", type: "n.", meaning: "安排，筹划" },
+    { word: "brief", type: "adj.", meaning: "短暂的" },
+    { word: "cinematic", type: "adj.", meaning: "电影的" },
+    { word: "turkey", type: "n.", meaning: "(电影或戏剧的)失败之作" },
+    { word: "storytelling", type: "n.", meaning: "讲故事，说书" },
+    { word: "wonderland", type: "n.", meaning: "(故事中的)仙境，奇境" },
+    { word: "escape", type: "v.", meaning: "(从危险或糟糕的处境中)逃离，逃避，摆脱" },
+    { word: "disappointed", type: "adj.", meaning: "失望的，沮丧的" },
+    { word: "epic", type: "adj.", meaning: "史诗般的；壮丽的，宏大的" },
+    { word: "live up to", type: "phr.", meaning: "符合(标准)，不负(盛名)" },
+    { word: "extent", type: "n.", meaning: "程度" },
+    { word: "to some extent", type: "phr.", meaning: "在某种程度上" },
+    { word: "in one's own right", type: "phr.", meaning: "凭借自身，靠自己" },
+    { word: "original", type: "adj.", meaning: "原先的，最初的" },
+    { word: "fictional", type: "adj.", meaning: "虚构的，编造的，小说(中)的" },
+    { word: "awkward", type: "adj.", meaning: "紧张的；不舒适的" },
+    { word: "behave", type: "v.", meaning: "表现" },
+    { word: "normal", type: "adj.", meaning: "正常的，平常的" },
+    { word: "responsibility", type: "n.", meaning: "责任" },
+    { word: "absence", type: "n.", meaning: "缺乏，没有" }
+];
+
+const unit5WordsBook2 = [
+    { word: "destination", type: "n.", meaning: "目的地，终点" },
+    { word: "gallery", type: "n.", meaning: "美术馆，画廊" },
+    { word: "indigenous", type: "adj.", meaning: "本地的，土生土长的" },
+    { word: "kangaroo", type: "n.", meaning: "袋鼠" },
+    { word: "crocodile", type: "n.", meaning: "鳄鱼" },
+    { word: "quest", type: "n.", meaning: "(长期的)寻求，探索，追求" },
+    { word: "quit", type: "v.", meaning: "离开(工作岗位、学校等)；离任" },
+    { word: "profession", type: "n.", meaning: "(需要高等教育和训练的)专业，行业" },
+    { word: "previous", type: "adj.", meaning: "以前的，先前的" },
+    { word: "route", type: "n.", meaning: "路线" },
+    { word: "aboard", type: "prep.", meaning: "在(船、飞机、火车)上" },
+    { word: "landscape", type: "n.", meaning: "(陆上的)风景，景致" },
+    { word: "dramatic", type: "adj.", meaning: "激动人心的；给人印象深刻的" },
+    { word: "hike", type: "v.", meaning: "在……徒步旅行，远足" },
+    { word: "volcano", type: "n.", meaning: "火山" },
+    { word: "embassy", type: "n.", meaning: "大使馆" },
+    { word: "visa", type: "n.", meaning: "(护照上的)签证" },
+    { word: "budget", type: "n.", meaning: "预算" },
+    { word: "chain", type: "n.", meaning: "连锁店，连锁集团" },
+    { word: "transfer", type: "n.", meaning: "转乘，换乘" },
+    { word: "luggage", type: "n.", meaning: "行李" },
+    { word: "currency", type: "n.", meaning: "货币，通货" },
+    { word: "credit", type: "n.", meaning: "赊购，信贷" },
+    { word: "credit card", type: "n.", meaning: "信用卡" },
+    { word: "souvenir", type: "n.", meaning: "纪念品，纪念物" },
+    { word: "cash", type: "n.", meaning: "现款，现金" },
+    { word: "flight", type: "n.", meaning: "航班，班机" },
+    { word: "remote", type: "adj.", meaning: "偏僻的，偏远的" },
+    { word: "engage", type: "v.", meaning: "参与，参加" },
+    { word: "café", type: "n.", meaning: "咖啡馆，小餐馆" },
+    { word: "soccer", type: "n.", meaning: "英式足球" },
+    { word: "continent", type: "n.", meaning: "洲，大洲，大陆" },
+    { word: "vehicle", type: "n.", meaning: "交通工具，车辆" },
+    { word: "deer", type: "n.", meaning: "鹿" },
+    { word: "mass", type: "n.", meaning: "大量，许多" },
+    { word: "poutine", type: "n.", meaning: "肉汁乳酪薯条(加拿大一种食品)" },
+    { word: "gravy", type: "n.", meaning: "(调味用的)肉汁" }
+];
+
+const unit6WordsBook2 = [
+    { word: "shark", type: "n.", meaning: "鲨(鱼)" },
+    { word: "scare", type: "v.", meaning: "使(某人)惊恐，吓唬" },
+    { word: "due to", type: "phr.", meaning: "由于，因为" },
+    { word: "fin", type: "v.", meaning: "切去(鱼的)鳍" },
+    { word: "fin", type: "n.", meaning: "鱼鳍" },
+    { word: "dive", type: "v.", meaning: "(通常指使用呼吸设备的)潜水" },
+    { word: "target", type: "v.", meaning: "把……作为目标" },
+    { word: "fortunately", type: "adv.", meaning: "幸运地" },
+    { word: "extinction", type: "n.", meaning: "灭绝，绝种" },
+    { word: "attitude", type: "n.", meaning: "(尤指通过行为表现出的对某事的一般)看法，态度" },
+    { word: "devote", type: "v.", meaning: "致力，献身，倾注" },
+    { word: "ocean", type: "n.", meaning: "海洋，大海" },
+    { word: "highlight", type: "v.", meaning: "使……突出，使注意力集中于" },
+    { word: "cruelty", type: "n.", meaning: "残忍，残酷，残暴" },
+    { word: "hunting", type: "n.", meaning: "打猎，狩猎" },
+    { word: "presentation", type: "n.", meaning: "报告，(观点的)陈述，说明" },
+    { word: "reserve", type: "n.", meaning: "(野生生物)保护区" },
+    { word: "staff", type: "n.", meaning: "员工" },
+    { word: "establish", type: "v.", meaning: "建立，设立" },
+    { word: "damage", type: "v.", meaning: "破损，损害，损伤" },
+    { word: "drought", type: "n.", meaning: "旱灾，干旱" },
+    { word: "flood", type: "n.", meaning: "洪水，水灾" },
+    { word: "affect", type: "v.", meaning: "影响" },
+    { word: "supply", type: "n.", meaning: "(煤气、电力、自来水等)供应(系统)" },
+    { word: "restore", type: "v.", meaning: "使恢复" },
+    { word: "adopt", type: "v.", meaning: "采取(某种方法)" },
+    { word: "sustainable", type: "adj.", meaning: "可持续的，不破坏环境的" },
+    { word: "bulb", type: "n.", meaning: "灯泡" },
+    { word: "renewable", type: "adj.", meaning: "(能源)可更新的，可再生的，可恢复的" },
+    { word: "carbon", type: "n.", meaning: "碳" },
+    { word: "greenhouse", type: "n.", meaning: "温室，暖房" },
+    { word: "reusable", type: "adj.", meaning: "可再度使用的，可多次使用的" },
+    { word: "brochure", type: "n.", meaning: "小册子" },
+    { word: "reduce", type: "v.", meaning: "减少，降低" },
+    { word: "solar", type: "adj.", meaning: "利用太阳光(能)的" },
+    { word: "release", type: "v.", meaning: "释放，排放" },
+    { word: "smog", type: "n.", meaning: "烟雾，雾霾" },
+    { word: "fog", type: "n.", meaning: "雾" },
+    { word: "severe", type: "adj.", meaning: "(问题、伤势、疾病等)很严重的" },
+    { word: "infection", type: "n.", meaning: "感染，传染病" },
+    { word: "lecture", type: "n.", meaning: "(尤指大学里的)讲座，讲课，演讲" },
+    { word: "permission", type: "n.", meaning: "允许，许可" },
+    { word: "slide", type: "n.", meaning: "幻灯片" },
+    { word: "majority", type: "n.", meaning: "多数，大多数(人或物)" },
+    { word: "false", type: "adj.", meaning: "不正确的，错误的" },
+    { word: "amount", type: "n.", meaning: "数量，数额" },
+    { word: "device", type: "n.", meaning: "设备，仪器，装置" },
+    { word: "stand‑by", type: "adj.", meaning: "备用的" },
+    { word: "mode", type: "n.", meaning: "(机器、设备的)运行方式，状态，模式" },
+    { word: "electricity", type: "n.", meaning: "电" },
+    { word: "leak", type: "v.", meaning: "(使)漏，(使)渗漏" },
+    { word: "appliance", type: "n.", meaning: "家用电器，家用器具" },
+    { word: "remove", type: "v.", meaning: "移走，搬走，去掉" },
+    { word: "plug", type: "n.", meaning: "(电)插头" },
+    { word: "take…into account", type: "phr.", meaning: "把……考虑进去" },
+    { word: "litre", type: "n.", meaning: "升，公升" },
+    { word: "campaign", type: "n.", meaning: "(宣传)活动" },
+    { word: "urge", type: "v.", meaning: "竭力主张，强烈要求，敦促" },
+    { word: "canteen", type: "n.", meaning: "(工厂、学校等的)食堂，餐厅" },
+    { word: "concerned", type: "adj.", meaning: "焦急的，担忧的" },
+    { word: "contribute", type: "v.", meaning: "促成，造成(某事发生)" },
+    { word: "average", type: "adj.", meaning: "平均(数)的" }
+];
+// ======================= 必修一 · 全单元完整词库 ======================
+const unit1WordsBook1 = [
+    { word: "senior", type: "adj.", meaning: "(地位、水平或级别)高的，高级的" },
+    { word: "senior high", type: "phr.", meaning: "高中" },
+    { word: "curious", type: "adj.", meaning: "好奇的" },
+    { word: "impression", type: "n.", meaning: "印象，感想" },
+    { word: "campus", type: "n.", meaning: "校园" },
+    { word: "tradition", type: "n.", meaning: "传统" },
+    { word: "facility", type: "n.", meaning: "设施" },
+    { word: "impressive", type: "adj.", meaning: "令人钦佩的，给人深刻印象的" },
+    { word: "moment", type: "n.", meaning: "某一时刻" },
+    { word: "author", type: "n.", meaning: "作者，作家" },
+    { word: "eagerness", type: "n.", meaning: "热切，渴望" },
+    { word: "explore", type: "v.", meaning: "考察，探险" },
+    { word: "one by one", type: "phr.", meaning: "依次地，一个接一个地" },
+    { word: "engine", type: "n.", meaning: "发动机，引擎" },
+    { word: "insect", type: "n.", meaning: "昆虫" },
+    { word: "collection", type: "n.", meaning: "(一批)收藏品" },
+    { word: "organise", type: "v.", meaning: "组织" },
+    { word: "nudge", type: "n.", meaning: "(通常用肘)轻推" },
+    { word: "butterfly", type: "n.", meaning: "蝴蝶" },
+    { word: "butterflies in one's stomach", type: "phr.", meaning: "情绪紧张，心里发慌" },
+    { word: "breathe", type: "v.", meaning: "呼吸" },
+    { word: "panic", type: "n.", meaning: "惊恐，惊慌" },
+    { word: "in panic", type: "phr.", meaning: "惊慌地" },
+    { word: "challenge", type: "n.", meaning: "挑战" },
+    { word: "pressure", type: "n.", meaning: "压力" },
+    { word: "calm", type: "adj.", meaning: "镇静的，沉着的" },
+    { word: "description", type: "n.", meaning: "描述，描写，叙述，形容" },
+    { word: "confident", type: "adj.", meaning: "有信心的，自信的" },
+    { word: "poster", type: "n.", meaning: "海报" },
+    { word: "badminton", type: "n.", meaning: "羽毛球" },
+    { word: "drama", type: "n.", meaning: "戏剧" },
+    { word: "band", type: "n.", meaning: "乐队，乐团" },
+    { word: "debate", type: "n.", meaning: "讨论，辩论" },
+    { word: "gym", type: "n.", meaning: "体育馆，健身房" },
+    { word: "piano", type: "n.", meaning: "钢琴" },
+    { word: "stage", type: "n.", meaning: "舞台" },
+    { word: "photography", type: "n.", meaning: "摄影" },
+    { word: "inner", type: "adj.", meaning: "(想法或情感)未表达出来的，隐藏的，内心的" },
+    { word: "pm", type: "n.", meaning: "下午" },
+    { word: "argue", type: "v.", meaning: "争论，争辩" },
+    { word: "topic", type: "n.", meaning: "话题，论题" },
+    { word: "sharp", type: "adj.", meaning: "敏锐的，聪明的" },
+    { word: "dinosaur", type: "n.", meaning: "恐龙" },
+    { word: "dolphin", type: "n.", meaning: "海豚" },
+    { word: "intelligent", type: "adj.", meaning: "有智慧的，聪明的" },
+    { word: "investigate", type: "v.", meaning: "查明，调查" },
+    { word: "various", type: "adj.", meaning: "各种各样的，各种不同的" },
+    { word: "volunteer", type: "n.", meaning: "志愿者，义务工作者，自愿参加者" },
+    { word: "gain", type: "v.", meaning: "获得，赢得" },
+    { word: "apply", type: "v.", meaning: "申请" },
+    { word: "schedule", type: "n.", meaning: "计划表，进度表，日程表" },
+    { word: "award", type: "n.", meaning: "奖，奖赏" },
+    { word: "opportunity", type: "n.", meaning: "机会，时机" },
+    { word: "hint", type: "n.", meaning: "有益的建议" },
+    { word: "subscribe", type: "v.", meaning: "订阅(报纸或杂志)" },
+    { word: "view", type: "n.", meaning: "(一次)观看" },
+    { word: "former", type: "adj.", meaning: "从前的" },
+    { word: "graduate", type: "v.", meaning: "毕业" },
+    { word: "orientation", type: "n.", meaning: "(新工作或学习课程开始前一段时间的)培训，迎新" },
+    { word: "Orientation Day", type: "phr.", meaning: "迎新日" },
+    { word: "frightened", type: "adj.", meaning: "受惊的，害怕的" },
+    { word: "sight", type: "n.", meaning: "看到，看见" },
+    { word: "figure", type: "v.", meaning: "认为，以为" },
+    { word: "go all out", type: "phr.", meaning: "全力以赴，竭尽全力" },
+    { word: "select", type: "v.", meaning: "挑选，选择" },
+    { word: "particular", type: "n.", meaning: "细节" },
+    { word: "in particular", type: "phr.", meaning: "尤其，特别" },
+    { word: "rainbow", type: "n.", meaning: "彩虹" },
+    { word: "neat", type: "adj.", meaning: "好的，令人愉快的" },
+    { word: "specific", type: "adj.", meaning: "具体的，特定的" },
+    { word: "refer", type: "v.", meaning: "参考，查阅" },
+    { word: "refer to", type: "phr.", meaning: "参考，查阅" },
+    { word: "journal", type: "n.", meaning: "日记，日志" },
+    { word: "junior", type: "adj.", meaning: "低年级的" },
+    { word: "struggle", type: "v.", meaning: "奋斗，拼搏" },
+    { word: "memorise", type: "v.", meaning: "记住，熟记" },
+    { word: "skateboarding", type: "n.", meaning: "滑板运动" },
+    { word: "forward", type: "adv.", meaning: "向前" },
+    { word: "look forward to", type: "phr.", meaning: "(兴奋地)期待，盼望" },
+    { word: "committee", type: "n.", meaning: "委员会" },
+    { word: "improve", type: "v.", meaning: "改善，改进" },
+    { word: "rate", type: "v.", meaning: "对……作评估，评价" },
+    { word: "performance", type: "n.", meaning: "(工作或活动中的)表现" },
+    { word: "exchange", type: "v.", meaning: "交流(信息、想法等)" }
+];
+
+const unit2WordsBook1 = [
+    { word: "title", type: "n.", meaning: "题目，标题" },
+    { word: "pine", type: "n.", meaning: "松树" },
+    { word: "pineapple", type: "n.", meaning: "菠萝" },
+    { word: "ham", type: "n.", meaning: "火腿" },
+    { word: "eggplant", type: "n.", meaning: "茄子" },
+    { word: "sculpt", type: "v.", meaning: "雕刻，雕塑" },
+    { word: "sculpture", type: "n.", meaning: "雕像，雕刻品，雕塑作品" },
+    { word: "seasick", type: "adj.", meaning: "晕船的" },
+    { word: "airsick", type: "adj.", meaning: "晕机的" },
+    { word: "carsick", type: "adj.", meaning: "晕车的" },
+    { word: "homesick", type: "adj.", meaning: "想家的" },
+    { word: "opposing", type: "adj.", meaning: "(观点、意见等)相反的，相对立的" },
+    { word: "behavior", type: "n.", meaning: "举止，行为" },
+    { word: "confusing", type: "adj.", meaning: "令人困惑的" },
+    { word: "capitalized", type: "adj.", meaning: "大写的" },
+    { word: "unique", type: "adj.", meaning: "独一无二的，独特的" },
+    { word: "burn up", type: "phr.", meaning: "烧毁，烧尽" },
+    { word: "burn down", type: "phr.", meaning: "烧毁" },
+    { word: "alarm", type: "n.", meaning: "警报器；闹钟" },
+    { word: "reflect", type: "v.", meaning: "显示，反映" },
+    { word: "creativity", type: "n.", meaning: "创造性，创造力" },
+    { word: "visible", type: "adj.", meaning: "看得见的，可见的" },
+    { word: "wind up", type: "phr.", meaning: "给(机械)上发条；使(活动、会议等)结束" },
+    { word: "creative", type: "adj.", meaning: "创造(性)的" },
+    { word: "type", type: "n.", meaning: "类型，种类" },
+    { word: "come across", type: "phr.", meaning: "偶然发现" },
+    { word: "unfamiliar", type: "adj.", meaning: "不熟悉的，不了解的" },
+    { word: "contact", type: "v.", meaning: "联系，联络" },
+    { word: "organization", type: "n.", meaning: "组织，团体，机构" },
+    { word: "likely", type: "adj.", meaning: "可能的，可能发生的" },
+    { word: "subway", type: "n.", meaning: "地铁" },
+    { word: "highway", type: "n.", meaning: "公路" },
+    { word: "motorway", type: "n.", meaning: "高速公路" },
+    { word: "gas", type: "n.", meaning: "汽油" },
+    { word: "petrol", type: "n.", meaning: "汽油" },
+    { word: "apartment", type: "n.", meaning: "一套住房，公寓套房" },
+    { word: "flat", type: "n.", meaning: "一套住房，公寓套房" },
+    { word: "elevator", type: "n.", meaning: "电梯，升降机" },
+    { word: "context", type: "n.", meaning: "上下文，语境" },
+    { word: "addition", type: "n.", meaning: "增加物，添加物" },
+    { word: "forum", type: "n.", meaning: "(因特网上的)论坛，讨论区" },
+    { word: "resource", type: "n.", meaning: "资料，(教学)资源" },
+    { word: "misadventure", type: "n.", meaning: "事故，灾难" },
+    { word: "remind", type: "v.", meaning: "提醒，使……想起" },
+    { word: "rather", type: "adv.", meaning: "相当，颇" },
+    { word: "comment", type: "n.", meaning: "评论" },
+    { word: "frog", type: "n.", meaning: "蛙，青蛙" },
+    { word: "throat", type: "n.", meaning: "喉咙，咽喉" },
+    { word: "have a frog in one's throat", type: "phr.", meaning: "(尤因喉咙痛)说话困难" },
+    { word: "downtown", type: "adj.", meaning: "在城镇中心区的，在闹市区的" },
+    { word: "boot", type: "n.", meaning: "靴子" },
+    { word: "entrance", type: "n.", meaning: "大门(口)，入口(处)" },
+    { word: "section", type: "n.", meaning: "区域" },
+    { word: "exit", type: "n.", meaning: "出口" },
+    { word: "actually", type: "adv.", meaning: "事实上，实际上" },
+    { word: "downstairs", type: "adv.", meaning: "在楼下" },
+    { word: "wicked", type: "adj.", meaning: "缺德的，邪恶的；很棒的，极好的" },
+    { word: "odd", type: "adj.", meaning: "奇特的，古怪的" },
+    { word: "negative", type: "adj.", meaning: "消极的，负面的" },
+    { word: "positive", type: "adj.", meaning: "好的，积极的" },
+    { word: "error", type: "n.", meaning: "错误，谬误" },
+    { word: "intend", type: "v.", meaning: "计划，打算" },
+    { word: "informal", type: "adj.", meaning: "(书写或言谈)非正式的" },
+    { word: "recognise", type: "v.", meaning: "认识，辨认出" },
+    { word: "base", type: "v.", meaning: "以……为基础" },
+    { word: "aware", type: "adj.", meaning: "意识到的，明白的" },
+    { word: "be aware of", type: "phr.", meaning: "意识到，察觉到" }
+];
+
+const unit3WordsBook1 = [
+    { word: "character", type: "n.", meaning: "(书、剧本、电影等中的)人物，角色" },
+    { word: "approach", type: "v.", meaning: "走近，靠近" },
+    { word: "chat", type: "n.", meaning: "闲谈，聊天" },
+    { word: "focus", type: "v.", meaning: "把(……)集中(于)" },
+    { word: "career", type: "n.", meaning: "职业，事业" },
+    { word: "lawyer", type: "n.", meaning: "律师" },
+    { word: "assume", type: "v.", meaning: "假定，假设，认为" },
+    { word: "respect", type: "v.", meaning: "尊敬，敬重" },
+    { word: "studio", type: "n.", meaning: "(音乐)录音室" },
+    { word: "court", type: "n.", meaning: "法院，法庭" },
+    { word: "ignore", type: "v.", meaning: "忽视，不理" },
+    { word: "professional", type: "adj.", meaning: "职业的，专业的" },
+    { word: "suit", type: "v.", meaning: "适合" },
+    { word: "talent", type: "n.", meaning: "天赋，才能" },
+    { word: "option", type: "n.", meaning: "选择，可选择的东西" },
+    { word: "sigh", type: "n.", meaning: "叹气，叹息(尤因厌烦、失望、疲倦等)" },
+    { word: "curtain", type: "n.", meaning: "(舞台上的)幕，帷幕" },
+    { word: "generation", type: "n.", meaning: "一代(人)" },
+    { word: "gap", type: "n.", meaning: "差距，差别" },
+    { word: "currently", type: "adv.", meaning: "现时，当前" },
+    { word: "regularly", type: "adv.", meaning: "经常" },
+    { word: "responsible", type: "adj.", meaning: "(对事故、错误、罪行等)负有责任的，应承担责任的" },
+    { word: "memory", type: "n.", meaning: "记忆，回忆" },
+    { word: "nowadays", type: "adv.", meaning: "现今，现时" },
+    { word: "jaw", type: "n.", meaning: "下巴，下颌" },
+    { word: "beard", type: "n.", meaning: "胡须" },
+    { word: "skin", type: "n.", meaning: "皮肤" },
+    { word: "jogging", type: "n.", meaning: "慢跑锻炼" },
+    { word: "slim", type: "adj.", meaning: "苗条的，修长的" },
+    { word: "cheek", type: "n.", meaning: "面颊，脸颊" },
+    { word: "nation", type: "n.", meaning: "国家" },
+    { word: "aim", type: "v.", meaning: "力求达到" },
+    { word: "issue", type: "n.", meaning: "(尤指社会或政治方面的)议题；争论的问题" },
+    { word: "theme", type: "n.", meaning: "主题" },
+    { word: "observe", type: "v.", meaning: "庆祝，过(节日、生日等)" },
+    { word: "range", type: "n.", meaning: "一系列" },
+    { word: "event", type: "n.", meaning: "活动(指演出、体育比赛、聚会等)" },
+    { word: "apologise", type: "v.", meaning: "道歉" },
+    { word: "stress", type: "n.", meaning: "重音，重读" },
+    { word: "impact", type: "n.", meaning: "作用，影响" },
+    { word: "strength", type: "n.", meaning: "强烈程度" },
+    { word: "admire", type: "v.", meaning: "钦佩，赞美，羡慕" },
+    { word: "judge", type: "v.", meaning: "认为，判断" },
+    { word: "settle", type: "v.", meaning: "和解，结束(争论)" },
+    { word: "settle for", type: "phr.", meaning: "勉强接受，将就" },
+    { word: "triathlon", type: "n.", meaning: "铁人三项运动" },
+    { word: "series", type: "n.", meaning: "系列比赛" },
+    { word: "in the lead", type: "phr.", meaning: "领先" },
+    { word: "onto", type: "prep.", meaning: "到……上，向……上，朝……上" },
+    { word: "track", type: "n.", meaning: "跑道" },
+    { word: "media", type: "n.", meaning: "新闻媒体，传媒" },
+    { word: "obviously", type: "adv.", meaning: "明显地，显而易见地" },
+    { word: "feature", type: "n.", meaning: "(报纸或杂志的)特写" },
+    { word: "typically", type: "adv.", meaning: "一般，通常" },
+    { word: "individual", type: "adj.", meaning: "独特的，与众不同的(一般含褒义)" },
+    { word: "style", type: "n.", meaning: "风格" },
+    { word: "extra", type: "adj.", meaning: "额外的，另外的" },
+    { word: "detail", type: "n.", meaning: "细节，细微之处" },
+    { word: "contain", type: "v.", meaning: "包含，含有" },
+    { word: "summary", type: "n.", meaning: "总结，概要" },
+    { word: "powerful", type: "adj.", meaning: "强有力的，有影响(感染力)的" },
+    { word: "despite", type: "prep.", meaning: "尽管，虽然" },
+    { word: "throughout", type: "prep.", meaning: "在整个期间，自始至终" },
+    { word: "entire", type: "adj.", meaning: "全部的，整个的" },
+    { word: "enormously", type: "adv.", meaning: "非常，极其" },
+    { word: "million", type: "num.", meaning: "许多，无数" },
+    { word: "disqualify", type: "v.", meaning: "(因犯规而)取消……的资格" },
+    { word: "athlete", type: "n.", meaning: "运动员，田径运动员" },
+    { word: "medal", type: "n.", meaning: "奖牌，勋章" },
+    { word: "somehow", type: "adv.", meaning: "用某种方法，不知怎的" },
+    { word: "indeed", type: "adv.", meaning: "当然，确实(用于强调陈述或回答)" }
+];
+
+const unit4WordsBook1 = [
+    { word: "forever", type: "adv.", meaning: "永远" },
+    { word: "familiar", type: "adj.", meaning: "熟悉的" },
+    { word: "adventure", type: "n.", meaning: "历险(经历)，奇遇" },
+    { word: "prefer", type: "v.", meaning: "更喜欢" },
+    { word: "click", type: "v.", meaning: "点击(鼠标)" },
+    { word: "lose track of", type: "phr.", meaning: "不了解……的情况，不了解……的动态" },
+    { word: "deliver", type: "v.", meaning: "递送，传送" },
+    { word: "thanks to", type: "phr.", meaning: "归功于……，多亏……" },
+    { word: "advance", type: "n.", meaning: "进步，进展" },
+    { word: "significantly", type: "adv.", meaning: "重大地，显著地" },
+    { word: "social media", type: "phr.", meaning: "社交媒体" },
+    { word: "maintain", type: "v.", meaning: "保持，维持" },
+    { word: "wi-fi", type: "n.", meaning: "无线网络，无线上网" },
+    { word: "digital", type: "adj.", meaning: "数字的，数码的" },
+    { word: "enable", type: "v.", meaning: "使可能，使发生" },
+    { word: "unusual", type: "adj.", meaning: "异常的，不平常的" },
+    { word: "site", type: "n.", meaning: "网站" },
+    { word: "tend", type: "v.", meaning: "易于做某事，往往会发生某事" },
+    { word: "update", type: "n.", meaning: "最新消息" },
+    { word: "saying", type: "n.", meaning: "格言，谚语，警句" },
+    { word: "criminal", type: "n.", meaning: "罪犯" },
+    { word: "bathwater", type: "n.", meaning: "浴水，洗澡水" },
+    { word: "throw the baby out with the bathwater", type: "phr.", meaning: "不分良莠一起抛弃" },
+    { word: "acquire", type: "v.", meaning: "获得，得到" },
+    { word: "goods", type: "n.", meaning: "商品" },
+    { word: "prove", type: "v.", meaning: "证明，证实" },
+    { word: "illustrate", type: "v.", meaning: "(举例)说明，阐明" },
+    { word: "diagram", type: "n.", meaning: "图解，示意图" },
+    { word: "inspiring", type: "adj.", meaning: "鼓舞人心的，启发灵感的" },
+    { word: "teenager", type: "n.", meaning: "青少年，十几岁的孩子(13到19岁之间的孩子)" },
+    { word: "pour", type: "v.", meaning: "灌，注，倒" },
+    { word: "pot", type: "n.", meaning: "锅" },
+    { word: "gram", type: "n.", meaning: "克" },
+    { word: "pack", type: "n.", meaning: "小盒，小包" },
+    { word: "comfort", type: "n.", meaning: "安慰，慰藉" },
+    { word: "patience", type: "n.", meaning: "耐心" },
+    { word: "passion", type: "n.", meaning: "强烈的情感，激情" },
+    { word: "generosity", type: "n.", meaning: "慷慨，大方" },
+    { word: "slice", type: "n.", meaning: "片，薄片" },
+    { word: "humour", type: "n.", meaning: "幽默感" },
+    { word: "quality", type: "n.", meaning: "素质，品德" },
+    { word: "anxious", type: "adj.", meaning: "焦虑的，不安的" },
+    { word: "postpone", type: "v.", meaning: "使(事件、行动等)延期，推迟" },
+    { word: "distance", type: "v.", meaning: "使与……保持距离，撇清和……的关系" },
+    { word: "ordinary", type: "adj.", meaning: "普通的，平常的" },
+    { word: "scar", type: "n.", meaning: "伤疤" },
+    { word: "dine", type: "v.", meaning: "进餐" },
+    { word: "chum", type: "n.", meaning: "好朋友" },
+    { word: "chap", type: "n.", meaning: "小伙子，家伙" },
+    { word: "fortune", type: "n.", meaning: "大笔的钱，巨款" },
+    { word: "make one's fortune", type: "phr.", meaning: "发财" },
+    { word: "drag", type: "v.", meaning: "拖，拉" },
+    { word: "ought to", type: "phr.", meaning: "应该，应当" },
+    { word: "destiny", type: "n.", meaning: "命运，天命" },
+    { word: "correspond", type: "v.", meaning: "通信" },
+    { word: "proposition", type: "n.", meaning: "事业，生意" },
+    { word: "hustle", type: "v.", meaning: "拼命干，努力干" },
+    { word: "staunch", type: "adj.", meaning: "坚定的，忠实可靠的" },
+    { word: "partner", type: "n.", meaning: "伙伴，搭档" },
+    { word: "turn up", type: "phr.", meaning: "(意外地或终于)出现" },
+    { word: "excerpt", type: "n.", meaning: "摘录，节录" },
+    { word: "appointed", type: "adj.", meaning: "约定的，指定的" },
+    { word: "strike", type: "v.", meaning: "划(火柴)" },
+    { word: "cigar", type: "n.", meaning: "雪茄烟" },
+    { word: "plain", type: "adj.", meaning: "简单的，朴素的" },
+    { word: "scene", type: "n.", meaning: "场景" },
+    { word: "bitterly", type: "adv.", meaning: "痛苦地，愤恨地" },
+    { word: "ashamed", type: "adj.", meaning: "感到不好意思的，难为情的" },
+    { word: "unfold", type: "v.", meaning: "(卷着的东西)展开，打开" },
+    { word: "location", type: "n.", meaning: "地点，位置" },
+    { word: "surroundings", type: "n.", meaning: "周围的事物，环境" },
+    { word: "personality", type: "n.", meaning: "个性，性格" },
+    { word: "atmosphere", type: "n.", meaning: "气氛，氛围，环境" }
+];
+
+const unit5WordsBook1 = [
+    { word: "charity", type: "n.", meaning: "慈善机构，慈善团体" },
+    { word: "monarch", type: "n.", meaning: "君主，国王" },
+    { word: "monarch butterfly", type: "phr.", meaning: "黑脉金斑蝶" },
+    { word: "Atlantic", type: "adj.", meaning: "大西洋的" },
+    { word: "whale", type: "n.", meaning: "鲸" },
+    { word: "annual", type: "adj.", meaning: "一年一度的，每年的" },
+    { word: "migration", type: "n.", meaning: "迁徙" },
+    { word: "migrate", type: "v.", meaning: "移栖，迁徙" },
+    { word: "seek", type: "v.", meaning: "寻找，寻求" },
+    { word: "professor", type: "n.", meaning: "教授" },
+    { word: "measure", type: "v.", meaning: "量，测量" },
+    { word: "position", type: "n.", meaning: "位置" },
+    { word: "determine", type: "v.", meaning: "测定，确定" },
+    { word: "eventually", type: "adv.", meaning: "终于，最终" },
+    { word: "solution", type: "n.", meaning: "解决，解决方法" },
+    { word: "mystery", type: "n.", meaning: "难以理解的事物，谜" },
+    { word: "amazing", type: "adj.", meaning: "惊人的，了不起的" },
+    { word: "crash", type: "v.", meaning: "暴跌" },
+    { word: "per cent", type: "n.", meaning: "百分比" },
+    { word: "destroy", type: "v.", meaning: "破坏，毁掉" },
+    { word: "chemical", type: "n.", meaning: "化学品" },
+    { word: "caterpillar", type: "n.", meaning: "毛虫(蝴蝶等昆虫的幼虫)" },
+    { word: "creature", type: "n.", meaning: "生物，动物" },
+    { word: "survive", type: "v.", meaning: "活下来，幸存" },
+    { word: "effect", type: "n.", meaning: "影响，结果" },
+    { word: "flow chart", type: "phr.", meaning: "流程图，作业图" },
+    { word: "accommodation", type: "n.", meaning: "住处，工作场所" },
+    { word: "idiom", type: "n.", meaning: "习语，成语" },
+    { word: "kill two birds with one stone", type: "phr.", meaning: "一举两得，一箭双雕" },
+    { word: "when the cat's away (the mice will play)", type: "phr.", meaning: "猫儿不在，老鼠作怪(指管事的不在，下面的人玩个痛快)" },
+    { word: "hold your horses", type: "phr.", meaning: "慢点，别急" },
+    { word: "rain cats and dogs", type: "phr.", meaning: "下倾盆大雨" },
+    { word: "authority", type: "n.", meaning: "当权，权力" },
+    { word: "source", type: "n.", meaning: "来源，出处" },
+    { word: "found", type: "v.", meaning: "创立，创建" },
+    { word: "photographer", type: "n.", meaning: "摄影师" },
+    { word: "button", type: "n.", meaning: "按钮" },
+    { word: "recover", type: "v.", meaning: "(从糟糕经历中)恢复" },
+    { word: "shock", type: "n.", meaning: "吃惊，震惊" },
+    { word: "element", type: "n.", meaning: "基本部分，要素" },
+    { word: "the elements", type: "phr.", meaning: "天气(尤指坏天气)" },
+    { word: "brave the elements", type: "phr.", meaning: "不顾天气恶劣，冒着风雨" },
+    { word: "encounter", type: "n.", meaning: "意外的相遇，邂逅" },
+    { word: "variety", type: "n.", meaning: "多样化，变化" },
+    { word: "per", type: "prep.", meaning: "每" },
+    { word: "path", type: "n.", meaning: "小径，小道" },
+    { word: "breathtaking", type: "adj.", meaning: "令人惊叹的" },
+    { word: "eagle", type: "n.", meaning: "鹰" },
+    { word: "concentrate", type: "v.", meaning: "专注，专心" },
+    { word: "freeze", type: "v.", meaning: "突然停止，呆住" },
+    { word: "stare", type: "v.", meaning: "凝视，盯着看" },
+    { word: "capture", type: "v.", meaning: "(用文字或图片)记录，捕捉" },
+    { word: "image", type: "n.", meaning: "图像，影像" },
+    { word: "after all", type: "phr.", meaning: "毕竟，终究" },
+    { word: "reaction", type: "n.", meaning: "(对某一情形或事件的)反应" },
+    { word: "file", type: "n.", meaning: "档案，文件" }
+];
+
+const unit6WordsBook1 = [
+    { word: "wrap", type: "v.", meaning: "包，裹" },
+    { word: "sheet", type: "n.", meaning: "(冰或水等的)一大片" },
+    { word: "frost", type: "n.", meaning: "霜" },
+    { word: "terrace", type: "n.", meaning: "梯田" },
+    { word: "dynasty", type: "n.", meaning: "朝代" },
+    { word: "completion", type: "n.", meaning: "完成，结束" },
+    { word: "region", type: "n.", meaning: "地区，区域" },
+    { word: "therefore", type: "adv.", meaning: "因此，由此" },
+    { word: "steep", type: "adj.", meaning: "陡的，陡峭的" },
+    { word: "soil", type: "n.", meaning: "土壤" },
+    { word: "shallow", type: "adj.", meaning: "浅的" },
+    { word: "prevent", type: "v.", meaning: "阻挡，防止" },
+    { word: "harmony", type: "n.", meaning: "融洽相处，和谐" },
+    { word: "design", type: "v.", meaning: "设计" },
+    { word: "vapour", type: "n.", meaning: "蒸气" },
+    { word: "harm", type: "v.", meaning: "伤害，损害" },
+    { word: "crop", type: "n.", meaning: "庄稼，作物" },
+    { word: "agriculture", type: "n.", meaning: "农业" },
+    { word: "replace", type: "v.", meaning: "以……替换，更换" }
+];
+
+// ======================= 选择性必修一 · 全单元完整词库（按用户提供顺序） ======================
+const unit1WordsBook4 = [
+    { word: "mood", type: "n.", meaning: "心情" },
+    { word: "circus", type: "n.", meaning: "马戏团" },
+    { word: "amusement", type: "n.", meaning: "娱乐，消遣" },
+    { word: "amusement park", type: "phr.", meaning: "游乐场" },
+    { word: "curly", type: "adj.", meaning: "卷曲的" },
+    { word: "wig", type: "n.", meaning: "假发" },
+    { word: "badge", type: "n.", meaning: "徽章" },
+    { word: "ankle", type: "n.", meaning: "脚踝" },
+    { word: "clown", type: "n.", meaning: "小丑" },
+    { word: "entertain", type: "v.", meaning: "使快乐" },
+    { word: "health care", type: "phr.", meaning: "医疗保健" },
+    { word: "cheer up", type: "phr.", meaning: "(使)高兴起来，(使)振作起来" },
+    { word: "do the trick", type: "phr.", meaning: "奏效，达到预期效果" },
+    { word: "examine", type: "v.", meaning: "检查(身体)" },
+    { word: "advertisement", type: "n.", meaning: "广告" },
+    { word: "employer", type: "n.", meaning: "雇用者，雇主" },
+    { word: "essential", type: "adj.", meaning: "极其重要的，必不可少的" },
+    { word: "impress", type: "v.", meaning: "使钦佩，使留下深刻印象" },
+    { word: "grin", type: "v.", meaning: "露齿而笑，咧着嘴笑" },
+    { word: "deserve", type: "v.", meaning: "应得，应受到" },
+    { word: "long face", type: "phr.", meaning: "愁眉苦脸" },
+    { word: "laughing stock", type: "phr.", meaning: "笑料，笑柄" },
+    { word: "crack a smile", type: "phr.", meaning: "笑了起来" },
+    { word: "practical joke", type: "phr.", meaning: "恶作剧" },
+    { word: "fame", type: "n.", meaning: "名声，名誉" },
+    { word: "linguist", type: "n.", meaning: "语言学家" },
+    { word: "witty", type: "adj.", meaning: "说话风趣的；妙趣横生的" },
+    { word: "medieval", type: "adj.", meaning: "中世纪的，中古时期的" },
+    { word: "emotive", type: "adj.", meaning: "使情绪激动的" },
+    { word: "mischievous", type: "adj.", meaning: "调皮的，淘气的" },
+    { word: "remark", type: "n.", meaning: "言论；意见，评论" },
+    { word: "interaction", type: "n.", meaning: "交流" },
+    { word: "barber", type: "n.", meaning: "男理发师" },
+    { word: "shave", type: "n.", meaning: "刮脸，刮胡子" },
+    { word: "fellow", type: "n.", meaning: "男人；家伙" },
+    { word: "brand", type: "n.", meaning: "品牌，牌子" },
+    { word: "brand of humour", type: "phr.", meaning: "某种类型的幽默" },
+    { word: "concept", type: "n.", meaning: "概念，观念" },
+    { word: "spot", type: "n.", meaning: "地点，处所" },
+    { word: "put sb on the spot", type: "phr.", meaning: "(故意提出难以回答或尴尬的问题)使某人难堪" },
+    { word: "cruel", type: "adj.", meaning: "残忍的" },
+    { word: "whisper", type: "v.", meaning: "悄声说，低语" },
+    { word: "roar", type: "v.", meaning: "哄笑，大笑" },
+    { word: "gently", type: "adv.", meaning: "温和地；轻柔地" },
+    { word: "tell off", type: "phr.", meaning: "斥责，责骂" },
+    { word: "illuminate", type: "v.", meaning: "照亮，照明" },
+    { word: "equation", type: "n.", meaning: "等式，方程式" },
+    { word: "complicated", type: "adj.", meaning: "难处理的；难懂的" },
+    { word: "conclude", type: "v.", meaning: "结束，终止" },
+    { word: "composer", type: "n.", meaning: "作曲家" },
+    { word: "fall behind", type: "phr.", meaning: "不能按时完成(工作)" }
+];
+
+const unit2WordsBook4 = [
+    { word: "debt", type: "n.", meaning: "债务，欠款" },
+    { word: "pace", type: "n.", meaning: "速度；进度" },
+    { word: "inform", type: "v.", meaning: "通知，告知" },
+    { word: "dread", type: "v.", meaning: "畏惧，惧怕" },
+    { word: "rarely", type: "adv.", meaning: "很少，难得" },
+    { word: "overnight", type: "adv.", meaning: "突然，一下子" },
+    { word: "rejection", type: "n.", meaning: "拒绝，否决" },
+    { word: "nevertheless", type: "adv.", meaning: "然而，不过" },
+    { word: "persevere", type: "v.", meaning: "锲而不舍，坚持不懈" },
+    { word: "criticism", type: "n.", meaning: "批评；指责" },
+    { word: "manuscript", type: "n.", meaning: "手稿，底稿" },
+    { word: "rye", type: "n.", meaning: "黑麦" },
+    { word: "best-seller", type: "n.", meaning: "畅销书；畅销产品" },
+    { word: "Victorian", type: "adj.", meaning: "英国维多利亚(女王)时代的" },
+    { word: "laureate", type: "n.", meaning: "重要奖项获得者" },
+    { word: "Poet Laureate", type: "phr.", meaning: "桂冠诗人" },
+    { word: "classic", type: "n.", meaning: "名著；经典作品" },
+    { word: "endurance", type: "n.", meaning: "(忍)耐力" },
+    { word: "guarantee", type: "v.", meaning: "保证；确保" },
+    { word: "delighted", type: "adj.", meaning: "愉快的，高兴的" },
+    { word: "outcome", type: "n.", meaning: "结果，后果" },
+    { word: "worthwhile", type: "adj.", meaning: "重要的；值得做的" },
+    { word: "blanket", type: "n.", meaning: "毯子，毛毯" },
+    { word: "beaver", type: "n.", meaning: "河狸，海狸" },
+    { word: "cucumber", type: "n.", meaning: "黄瓜" },
+    { word: "enthusiastic", type: "adj.", meaning: "热心的，热衷的" },
+    { word: "contest", type: "n.", meaning: "比赛，竞赛" },
+    { word: "upset", type: "adj.", meaning: "心烦意乱的，烦恼的" },
+    { word: "elect", type: "v.", meaning: "选举，推选" },
+    { word: "blessing", type: "n.", meaning: "幸事，幸运" },
+    { word: "appreciative", type: "adj.", meaning: "感激的" },
+    { word: "worthy", type: "adj.", meaning: "值得尊敬的；值得赞誉的" },
+    { word: "worthy of", type: "phr.", meaning: "值得……的" },
+    { word: "mere", type: "adj.", meaning: "仅仅，只不过" },
+    { word: "gentleness", type: "n.", meaning: "和蔼，温和" },
+    { word: "companionship", type: "n.", meaning: "友谊；友好交往" },
+    { word: "fingertip", type: "n.", meaning: "指尖" },
+    { word: "outline", type: "n.", meaning: "外形，轮廓" },
+    { word: "intoxicate", type: "v.", meaning: "使兴奋，使陶醉" },
+    { word: "pageant", type: "n.", meaning: "盛大的(露天)演出" },
+    { word: "the pageant of", type: "phr.", meaning: "(历史事件的)缤纷场景" },
+    { word: "probe", type: "v.", meaning: "调查；探究" },
+    { word: "dawn", type: "n.", meaning: "黎明，破晓" },
+    { word: "delight", type: "n.", meaning: "使人高兴的事" },
+    { word: "revelation", type: "n.", meaning: "展现，显示" },
+    { word: "workaday", type: "adj.", meaning: "平凡的；平淡的" },
+    { word: "amid", type: "prep.", meaning: "在……之中" },
+    { word: "haunt", type: "n.", meaning: "(某人)常去的地方" },
+    { word: "permanent", type: "adj.", meaning: "长久的；永久的" },
+    { word: "descend", type: "v.", meaning: "降临；来临" },
+    { word: "mighty", type: "adj.", meaning: "强有力的；雄伟的" },
+    { word: "strains of", type: "phr.", meaning: "音乐的曲调或旋律" },
+    { word: "orchestra", type: "n.", meaning: "(大型的)管弦乐队" },
+    { word: "tactile", type: "adj.", meaning: "触觉的" },
+    { word: "perfume", type: "n.", meaning: "香味" },
+    { word: "relish", type: "n.", meaning: "享受，乐趣" },
+    { word: "morsel", type: "n.", meaning: "(尤指食物的)一小片，一小块" },
+    { word: "delightful", type: "adj.", meaning: "令人愉快的，讨人喜欢的" },
+    { word: "literary", type: "adj.", meaning: "文学的" },
+    { word: "embarrassed", type: "adj.", meaning: "难堪的，尴尬的" }
+];
+
+const unit3WordsBook4 = [
+    { word: "a far cry from", type: "phr.", meaning: "与……大不相同" },
+    { word: "shiny", type: "adj.", meaning: "光滑发亮的，闪光的" },
+    { word: "association", type: "n.", meaning: "协会，社团" },
+    { word: "muddy", type: "adj.", meaning: "沾满泥的，泥泞的" },
+    { word: "shot", type: "n.", meaning: "投球，射球，击球" },
+    { word: "backboard", type: "n.", meaning: "篮板" },
+    { word: "give way", type: "phr.", meaning: "倒塌，向下垮" },
+    { word: "bump", type: "n.", meaning: "隆起之处" },
+    { word: "bounce", type: "v.", meaning: "(使)弹起，(使)反弹" },
+    { word: "sharpen", type: "v.", meaning: "使提高，使改进" },
+    { word: "teammate", type: "n.", meaning: "队友" },
+    { word: "footstep", type: "n.", meaning: "脚步声；足迹" },
+    { word: "follow in one's footsteps", type: "phr.", meaning: "仿效某人；继承某人(尤指家人)的事业" },
+    { word: "carry on", type: "phr.", meaning: "继续" },
+    { word: "warrior", type: "n.", meaning: "武士，战士" },
+    { word: "expectation", type: "n.", meaning: "预料，预期" },
+    { word: "beyond one's expectations", type: "phr.", meaning: "超出某人的预期" },
+    { word: "in a row", type: "phr.", meaning: "连续地" },
+    { word: "philosophy", type: "n.", meaning: "人生哲学" },
+    { word: "self-belief", type: "n.", meaning: "自信" },
+    { word: "hoop", type: "n.", meaning: "(篮球中的)篮圈" },
+    { word: "cheat", type: "v.", meaning: "欺骗，作弊" },
+    { word: "yoga", type: "n.", meaning: "瑜伽" },
+    { word: "roller skating", type: "phr.", meaning: "滑旱冰" },
+    { word: "remarkable", type: "adj.", meaning: "非凡的；不寻常的" },
+    { word: "net", type: "n.", meaning: "球网" },
+    { word: "spiker", type: "n.", meaning: "(排球队的)扣球队员，主攻手" },
+    { word: "burst", type: "v.", meaning: "突然出现" },
+    { word: "burst onto", type: "phr.", meaning: "突然出现在……(指突然成功)" },
+    { word: "vivid", type: "adj.", meaning: "生动的，逼真的" },
+    { word: "assign", type: "v.", meaning: "分配，分派" },
+    { word: "opponent", type: "n.", meaning: "(竞争、比赛等的)对手" },
+    { word: "quarter-final", type: "n.", meaning: "四分之一决赛" },
+    { word: "preliminary", type: "adj.", meaning: "初步的；预备的" },
+    { word: "surgery", type: "n.", meaning: "外科手术" },
+    { word: "pay off", type: "phr.", meaning: "取得成功" },
+    { word: "comeback", type: "n.", meaning: "东山再起" },
+    { word: "defeat", type: "v.", meaning: "战胜，打败" },
+    { word: "semi-final", type: "n.", meaning: "半决赛" },
+    { word: "steely", type: "adj.", meaning: "钢铁般的；坚定的" },
+    { word: "nerve", type: "n.", meaning: "意志力" },
+    { word: "seize", type: "v.", meaning: "夺取" },
+    { word: "cooperation", type: "n.", meaning: "合作，协作" },
+    { word: "ingredient", type: "n.", meaning: "(完成某事的)要素，因素" },
+    { word: "teamwork", type: "n.", meaning: "合作，协作" },
+    { word: "podium", type: "n.", meaning: "表演台，讲台" },
+    { word: "tournament", type: "n.", meaning: "锦标赛" },
+    { word: "intense", type: "adj.", meaning: "紧张的，激烈的" }
+];
+
+const unit4WordsBook4 = [
+    { word: "quote", type: "n.", meaning: "引文，引语" },
+    { word: "Dutch", type: "adj.", meaning: "荷兰的" },
+    { word: "float", type: "v.", meaning: "浮，漂" },
+    { word: "folk", type: "adj.", meaning: "民间的，民俗的" },
+    { word: "tale", type: "n.", meaning: "故事" },
+    { word: "folk tale", type: "phr.", meaning: "民间故事" },
+    { word: "motion", type: "n.", meaning: "动，运动" },
+    { word: "set…in motion", type: "phr.", meaning: "使……开始" },
+    { word: "compose", type: "v.", meaning: "作(曲)" },
+    { word: "crouch", type: "v.", meaning: "蹲下；蹲伏" },
+    { word: "peacock", type: "n.", meaning: "(雄)孔雀" },
+    { word: "princess", type: "n.", meaning: "公主" },
+    { word: "ethnic", type: "adj.", meaning: "民族的" },
+    { word: "abstract", type: "adj.", meaning: "抽象(派)的" },
+    { word: "awe-inspiring", type: "adj.", meaning: "令人起敬的，令人钦佩的" },
+    { word: "installation", type: "n.", meaning: "现代雕塑装置(除物体外还包括光、声等)" },
+    { word: "wire", type: "n.", meaning: "金属丝；电线" },
+    { word: "cable", type: "n.", meaning: "电缆" },
+    { word: "innovative", type: "adj.", meaning: "新颖的，创新的" },
+    { word: "trend", type: "n.", meaning: "趋势，动向" },
+    { word: "wire fence", type: "phr.", meaning: "铁丝网，铁丝栅栏" },
+    { word: "contrast", type: "n.", meaning: "反差，对比" },
+    { word: "Greek", type: "adj.", meaning: "希腊的" },
+    { word: "literally", type: "adv.", meaning: "根据字面意思" },
+    { word: "technician", type: "n.", meaning: "巧匠" },
+    { word: "animation", type: "n.", meaning: "动画片" },
+    { word: "distinct", type: "adj.", meaning: "清晰的；明显不同的" },
+    { word: "innovation", type: "n.", meaning: "革新，创新" }
+];
+
+const unit5WordsBook4 = [
+    { word: "seed", type: "n.", meaning: "种子，籽" },
+    { word: "distant", type: "adj.", meaning: "遥远的" },
+    { word: "answer the call", type: "phr.", meaning: "响应号召" },
+    { word: "disgrace", type: "n.", meaning: "丢脸，耻辱" },
+    { word: "be a disgrace", type: "phr.", meaning: "是耻辱，是丢脸的事" },
+    { word: "geologist", type: "n.", meaning: "地质学家" },
+    { word: "sample", type: "n.", meaning: "样本" },
+    { word: "evolve", type: "v.", meaning: "进化" },
+    { word: "finch", type: "n.", meaning: "雀科鸣禽" },
+    { word: "beak", type: "n.", meaning: "鸟嘴，喙" },
+    { word: "suspect", type: "v.", meaning: "猜想，怀疑，觉得" },
+    { word: "ancestor", type: "n.", meaning: "(动物的)原种，祖先" },
+    { word: "evolution", type: "n.", meaning: "进化(论)" },
+    { word: "generate", type: "v.", meaning: "产生，创造" },
+    { word: "characteristic", type: "n.", meaning: "特征，特性" },
+    { word: "decline", type: "v.", meaning: "减少" },
+    { word: "tortoise", type: "n.", meaning: "陆龟" },
+    { word: "blame", type: "v.", meaning: "责怪，指责；把……归咎于" },
+    { word: "goat", type: "n.", meaning: "山羊" },
+    { word: "be native to", type: "phr.", meaning: "源于……的，原产于……" },
+    { word: "primitive", type: "adj.", meaning: "原始的，低等的" },
+    { word: "worldwide", type: "adv.", meaning: "遍及全世界" },
+    { word: "giant", type: "adj.", meaning: "巨大的，特大的" },
+    { word: "giant tortoise", type: "phr.", meaning: "巨型陆龟" },
+    { word: "mangrove", type: "n.", meaning: "红树(一种热带树木，生于水中或水边，并从树枝上长出新根须)" },
+    { word: "iguana", type: "n.", meaning: "鬣蜥(一种大型热带美洲蜥蜴)" },
+    { word: "comb-like", type: "adj.", meaning: "梳状的" },
+    { word: "spine", type: "n.", meaning: "(动植物的)刺，棘毛" },
+    { word: "myth", type: "n.", meaning: "(古代的)神话" },
+    { word: "legend", type: "n.", meaning: "传说，传奇(故事)" },
+    { word: "detect", type: "v.", meaning: "发现，察觉(尤指不易察觉到的事物)" },
+    { word: "wasp", type: "n.", meaning: "黄蜂" },
+    { word: "pesticide", type: "n.", meaning: "杀虫剂，农药" },
+    { word: "root", type: "n.", meaning: "根" },
+    { word: "link", type: "v.", meaning: "把……联系起来；连接" },
+    { word: "fungus", type: "n.", meaning: "真菌(复数 fungi)" },
+    { word: "fungal", type: "adj.", meaning: "真菌的" },
+    { word: "cybercrime", type: "n.", meaning: "网络犯罪" },
+    { word: "centimetre", type: "n.", meaning: "厘米" }
+];
+
+const unit6WordsBook4 = [
+    { word: "steadily", type: "adv.", meaning: "平稳地" },
+    { word: "massive", type: "adj.", meaning: "巨大的" },
+    { word: "delicate", type: "adj.", meaning: "脆弱的" },
+    { word: "landmark", type: "n.", meaning: "地标" },
+    { word: "splendid", type: "adj.", meaning: "壮丽的" },
+    { word: "permafrost", type: "n.", meaning: "永久冻土层" },
+    { word: "Tibetan", type: "adj.", meaning: "西藏的" },
+    { word: "antelope", type: "n.", meaning: "羚羊" },
+    { word: "leisure", type: "n.", meaning: "空闲，闲暇" },
+    { word: "at one's leisure", type: "phr.", meaning: "空闲时" },
+    { word: "wetland", type: "n.", meaning: "湿地" },
+    { word: "grassland", type: "n.", meaning: "草原" },
+    { word: "radiation", type: "n.", meaning: "辐射" },
+    { word: "mirror-like", type: "adj.", meaning: "如镜面般的" },
+    { word: "wander", type: "v.", meaning: "徘徊" },
+    { word: "scenery", type: "n.", meaning: "风景，景色" },
+    { word: "plateau", type: "n.", meaning: "高原" },
+    { word: "economy", type: "n.", meaning: "经济" },
+    { word: "jungle", type: "n.", meaning: "(热带)丛林" },
+    { word: "disturb", type: "v.", meaning: "干扰，扰乱" },
+    { word: "emission", type: "n.", meaning: "散发物，排放物" },
+    { word: "operator", type: "n.", meaning: "经营者" },
+    { word: "conservationist", type: "n.", meaning: "(动植物或古旧建筑的)保护工作者；环境保护主义者" },
+    { word: "via", type: "prep.", meaning: "通过(某人、某机器等)传送(某物)；借助于" },
+    { word: "candidate", type: "n.", meaning: "申请者" },
+    { word: "applicant", type: "n.", meaning: "申请人" },
+    { word: "favour", type: "n.", meaning: "支持，赞同" },
+    { word: "in favour of", type: "phr.", meaning: "支持，赞同" },
+    { word: "advertise", type: "v.", meaning: "(为……)做广告(宣传)" },
+    { word: "genuine", type: "adj.", meaning: "真的，真正的" },
+    { word: "salary", type: "n.", meaning: "薪金，工资" },
+    { word: "negotiable", type: "adj.", meaning: "可协商的" },
+    { word: "preference", type: "n.", meaning: "优先(权)" },
+    { word: "qualification", type: "n.", meaning: "技能条件，资格" },
+    { word: "waist", type: "n.", meaning: "腰，腰部" }
+];
+// ======================= 选择性必修二 · 全单元完整词库 ======================
+const unit1WordsBook5 = [
+    { word: "integrity", type: "n.", meaning: "正直诚实" },
+    { word: "virtue", type: "n.", meaning: "美德" },
+    { word: "licence", type: "n.", meaning: "执照" },
+    { word: "loan", type: "n.", meaning: "(银行等的)贷款" },
+    { word: "adulthood", type: "n.", meaning: "成年" },
+    { word: "milestone", type: "n.", meaning: "重大事件，里程碑" },
+    { word: "election", type: "n.", meaning: "选举" },
+    { word: "wage", type: "n.", meaning: "(按小时、日或周计算的)工资，薪金" },
+    { word: "tax", type: "n.", meaning: "税" },
+    { word: "have a say", type: "phr.", meaning: "有发言权" },
+    { word: "behind the wheel", type: "phr.", meaning: "在驾驶汽车" },
+    { word: "ambulance", type: "n.", meaning: "救护车" },
+    { word: "legal", type: "adj.", meaning: "合法的" },
+    { word: "mature", type: "adj.", meaning: "成熟的，明白事理的" },
+    { word: "instantly", type: "adv.", meaning: "立即，马上" },
+    { word: "childhood", type: "n.", meaning: "童年，儿童时代" },
+    { word: "obey", type: "v.", meaning: "服从；遵守" },
+    { word: "subtle", type: "adj.", meaning: "难以察觉的；微妙的" },
+    { word: "gradual", type: "adj.", meaning: "逐渐的，逐步的" },
+    { word: "selfish", type: "adj.", meaning: "自私的" },
+    { word: "organ donation", type: "phr.", meaning: "器官捐献" },
+    { word: "approve", type: "v.", meaning: "赞成，同意" },
+    { word: "steady", type: "adj.", meaning: "稳定的" },
+    { word: "tempt", type: "v.", meaning: "诱惑，引诱" },
+    { word: "librarian", type: "n.", meaning: "图书馆管理员" },
+    { word: "household", type: "adj.", meaning: "家庭的" },
+    { word: "commute", type: "n.", meaning: "每天上班的路程" },
+    { word: "deposit", type: "n.", meaning: "订金" },
+    { word: "commitment", type: "n.", meaning: "投入，花费" },
+    { word: "suitable", type: "adj.", meaning: "合适的" },
+    { word: "minimum", type: "adj.", meaning: "最小的，最少的" },
+    { word: "bittersweet", type: "adj.", meaning: "苦乐参半的" },
+    { word: "boarder", type: "n.", meaning: "寄宿生，住校生" },
+    { word: "varied", type: "adj.", meaning: "各种各样的" },
+    { word: "cherish", type: "v.", meaning: "重视，珍视" },
+    { word: "routine", type: "n.", meaning: "惯例，习惯" },
+    { word: "primeval", type: "adj.", meaning: "原始的，远古的" },
+    { word: "boa constrictor", type: "phr.", meaning: "蟒蛇" },
+    { word: "swallow", type: "v.", meaning: "吞下，咽下" },
+    { word: "prey", type: "n.", meaning: "猎物" },
+    { word: "chew", type: "v.", meaning: "咀嚼" },
+    { word: "digestion", type: "n.", meaning: "消化(过程)" },
+    { word: "ponder", type: "v.", meaning: "仔细考虑，深思" },
+    { word: "masterpiece", type: "n.", meaning: "杰作" },
+    { word: "digest", type: "v.", meaning: "消化(食物)" },
+    { word: "lay aside", type: "phr.", meaning: "把……搁置一边" },
+    { word: "devote oneself to", type: "phr.", meaning: "致力于，献身于" },
+    { word: "arithmetic", type: "n.", meaning: "算术" },
+    { word: "disheartened", type: "adj.", meaning: "沮丧的，灰心的" },
+    { word: "tiresome", type: "adj.", meaning: "烦人的，令人厌烦的" },
+    { word: "at a glance", type: "phr.", meaning: "一瞥，看一眼" },
+    { word: "consequence", type: "n.", meaning: "后果" },
+    { word: "intimately", type: "adv.", meaning: "亲密地；密切地" },
+    { word: "golf", type: "n.", meaning: "高尔夫球运动" },
+    { word: "politics", type: "n.", meaning: "政治" },
+    { word: "necktie", type: "n.", meaning: "领带" },
+    { word: "evidence", type: "n.", meaning: "证据" },
+    { word: "airline", type: "n.", meaning: "航空公司" },
+    { word: "memorable", type: "adj.", meaning: "难忘的" },
+    { word: "bond", type: "n.", meaning: "纽带，关系" },
+    { word: "conclusion", type: "n.", meaning: "结论" }
+];
+
+const unit2WordsBook5 = [
+    { word: "security", type: "n.", meaning: "安全" },
+    { word: "moderator", type: "n.", meaning: "主持人" },
+    { word: "detox", type: "n.", meaning: "脱瘾" },
+    { word: "fundraising", type: "n.", meaning: "募捐，筹款" },
+    { word: "switch", type: "v.", meaning: "(用开关)改变，转换" },
+    { word: "switch on", type: "phr.", meaning: "(用开关)开，打开" },
+    { word: "motivate", type: "v.", meaning: "激发，激励" },
+    { word: "occupy", type: "v.", meaning: "占用，占去(时间)" },
+    { word: "profile", type: "n.", meaning: "概况" },
+    { word: "distract", type: "v.", meaning: "分散(注意力)，使分心" },
+    { word: "constantly", type: "adv.", meaning: "持续不断地；经常地" },
+    { word: "towel", type: "n.", meaning: "毛巾" },
+    { word: "throw in the towel", type: "phr.", meaning: "认输" },
+    { word: "access", type: "n.", meaning: "接触的机会" },
+    { word: "rely", type: "v.", meaning: "(为生活或生存而)依赖" },
+    { word: "rely on", type: "phr.", meaning: "依靠，依赖" },
+    { word: "deadline", type: "n.", meaning: "截止时间；最后期限" },
+    { word: "procrastination", type: "n.", meaning: "拖延" },
+    { word: "appropriate", type: "adj.", meaning: "恰当的；合适的" },
+    { word: "spit", type: "v.", meaning: "吐口水，吐唾沫" },
+    { word: "headphones", type: "n.", meaning: "(头戴式)耳机" },
+    { word: "bin", type: "n.", meaning: "垃圾箱" },
+    { word: "considerate", type: "adj.", meaning: "替他人着想的" },
+    { word: "promote", type: "v.", meaning: "促进，增进" },
+    { word: "clarify", type: "v.", meaning: "澄清，讲清楚，阐明" },
+    { word: "headline", type: "n.", meaning: "媒体报道的热门话题；标题" },
+    { word: "max out", type: "phr.", meaning: "(钱)花光；(信用卡)刷爆" },
+    { word: "in contrast to", type: "phr.", meaning: "与……形成对比" },
+    { word: "district", type: "n.", meaning: "地区，区域" },
+    { word: "necessity", type: "n.", meaning: "必需品" },
+    { word: "toothpaste", type: "n.", meaning: "牙膏" },
+    { word: "soap", type: "n.", meaning: "肥皂" },
+    { word: "item", type: "n.", meaning: "一件商品(或物品)" },
+    { word: "unprecedentedly", type: "adv.", meaning: "空前地" },
+    { word: "personal finances", type: "phr.", meaning: "(个人的)财务管理" },
+    { word: "jar", type: "n.", meaning: "(玻璃)罐子，广口瓶" },
+    { word: "invest", type: "v.", meaning: "投资" },
+    { word: "lifelong", type: "adj.", meaning: "终身的" },
+    { word: "vision", type: "n.", meaning: "构想，设想" },
+    { word: "likewise", type: "adv.", meaning: "同样地；相似地" },
+    { word: "objectively", type: "adv.", meaning: "客观地" },
+    { word: "equip", type: "v.", meaning: "使有知识和技能，使能够胜任" },
+    { word: "nail", type: "n.", meaning: "钉子" }
+];
+
+const unit3WordsBook5 = [
+    { word: "exterior", type: "n.", meaning: "外部，外观" },
+    { word: "stationery", type: "n.", meaning: "文具" },
+    { word: "saleswoman", type: "n.", meaning: "女销售员" },
+    { word: "leadership", type: "n.", meaning: "领导；领导地位" },
+    { word: "organic", type: "adj.", meaning: "有机的；绿色的" },
+    { word: "recital", type: "n.", meaning: "朗诵会" },
+    { word: "jazz", type: "n.", meaning: "爵士乐" },
+    { word: "pop up", type: "phr.", meaning: "突然出现，冒出来" },
+    { word: "humble", type: "adj.", meaning: "简陋的" },
+    { word: "compete", type: "v.", meaning: "竞争" },
+    { word: "emphasise", type: "v.", meaning: "强调" },
+    { word: "reconstruction", type: "n.", meaning: "重建；修复" },
+    { word: "decade", type: "n.", meaning: "十年；十年期" },
+    { word: "legendary", type: "adj.", meaning: "大名鼎鼎的，传奇式的" },
+    { word: "fixture", type: "n.", meaning: "固定存在物" },
+    { word: "elderly", type: "adj.", meaning: "年老的" },
+    { word: "tablet", type: "n.", meaning: "平板电脑" },
+    { word: "sympathy", type: "n.", meaning: "同情" },
+    { word: "bunch", type: "n.", meaning: "一群，一伙" },
+    { word: "a bunch of", type: "phr.", meaning: "一群" },
+    { word: "dusty", type: "adj.", meaning: "布满灰尘的" },
+    { word: "shelf", type: "n.", meaning: "搁板，架子" },
+    { word: "furniture", type: "n.", meaning: "家具" },
+    { word: "mist", type: "n.", meaning: "薄雾，雾霭" },
+    { word: "brick", type: "n.", meaning: "砖，砖块" },
+    { word: "journalist", type: "n.", meaning: "新闻工作者；新闻记者" },
+    { word: "era", type: "n.", meaning: "时代，年代" },
+    { word: "reform", type: "n.", meaning: "改进；改革" },
+    { word: "reform and opening-up", type: "phr.", meaning: "改革开放" },
+    { word: "pave", type: "v.", meaning: "铺(路、地面等)" },
+    { word: "pave the way", type: "phr.", meaning: "铺平道路；创造条件" },
+    { word: "socialist", type: "adj.", meaning: "社会主义的" },
+    { word: "alongside", type: "prep.", meaning: "(与……)一起" },
+    { word: "initiative", type: "n.", meaning: "倡议" },
+    { word: "the Belt and Road Initiative", type: "phr.", meaning: "“一带一路”倡议" },
+    { word: "solid", type: "adj.", meaning: "坚实的" },
+    { word: "economic", type: "adj.", meaning: "经济(上)的" },
+    { word: "occupation", type: "n.", meaning: "工作，职业" },
+    { word: "cafeteria", type: "n.", meaning: "自助餐厅" },
+    { word: "emoji", type: "n.", meaning: "表情符号" },
+    { word: "integral", type: "adj.", meaning: "不可缺少的" },
+    { word: "component", type: "n.", meaning: "组成部分" },
+    { word: "category", type: "n.", meaning: "类别" },
+    { word: "expand", type: "v.", meaning: "(使)扩大；增加" },
+    { word: "pictograph", type: "n.", meaning: "象形图" },
+    { word: "emotional", type: "adj.", meaning: "情绪(上)的，情感(上)的" },
+    { word: "gesture", type: "n.", meaning: "手势，姿势" },
+    { word: "facial", type: "adj.", meaning: "脸上的；面部的" },
+    { word: "textspeak", type: "n.", meaning: "短信简写语" },
+    { word: "intention", type: "n.", meaning: "意图，目的" },
+    { word: "adaptation", type: "n.", meaning: "改编版" },
+    { word: "accessible", type: "adj.", meaning: "易懂的" },
+    { word: "soul", type: "n.", meaning: "精神" },
+    { word: "tendency", type: "n.", meaning: "趋势" },
+    { word: "facilitate", type: "v.", meaning: "促进；使便利" },
+    { word: "educator", type: "n.", meaning: "教育工作者" },
+    { word: "pictorial", type: "adj.", meaning: "图画的" },
+    { word: "secondary", type: "adj.", meaning: "次要的，第二位的" },
+    { word: "comic", type: "n.", meaning: "连环漫画" },
+    { word: "costume", type: "n.", meaning: "化装服" },
+    { word: "urgently", type: "adv.", meaning: "紧急地；急迫地" },
+    { word: "convincing", type: "adj.", meaning: "有说服力的，使人信服的" }
+];
+
+const unit4WordsBook5 = [
+    { word: "boundary", type: "n.", meaning: "分界线；边界" },
+    { word: "statistic", type: "n.", meaning: "(一项)统计数据" },
+    { word: "assist", type: "v.", meaning: "协助，帮助" },
+    { word: "tackle", type: "v.", meaning: "处理，对付(难题)" },
+    { word: "vital", type: "adj.", meaning: "极其重要的" },
+    { word: "comrade", type: "n.", meaning: "同志；朋友" },
+    { word: "tragic", type: "adj.", meaning: "悲惨的，不幸的" },
+    { word: "Ebola", type: "n.", meaning: "埃博拉病毒" },
+    { word: "combat", type: "v.", meaning: "防止，抑制" },
+    { word: "relieve", type: "v.", meaning: "给(某人)换班" },
+    { word: "specialist", type: "n.", meaning: "专家" },
+    { word: "infectious", type: "adj.", meaning: "传染性的" },
+    { word: "clinic", type: "n.", meaning: "诊所；门诊部" },
+    { word: "disinfect", type: "v.", meaning: "为……消毒，给……杀菌" },
+    { word: "outbreak", type: "n.", meaning: "爆发，突然发生" },
+    { word: "devotion", type: "n.", meaning: "奉献" },
+    { word: "vomit", type: "n.", meaning: "呕吐物" },
+    { word: "miracle", type: "n.", meaning: "意外的幸运事；奇迹" },
+    { word: "van", type: "n.", meaning: "小型货车" },
+    { word: "twin", type: "adj.", meaning: "双胞胎的" },
+    { word: "ward", type: "n.", meaning: "病房" },
+    { word: "compensate", type: "v.", meaning: "弥补，补偿" },
+    { word: "collaborate", type: "v.", meaning: "合作，协作" },
+    { word: "mankind", type: "n.", meaning: "人类" },
+    { word: "realistic", type: "adj.", meaning: "(目标、希望)能够实现的" },
+    { word: "minority", type: "n.", meaning: "少数派；少数" },
+    { word: "cast", type: "v.", meaning: "选派(角色)" },
+    { word: "inclusive", type: "adj.", meaning: "包容广阔的" },
+    { word: "culture shock", type: "phr.", meaning: "文化冲击" },
+    { word: "joint", type: "adj.", meaning: "联合的，共同的" },
+    { word: "harmonious", type: "adj.", meaning: "和睦的，融洽的" },
+    { word: "mutual", type: "adj.", meaning: "共有的，共同的" },
+    { word: "rewarding", type: "adj.", meaning: "值得做的，有意义的" },
+    { word: "mount", type: "v.", meaning: "走上，登上" },
+    { word: "civil", type: "adj.", meaning: "公民的，国民的" },
+    { word: "civil war", type: "phr.", meaning: "内战" },
+    { word: "slave", type: "n.", meaning: "奴隶" },
+    { word: "confederate", type: "adj.", meaning: "(美国内战期间)南部联邦的" },
+    { word: "union", type: "n.", meaning: "联邦" },
+    { word: "civilian", type: "adj.", meaning: "平民的；百姓的" },
+    { word: "division", type: "n.", meaning: "分歧，分裂" },
+    { word: "bring forth", type: "phr.", meaning: "使产生，使出现" },
+    { word: "conceive", type: "v.", meaning: "构想，设想" },
+    { word: "liberty", type: "n.", meaning: "自由" },
+    { word: "dedicate", type: "v.", meaning: "致力于，献身于" },
+    { word: "endure", type: "v.", meaning: "持续存在" },
+    { word: "battlefield", type: "n.", meaning: "战场" },
+    { word: "portion", type: "n.", meaning: "一部分" },
+    { word: "altogether", type: "adv.", meaning: "完全" },
+    { word: "consecrate", type: "v.", meaning: "宣布……为神圣之处" },
+    { word: "hallow", type: "v.", meaning: "使成为神圣" },
+    { word: "detract", type: "v.", meaning: "减低，破坏，损害" },
+    { word: "nobly", type: "adv.", meaning: "高尚地，崇高地" },
+    { word: "in vain", type: "phr.", meaning: "白白地" },
+    { word: "perish", type: "v.", meaning: "死亡" },
+    { word: "influential", type: "adj.", meaning: "有影响力的" },
+    { word: "communist", type: "adj.", meaning: "共产主义的" }
+];
+
+const unit5WordsBook5 = [
+    { word: "halfway", type: "adj.", meaning: "中间的，半途的" },
+    { word: "dramatically", type: "adv.", meaning: "显著地" },
+    { word: "heritage", type: "n.", meaning: "遗产；传统" },
+    { word: "inhabitant", type: "n.", meaning: "栖居的动物" },
+    { word: "penguin", type: "n.", meaning: "企鹅" },
+    { word: "habitat", type: "n.", meaning: "栖息地" },
+    { word: "rat", type: "n.", meaning: "大老鼠" },
+    { word: "subsequently", type: "adv.", meaning: "后来，随后" },
+    { word: "appetite", type: "n.", meaning: "胃口，食欲" },
+    { word: "multiply", type: "v.", meaning: "(使)大大增加，(使)倍增" },
+    { word: "vegetation", type: "n.", meaning: "植物，草木(总称)" },
+    { word: "erosion", type: "n.", meaning: "侵蚀" },
+    { word: "parakeet", type: "n.", meaning: "长尾(小)鹦鹉" },
+    { word: "chaos", type: "n.", meaning: "大混乱；紊乱" },
+    { word: "conservation", type: "n.", meaning: "保护" },
+    { word: "virus", type: "n.", meaning: "病毒" },
+    { word: "decrease", type: "v.", meaning: "(使)变小，(使)减少" },
+    { word: "trap", type: "n.", meaning: "夹子，陷阱" },
+    { word: "departure", type: "n.", meaning: "离开" },
+    { word: "immunity", type: "n.", meaning: "免疫力" },
+    { word: "explode", type: "v.", meaning: "突然增加" },
+    { word: "collapse", type: "v.", meaning: "倒坍；塌下" },
+    { word: "substantial", type: "adj.", meaning: "大量的，多的" },
+    { word: "incident", type: "n.", meaning: "事件" },
+    { word: "intervention", type: "n.", meaning: "干预，介入" },
+    { word: "owe", type: "v.", meaning: "应该做；对……负有……的义务" },
+    { word: "postscript", type: "n.", meaning: "附言" },
+    { word: "pest", type: "n.", meaning: "有害小动物；害虫" },
+    { word: "ecology", type: "n.", meaning: "生态" },
+    { word: "dissolve", type: "v.", meaning: "(使)溶解" },
+    { word: "nutrient", type: "n.", meaning: "养分，营养物" },
+    { word: "comparison", type: "n.", meaning: "比较" },
+    { word: "visual", type: "adj.", meaning: "视觉的" },
+    { word: "session", type: "n.", meaning: "一段时间" },
+    { word: "on behalf of", type: "phr.", meaning: "代表" },
+    { word: "herbal", type: "adj.", meaning: "用香(药)草制成的" },
+    { word: "mysterious", type: "adj.", meaning: "神秘的" },
+    { word: "status", type: "n.", meaning: "地位；身份" },
+    { word: "criterion", type: "n.", meaning: "标准，准则" },
+    { word: "prosper", type: "v.", meaning: "兴旺，发达" },
+    { word: "rare", type: "adj.", meaning: "稀有的，罕见的" },
+    { word: "biological", type: "adj.", meaning: "生物的，与生物有关的" },
+    { word: "apparently", type: "adv.", meaning: "据说；看来，似乎" },
+    { word: "vast", type: "adj.", meaning: "巨大的；广大的" },
+    { word: "altitude", type: "n.", meaning: "海拔(高度)" },
+    { word: "variation", type: "n.", meaning: "差异；变化" },
+    { word: "thrive", type: "v.", meaning: "茁壮成长" },
+    { word: "fossil", type: "n.", meaning: "化石" },
+    { word: "floral", type: "adj.", meaning: "花的" },
+    { word: "vertebrate", type: "n.", meaning: "脊椎动物" },
+    { word: "beehive", type: "n.", meaning: "蜂房，蜂箱" },
+    { word: "endangered", type: "adj.", meaning: "濒临灭绝的" },
+    { word: "elsewhere", type: "adv.", meaning: "在别处" },
+    { word: "invasion", type: "n.", meaning: "涌入" },
+    { word: "coexist", type: "v.", meaning: "共存，共处" },
+    { word: "secure", type: "adj.", meaning: "稳固的；安全的" },
+    { word: "greeting", type: "n.", meaning: "问候，招呼" }
+];
+
+const unit6WordsBook5 = [
+    { word: "fox", type: "n.", meaning: "狐狸" },
+    { word: "chacma baboon", type: "phr.", meaning: "南非大狒，大狒狒" },
+    { word: "crime", type: "n.", meaning: "罪，罪行" },
+    { word: "seaside", type: "adj.", meaning: "海滨的" },
+    { word: "suburb", type: "n.", meaning: "郊区，城郊" },
+    { word: "greedy", type: "adj.", meaning: "贪婪的，贪心的" },
+    { word: "thief", type: "n.", meaning: "小偷，贼" },
+    { word: "commit", type: "v.", meaning: "犯(错误或罪行)" },
+    { word: "urban", type: "adj.", meaning: "城镇的，城市的" },
+    { word: "predator", type: "n.", meaning: "掠食动物，捕食性动物" },
+    { word: "newcomer", type: "n.", meaning: "新来者" },
+    { word: "flourish", type: "v.", meaning: "生长茂盛，兴盛" },
+    { word: "racoon", type: "n.", meaning: "浣熊" },
+    { word: "container", type: "n.", meaning: "容器" },
+    { word: "garbage", type: "n.", meaning: "垃圾" },
+    { word: "lamb", type: "n.", meaning: "羔羊肉" },
+    { word: "kebab", type: "n.", meaning: "烤(肉)串" },
+    { word: "garlic", type: "n.", meaning: "(大)蒜" },
+    { word: "estimate", type: "v.", meaning: "估计，估算" },
+    { word: "migratory", type: "adj.", meaning: "迁徙的" },
+    { word: "appreciate", type: "v.", meaning: "欣赏；赏识" },
+    { word: "crucial", type: "adj.", meaning: "至关重要的，关键性的" },
+    { word: "restrict", type: "v.", meaning: "限制，控制" },
+    { word: "hiker", type: "n.", meaning: "徒步旅行者，远足者" },
+    { word: "kit", type: "n.", meaning: "成套工具" },
+    { word: "optimistic", type: "adj.", meaning: "乐观的；乐观主义的" },
+    { word: "clay", type: "n.", meaning: "黏土" },
+    { word: "cave", type: "n.", meaning: "洞穴" },
+    { word: "heat wave", type: "phr.", meaning: "酷热期，热浪期" },
+    { word: "indoors", type: "adv.", meaning: "在室内" },
+    { word: "cope with", type: "phr.", meaning: "应付" },
+    { word: "fuel", type: "n.", meaning: "燃料" },
+    { word: "consumption", type: "n.", meaning: "(精力、油、电等的)消耗量" },
+    { word: "supplement", type: "v.", meaning: "补充，增补，增加" },
+    { word: "eliminate", type: "v.", meaning: "消除，根除" },
+    { word: "firefighter", type: "n.", meaning: "消防队员" },
+    { word: "bring... under control", type: "phr.", meaning: "使……处于控制之下" },
+    { word: "blaze", type: "n.", meaning: "烈火，大火" },
+    { word: "fierce", type: "adj.", meaning: "恶劣的，极端的" },
+    { word: "react", type: "v.", meaning: "(作出)反应" },
+    { word: "monthly", type: "adj.", meaning: "每月一次的" },
+    { word: "get rid of", type: "phr.", meaning: "摆脱，除去" },
+    { word: "Mars", type: "n.", meaning: "火星" },
+    { word: "advanced", type: "adj.", meaning: "高级的；先进的" },
+    { word: "wipe", type: "v.", meaning: "擦，拭，揩" },
+    { word: "wipe out", type: "phr.", meaning: "彻底摧毁，消灭" },
+    { word: "nuclear", type: "adj.", meaning: "核武器的" },
+    { word: "terrifying", type: "adj.", meaning: "极其可怕的，骇人听闻的" }
+];
+// ======================= 选择性必修三 · 全单元完整词库 ======================
+const unit1WordsBook6 = [
+    { word: "self-critical", type: "adj.", meaning: "自我批评的，自我批判的" },
+    { word: "freckle", type: "n.", meaning: "(尤指脸上的)雀斑，斑点" },
+    { word: "enlarge", type: "v.", meaning: "(使)增大，扩大" },
+    { word: "jawline", type: "n.", meaning: "下巴的形状" },
+    { word: "boost", type: "v.", meaning: "促进，推动" },
+    { word: "boost one's confidence", type: "phr.", meaning: "增加某人的信心" },
+    { word: "narcissist", type: "n.", meaning: "自我陶醉者" },
+    { word: "obsessive", type: "adj.", meaning: "痴迷的，迷恋的；过度的（含贬义）" },
+    { word: "pretend", type: "v.", meaning: "假装，装作" },
+    { word: "misjudge", type: "v.", meaning: "对（人或情况）判断错误" },
+    { word: "lipstick", type: "n.", meaning: "唇膏，口红" },
+    { word: "identical", type: "adj.", meaning: "完全相同的；非常相似的" },
+    { word: "dormitory", type: "n.", meaning: "寝室" },
+    { word: "roommate", type: "n.", meaning: "(尤指大学里的)室友" },
+    { word: "bizarre", type: "adj.", meaning: "古怪的；奇异的" },
+    { word: "from head to toe", type: "phr.", meaning: "从头到脚" },
+    { word: "makeover", type: "n.", meaning: "(以新衣服、新发型等进行的)打扮，装扮" },
+    { word: "overlook", type: "v.", meaning: "忽视，忽略" },
+    { word: "bother", type: "v.", meaning: "(使)苦恼" },
+    { word: "pill", type: "n.", meaning: "药丸，药片" },
+    { word: "stereotype", type: "n.", meaning: "模式化的思想" },
+    { word: "skinny", type: "adj.", meaning: "极瘦的，皮包骨的" },
+    { word: "acknowledge", type: "v.", meaning: "承认（某事属实或某情况存在）" },
+    { word: "assumption", type: "n.", meaning: "假定，假设" },
+    { word: "saving", type: "n.", meaning: "积蓄" },
+    { word: "welfare", type: "n.", meaning: "帮助；福利" },
+    { word: "psychology", type: "n.", meaning: "心理，心理过程" },
+    { word: "finding", type: "n.", meaning: "研究的结果；发现" },
+    { word: "frightful", type: "adj.", meaning: "可怕的" },
+    { word: "monstrous", type: "adj.", meaning: "丑陋的；骇人的" },
+    { word: "righteous", type: "adj.", meaning: "正派的，正直的" },
+    { word: "outward", type: "adj.", meaning: "外表的，表面的" },
+    { word: "beast", type: "n.", meaning: "(尤指体型庞大或危险的)野兽" },
+    { word: "timid", type: "adj.", meaning: "胆小的，胆怯的" },
+    { word: "coward", type: "n.", meaning: "胆小鬼；懦夫" },
+    { word: "bookish", type: "adj.", meaning: "好读书的，书呆子气的" },
+    { word: "loyal", type: "adj.", meaning: "忠贞的，忠实的，忠诚的" },
+    { word: "novelist", type: "n.", meaning: "小说家" },
+    { word: "kidnap", type: "v.", meaning: "绑架；劫持" },
+    { word: "torture", type: "v.", meaning: "拷打，拷问" },
+    { word: "execution", type: "n.", meaning: "(尤指依法的)处死" },
+    { word: "predicament", type: "n.", meaning: "尴尬的处境" },
+    { word: "graceful", type: "adj.", meaning: "优美的，优雅的" },
+    { word: "repulsive", type: "adj.", meaning: "令人厌恶的" },
+    { word: "defect", type: "n.", meaning: "缺点，缺陷，毛病" },
+    { word: "hunched", type: "adj.", meaning: "弓身的，弓背的" },
+    { word: "comprehension", type: "n.", meaning: "理解（力）" },
+    { word: "melancholy", type: "adj.", meaning: "忧郁，无名的伤感" },
+    { word: "wretch", type: "n.", meaning: "可怜的人" },
+    { word: "exclaim", type: "v.", meaning: "(因惊讶、愤怒或兴奋而)呼喊，惊叫" },
+    { word: "heartfelt", type: "adj.", meaning: "衷心的，诚挚的" },
+    { word: "compassion", type: "n.", meaning: "怜悯；同情" },
+    { word: "exquisite", type: "adj.", meaning: "精美的，精致的" },
+    { word: "accent", type: "n.", meaning: "口音" },
+    { word: "utter", type: "v.", meaning: "(尤指吃力地)发出（声音）" },
+    { word: "syllable", type: "n.", meaning: "音节" },
+    { word: "immense", type: "adj.", meaning: "巨大的" },
+    { word: "monster", type: "n.", meaning: "怪物" },
+    { word: "resemble", type: "v.", meaning: "像；与……类似，与……相似" },
+    { word: "savage", type: "adj.", meaning: "野蛮的" },
+    { word: "dew", type: "n.", meaning: "露水" },
+    { word: "whilst", type: "conj.", meaning: "而（用于强调两种情况、活动等之间的差别）" },
+    { word: "coarse", type: "adj.", meaning: "粗的，粗糙的" },
+    { word: "downtrodden", type: "adj.", meaning: "被践踏的，受压迫的，遭蹂躏的" },
+    { word: "pebble", type: "n.", meaning: "卵石，小圆石，砾石" },
+    { word: "heartbreaking", type: "adj.", meaning: "令人悲伤的" },
+    { word: "expression", type: "n.", meaning: "表情；神色" },
+    { word: "intently", type: "adv.", meaning: "专心地；一心一意地" },
+    { word: "repay", type: "v.", meaning: "报答" },
+    { word: "profound", type: "adj.", meaning: "(感情)强烈的，深切的" },
+    { word: "tenderness", type: "n.", meaning: "柔情" },
+    { word: "motive", type: "n.", meaning: "(尤指隐藏的)动机，原因，目的" }
+];
+
+const unit2WordsBook6 = [
+    { word: "lens", type: "n.", meaning: "(照相机、摄像机的)镜头" },
+    { word: "pose", type: "v.", meaning: "(使)摆好姿势" },
+    { word: "grocery", type: "n.", meaning: "食品杂货店" },
+    { word: "grocery store", type: "phr.", meaning: "超级市场" },
+    { word: "fascination", type: "n.", meaning: "着迷，迷恋" },
+    { word: "fashion", type: "n.", meaning: "时尚" },
+    { word: "uncomplicated", type: "adj.", meaning: "不复杂的，简单的；单纯的" },
+    { word: "faraway", type: "adj.", meaning: "遥远的" },
+    { word: "celebrity", type: "n.", meaning: "名人，明星" },
+    { word: "craft", type: "n.", meaning: "(某行业所需的)技能" },
+    { word: "anthropologist", type: "n.", meaning: "人类学家" },
+    { word: "trial", type: "n.", meaning: "试验" },
+    { word: "by trial and error", type: "phr.", meaning: "反复试验（以得出最佳结果）" },
+    { word: "craftsmanship", type: "n.", meaning: "手艺；工艺；技艺" },
+    { word: "atomic", type: "adj.", meaning: "原子能的；核能的" },
+    { word: "back down", type: "phr.", meaning: "退让；认输" },
+    { word: "the cutting edge (of sth)", type: "phr.", meaning: "（某事物发展的）尖端，最前沿" },
+    { word: "think outside the box", type: "phr.", meaning: "不拘一格地思考，跳出框框思考" },
+    { word: "break new ground", type: "phr.", meaning: "开辟新的领域；有新发现" },
+    { word: "hydrogen", type: "n.", meaning: "氢" },
+    { word: "propulsion", type: "n.", meaning: "(车辆等的)推进力" },
+    { word: "jet propulsion", type: "phr.", meaning: "喷气推进" },
+    { word: "acclaim", type: "v.", meaning: "表扬，赞赏" },
+    { word: "shun", type: "v.", meaning: "(故意)避开，躲开" },
+    { word: "spotlight", type: "n.", meaning: "聚光灯；媒体的关注" },
+    { word: "harsh", type: "adj.", meaning: "恶劣的，艰苦的，严峻的" },
+    { word: "prosperous", type: "adj.", meaning: "富裕的，繁荣的，兴旺的" },
+    { word: "courtyard", type: "n.", meaning: "庭院，院子" },
+    { word: "precious", type: "adj.", meaning: "珍稀的；贵重的" },
+    { word: "antique", type: "n.", meaning: "古董，古玩，古物" },
+    { word: "restoration", type: "n.", meaning: "(旧建筑或旧家具等的)修复，整修" },
+    { word: "crimson", type: "adj.", meaning: "深红色的" },
+    { word: "workplace", type: "n.", meaning: "工作场所" },
+    { word: "timepiece", type: "n.", meaning: "计时器；钟；表" },
+    { word: "envoy", type: "n.", meaning: "使者，使节" },
+    { word: "intricate", type: "adj.", meaning: "错综复杂的" },
+    { word: "maximum", type: "n.", meaning: "最大量，最大值" },
+    { word: "painstaking", type: "adj.", meaning: "小心的；费尽心思的；精心的" },
+    { word: "workshop", type: "n.", meaning: "车间，工场" },
+    { word: "melody", type: "n.", meaning: "歌曲；曲调" },
+    { word: "polish", type: "v.", meaning: "擦亮，擦光" },
+    { word: "gigantic", type: "adj.", meaning: "巨大的，庞大的" },
+    { word: "bark", type: "v.", meaning: "(狗)吠叫" },
+    { word: "flap", type: "v.", meaning: "振(翼)，扑动(翅膀)" },
+    { word: "spin", type: "v.", meaning: "将(棉花、羊毛等)纺(线)" },
+    { word: "exaggeration", type: "n.", meaning: "夸大，夸张" },
+    { word: "metaphor", type: "n.", meaning: "隐喻，暗喻" },
+    { word: "nonetheless", type: "adv.", meaning: "然而，但是；尽管如此，虽然如此" },
+    { word: "artisan", type: "n.", meaning: "工匠，手艺人" },
+    { word: "preserve", type: "v.", meaning: "维护，保护；保存" },
+    { word: "apt", type: "adj.", meaning: "适当的，恰当的" },
+    { word: "timeless", type: "adj.", meaning: "永恒的，恒久的；永不过时的" },
+    { word: "sedately", type: "adv.", meaning: "安静地；慢悠悠地" },
+    { word: "modest", type: "adj.", meaning: "谦虚的，谦逊的" },
+    { word: "essay", type: "n.", meaning: "短文，论说文" },
+    { word: "dominate", type: "v.", meaning: "支配，控制，主宰" },
+    { word: "architecture", type: "n.", meaning: "建筑风格，建筑设计" },
+    { word: "ambitious", type: "adj.", meaning: "宏大的，艰巨的" },
+    { word: "associate", type: "v.", meaning: "与……有关" },
+    { word: "analysis", type: "n.", meaning: "分析" },
+    { word: "comprise", type: "v.", meaning: "包括，由……构成" }
+];
+
+const unit3WordsBook6 = [
+    { word: "violent", type: "adj.", meaning: "狂暴的，凶暴的" },
+    { word: "landing", type: "n.", meaning: "(军队的)登陆" },
+    { word: "allied", type: "adj.", meaning: "(第二次世界大战)同盟国的" },
+    { word: "troop", type: "n.", meaning: "部队；军队" },
+    { word: "code-name", type: "v.", meaning: "起代号为" },
+    { word: "tide", type: "n.", meaning: "潮水" },
+    { word: "supreme", type: "adj.", meaning: "最高的" },
+    { word: "commander", type: "n.", meaning: "指挥官，长官" },
+    { word: "parachute", type: "n.", meaning: "降落伞" },
+    { word: "objective", type: "n.", meaning: "目的，目标" },
+    { word: "coastline", type: "n.", meaning: "海岸线" },
+    { word: "violence", type: "n.", meaning: "暴力" },
+    { word: "horror", type: "n.", meaning: "惊恐" },
+    { word: "drown", type: "v.", meaning: "(使)淹死" },
+    { word: "gunfire", type: "n.", meaning: "炮火" },
+    { word: "amongst", type: "prep.", meaning: "在……当中（=among）" },
+    { word: "tank", type: "n.", meaning: "坦克" },
+    { word: "recall", type: "v.", meaning: "回想，回忆起" },
+    { word: "barely", type: "adv.", meaning: "勉强才能" },
+    { word: "liberate", type: "v.", meaning: "解放（城市、国家等）" },
+    { word: "memorial", type: "adj.", meaning: "纪念的，追悼的" },
+    { word: "solemn", type: "adj.", meaning: "严肃的，庄重的" },
+    { word: "weary", type: "v.", meaning: "(使)非常疲倦" },
+    { word: "condemn", type: "v.", meaning: "迫使（某人）处于不幸的境地" },
+    { word: "outstanding", type: "adj.", meaning: "杰出的，优秀的" },
+    { word: "uniform", type: "n.", meaning: "制服" },
+    { word: "bomb", type: "v.", meaning: "轰炸" },
+    { word: "peacekeeping", type: "n.", meaning: "维持和平（的行动）" },
+    { word: "peacekeeper", type: "n.", meaning: "维和人员" },
+    { word: "friction", type: "n.", meaning: "冲突，摩擦" },
+    { word: "disarm", type: "v.", meaning: "解除武装" },
+    { word: "combatant", type: "n.", meaning: "战斗人员" },
+    { word: "weapon", type: "n.", meaning: "武器，兵器" },
+    { word: "ammunition", type: "n.", meaning: "弹药" },
+    { word: "stability", type: "n.", meaning: "稳固，稳定" },
+    { word: "on standby", type: "phr.", meaning: "待命" },
+    { word: "professionalism", type: "n.", meaning: "专业水准；专业素质；职业精神" },
+    { word: "academic", type: "adj.", meaning: "学术的" },
+    { word: "aggression", type: "n.", meaning: "侵略" },
+    { word: "intellectual", type: "adj.", meaning: "智力的，脑力的" },
+    { word: "associated", type: "adj.", meaning: "联合的" },
+    { word: "rough", type: "adj.", meaning: "简单的；粗糙的" },
+    { word: "sardine", type: "n.", meaning: "沙丁鱼" },
+    { word: "dire", type: "adj.", meaning: "极其严重的" },
+    { word: "disrupt", type: "v.", meaning: "扰乱" },
+    { word: "daunting", type: "adj.", meaning: "吓人的，使人气馁的" },
+    { word: "fortify", type: "v.", meaning: "激励，加强" },
+    { word: "emerge", type: "v.", meaning: "出现" },
+    { word: "shirk", type: "v.", meaning: "逃避" },
+    { word: "invader", type: "n.", meaning: "侵略者，侵略军" },
+    { word: "depict", type: "v.", meaning: "描述，描写" },
+    { word: "peer", type: "n.", meaning: "同龄人；同辈" },
+    { word: "misty", type: "adj.", meaning: "多雾的" },
+    { word: "breeze", type: "n.", meaning: "微风" },
+    { word: "crowning", type: "adj.", meaning: "使圆满的，使完美的" },
+    { word: "glory", type: "n.", meaning: "辉煌的成就；荣耀的事" },
+    { word: "prominent", type: "adj.", meaning: "著名的，杰出的" },
+    { word: "dedication", type: "n.", meaning: "奉献" },
+    { word: "representative", type: "n.", meaning: "代表" },
+    { word: "commemorate", type: "v.", meaning: "庆祝，为……举行纪念活动" },
+    { word: "anniversary", type: "n.", meaning: "周年纪念日" },
+    { word: "reaffirm", type: "v.", meaning: "重申，再次确定" },
+    { word: "collective", type: "adj.", meaning: "集体的；共同的" },
+    { word: "blueprint", type: "n.", meaning: "蓝图" },
+    { word: "sum", type: "n.", meaning: "金额，款项" },
+    { word: "grain", type: "n.", meaning: "谷物，粮食" },
+    { word: "relevant", type: "adj.", meaning: "有关的，切题的" }
+];
+
+const unit4WordsBook6 = [
+    { word: "artificial", type: "adj.", meaning: "人造的，人工的" },
+    { word: "artificial intelligence", type: "phr.", meaning: "人工智能" },
+    { word: "humanity", type: "n.", meaning: "人类" },
+    { word: "assistant", type: "n.", meaning: "助手，助理" },
+    { word: "susceptible", type: "adj.", meaning: "易受影响的" },
+    { word: "victim", type: "n.", meaning: "受害者" },
+    { word: "potentially", type: "adv.", meaning: "潜在地" },
+    { word: "automation", type: "n.", meaning: "自动化" },
+    { word: "capacity", type: "n.", meaning: "能力，才能" },
+    { word: "analyse", type: "v.", meaning: "分析" },
+    { word: "leap", type: "n.", meaning: "剧变" },
+    { word: "regulate", type: "v.", meaning: "控制，管理" },
+    { word: "illegal", type: "adj.", meaning: "非法的，违法的" },
+    { word: "immoral", type: "adj.", meaning: "不道德的，道德败坏的" },
+    { word: "client", type: "n.", meaning: "客户，客人" },
+    { word: "cite", type: "v.", meaning: "引用，引述" },
+    { word: "assess", type: "v.", meaning: "评价，评定" },
+    { word: "bank on", type: "phr.", meaning: "依靠，指望" },
+    { word: "horizon", type: "n.", meaning: "地平线" },
+    { word: "on the horizon", type: "phr.", meaning: "将要发生" },
+    { word: "reckon", type: "v.", meaning: "认为，以为" },
+    { word: "cell", type: "n.", meaning: "细胞" },
+    { word: "bound", type: "adj.", meaning: "可能的" },
+    { word: "be bound to", type: "phr.", meaning: "很有可能，肯定会" },
+    { word: "cycle", type: "n.", meaning: "自行车" },
+    { word: "demand", type: "n.", meaning: "需要，需求" },
+    { word: "crater", type: "n.", meaning: "(物体坠落、炸弹爆炸等在地上造成的)坑" },
+    { word: "agile", type: "adj.", meaning: "敏捷的，灵活的" },
+    { word: "slope", type: "v.", meaning: "倾斜，成斜坡" },
+    { word: "hop", type: "n.", meaning: "跳跃" },
+    { word: "squeak", type: "v.", meaning: "发出吱吱声" },
+    { word: "tendon", type: "n.", meaning: "腱" },
+    { word: "wavelength", type: "n.", meaning: "波长" },
+    { word: "mechanical", type: "adj.", meaning: "机械的" },
+    { word: "imitation", type: "n.", meaning: "仿制品" },
+    { word: "mutt", type: "n.", meaning: "杂种狗" },
+    { word: "frown", type: "v.", meaning: "皱眉" },
+    { word: "positronic", type: "adj.", meaning: "正电子的" },
+    { word: "tightly", type: "adv.", meaning: "紧紧地" },
+    { word: "desperate", type: "adj.", meaning: "拼命的，绝望的" },
+    { word: "clue", type: "n.", meaning: "线索，提示" },
+    { word: "faulty", type: "adj.", meaning: "有故障的，有缺陷的" },
+    { word: "consistent", type: "adj.", meaning: "一贯的，一致的" }
+];
+
+const unit5WordsBook6 = [
+    { word: "lotus", type: "n.", meaning: "莲花，荷花" },
+    { word: "termite", type: "n.", meaning: "白蚁" },
+    { word: "mound", type: "n.", meaning: "土堆，土丘" },
+    { word: "algae", type: "n.", meaning: "藻类（植物）" },
+    { word: "take…for granted", type: "phr.", meaning: "认为……理所当然" },
+    { word: "pine cone", type: "phr.", meaning: "松果，松球" },
+    { word: "tile", type: "n.", meaning: "瓦片" },
+    { word: "architect", type: "n.", meaning: "建筑师" },
+    { word: "mimic", type: "v.", meaning: "模仿" },
+    { word: "waterfront", type: "n.", meaning: "滨水地区" },
+    { word: "promenade", type: "n.", meaning: "滨海步道" },
+    { word: "plumbing", type: "n.", meaning: "管道系统" },
+    { word: "superb", type: "adj.", meaning: "极好的，出色的" },
+    { word: "biomimicry", type: "n.", meaning: "仿生学" },
+    { word: "dioxide", type: "n.", meaning: "二氧化物" },
+    { word: "convert", type: "v.", meaning: "使转变；使转换" },
+    { word: "frontier", type: "n.", meaning: "(学科的)知识前沿" },
+    { word: "pond", type: "n.", meaning: "池塘" },
+    { word: "sow", type: "v.", meaning: "播（种）" },
+    { word: "wisdom", type: "n.", meaning: "智慧" },
+    { word: "seek solutions to", type: "phr.", meaning: "寻求解决方法" },
+    { word: "take inspiration from", type: "phr.", meaning: "从……中获取灵感" },
+    { word: "employ", type: "v.", meaning: "使用，运用" },
+    { word: "bat", type: "n.", meaning: "蝙蝠" },
+    { word: "echo-location", type: "n.", meaning: "回声定位" },
+    { word: "radar", type: "n.", meaning: "雷达" },
+    { word: "swimsuit", type: "n.", meaning: "游泳衣" },
+    { word: "dragonfly", type: "n.", meaning: "蜻蜓" },
+    { word: "drone", type: "n.", meaning: "无人驾驶飞机" },
+    { word: "spider", type: "n.", meaning: "蜘蛛" },
+    { word: "physician", type: "n.", meaning: "医生" },
+    { word: "superficially", type: "adv.", meaning: "表面（上）地" },
+    { word: "bow", type: "v.", meaning: "鞠躬" },
+    { word: "rural", type: "adj.", meaning: "农村的，乡村的" },
+    { word: "decent", type: "adj.", meaning: "可接受的，相当好的" },
+    { word: "cottage", type: "n.", meaning: "乡村小屋" },
+    { word: "deliberately", type: "adv.", meaning: "不慌不忙地，从容不迫地" },
+    { word: "withdraw", type: "v.", meaning: "退出" },
+    { word: "domestic", type: "adj.", meaning: "驯养的；家养的" },
+    { word: "depressive", type: "adj.", meaning: "抑郁的" },
+    { word: "reluctant", type: "adj.", meaning: "不情愿的；勉强的" },
+    { word: "depart", type: "v.", meaning: "离开" },
+    { word: "lane", type: "n.", meaning: "(乡间的)小路" },
+    { word: "atop", type: "prep.", meaning: "在……顶上" },
+    { word: "mulberry", type: "n.", meaning: "桑葚；桑树" },
+    { word: "purity", type: "n.", meaning: "纯洁；洁净" },
+    { word: "resign", type: "v.", meaning: "使自己顺从于（做）某事；安于" },
+    { word: "botanical", type: "adj.", meaning: "植物（学）的" },
+    { word: "reject", type: "v.", meaning: "拒绝接受" },
+    { word: "ease", type: "n.", meaning: "舒适，悠闲" },
+    { word: "at ease with", type: "phr.", meaning: "不拘束，放松" },
+    { word: "attain", type: "v.", meaning: "得到，获得" },
+    { word: "fulfilment", type: "n.", meaning: "满足（感）" },
+    { word: "evaluate", type: "v.", meaning: "评估，评价" }
+];
+
+const unit6WordsBook6 = [
+    { word: "weekly", type: "adj.", meaning: "一周一次的" },
+    { word: "inspector", type: "n.", meaning: "检查员，巡视员" },
+    { word: "insist", type: "v.", meaning: "坚持，坚决认为" },
+    { word: "secrecy", type: "n.", meaning: "保密，秘密状态" },
+    { word: "shaving", type: "n.", meaning: "刮胡子" },
+    { word: "flush", type: "v.", meaning: "(使)发红" },
+    { word: "plum", type: "n.", meaning: "李子；梅子" },
+    { word: "faintly", type: "adv.", meaning: "微弱地；模糊地" },
+    { word: "dispose", type: "v.", meaning: "排列，布置" },
+    { word: "sparkle", type: "v.", meaning: "闪耀，闪光" },
+    { word: "prospect", type: "n.", meaning: "开阔的景观，景色" },
+    { word: "redden", type: "v.", meaning: "(使)变红" },
+    { word: "glare", type: "n.", meaning: "刺眼的强光" },
+    { word: "flake", type: "n.", meaning: "小薄片" },
+    { word: "bend", type: "v.", meaning: "变弯曲" },
+    { word: "weathercock", type: "n.", meaning: "(公鸡形)风标" },
+    { word: "church", type: "n.", meaning: "教堂" },
+    { word: "rhyme", type: "n.", meaning: "儿歌，童谣" },
+    { word: "alabaster", type: "n.", meaning: "雪花石膏" },
+    { word: "goose", type: "n.", meaning: "鹅" },
+    { word: "feather", type: "n.", meaning: "羽毛" },
+    { word: "innocent", type: "adj.", meaning: "天真无邪的" },
+    { word: "enhance", type: "v.", meaning: "改进；增强" },
+    { word: "bloom", type: "v.", meaning: "开花" },
+    { word: "charm", type: "n.", meaning: "魅力，魔力" },
+    { word: "bleak", type: "adj.", meaning: "阴冷的；阴郁的" },
+    { word: "fade", type: "v.", meaning: "逐渐消失；褪色" },
+    { word: "orchard", type: "n.", meaning: "果园" },
+    { word: "cluster", type: "n.", meaning: "串，丛，簇" },
+    { word: "wheat", type: "n.", meaning: "小麦" },
+    { word: "pile", type: "v.", meaning: "堆放，摞起" },
+    { word: "gentle", type: "adj.", meaning: "轻柔的；温和的" },
+    { word: "sweep", type: "v.", meaning: "吹过，掠过" },
+    { word: "tinge", type: "v.", meaning: "着色于……" },
+    { word: "wagon", type: "n.", meaning: "四轮运货车" },
+    { word: "reap", type: "v.", meaning: "收割（庄稼）" },
+    { word: "ban", type: "v.", meaning: "禁止，取缔" },
+    { word: "puzzled", type: "adj.", meaning: "困惑的，无法理解的" },
+    { word: "backyard", type: "n.", meaning: "后院" },
+    { word: "moribund", type: "adj.", meaning: "垂死的，奄奄一息的" },
+    { word: "tremble", type: "v.", meaning: "颤抖，发抖" },
+    { word: "throb", type: "v.", meaning: "生机勃勃；热闹" },
+    { word: "chorus", type: "n.", meaning: "合唱曲" },
+    { word: "robin", type: "n.", meaning: "知更鸟" },
+    { word: "catbird", type: "n.", meaning: "猫鹊" },
+    { word: "dove", type: "n.", meaning: "鸽子" },
+    { word: "jay", type: "n.", meaning: "松鸦" },
+    { word: "wren", type: "n.", meaning: "鹪鹩（一种褐色小鸟）" },
+    { word: "marsh", type: "n.", meaning: "沼泽，湿地" },
+    { word: "fable", type: "n.", meaning: "寓言" },
+    { word: "alert", type: "v.", meaning: "提醒，使（某人）意识到" },
+    { word: "knowingly", type: "adv.", meaning: "故意地" },
+    { word: "gypsy moth", type: "phr.", meaning: "舞毒蛾" },
+    { word: "dozen number", type: "phr.", meaning: "一打；许多" },
+    { word: "thorough", type: "adj.", meaning: "仔细的；缜密的" },
+    { word: "precise", type: "adj.", meaning: "精确的；一丝不苟的" },
+    { word: "launch", type: "v.", meaning: "推出，发起" },
+    { word: "posthumous", type: "adj.", meaning: "死后获得的" },
+    { word: "marine", type: "adj.", meaning: "海洋的" },
+    { word: "reputation", type: "n.", meaning: "名誉，名望" },
+    { word: "elegance", type: "n.", meaning: "优美；简洁" },
+    { word: "passionate", type: "adj.", meaning: "具有强烈信念的" },
+    { word: "diamond", type: "n.", meaning: "钻石" }
+];
+        const booksDB = {
+            book3: { name: "必修三", units: {
+                unit1: { name: "UNIT 1", words: unit1WordsBook3 },
+                unit2: { name: "UNIT 2", words: unit2WordsBook3 },
+                unit3: { name: "UNIT 3", words: unit3WordsBook3 },
+                unit4: { name: "UNIT 4", words: unit4WordsBook3 },
+                unit5: { name: "UNIT 5", words: unit5WordsBook3 },
+                unit6: { name: "UNIT 6", words: unit6WordsBook3 }
+            } },
+            book2: { name: "必修二", units: {
+                unit1: { name: "UNIT 1", words: unit1WordsBook2 },
+                unit2: { name: "UNIT 2", words: unit2WordsBook2 },
+                unit3: { name: "UNIT 3", words: unit3WordsBook2 },
+                unit4: { name: "UNIT 4", words: unit4WordsBook2 },
+                unit5: { name: "UNIT 5", words: unit5WordsBook2 },
+                unit6: { name: "UNIT 6", words: unit6WordsBook2 }
+            } },
+            book1: { name: "必修一", units: {
+                unit1: { name: "UNIT 1", words: unit1WordsBook1 },
+                unit2: { name: "UNIT 2", words: unit2WordsBook1 },
+                unit3: { name: "UNIT 3", words: unit3WordsBook1 },
+                unit4: { name: "UNIT 4", words: unit4WordsBook1 },
+                unit5: { name: "UNIT 5", words: unit5WordsBook1 },
+                unit6: { name: "UNIT 6", words: unit6WordsBook1 }
+            } },
+            book4: { name: "选择性必修一", units: {
+                unit1: { name: "UNIT 1", words: unit1WordsBook4 },
+                unit2: { name: "UNIT 2", words: unit2WordsBook4 },
+                unit3: { name: "UNIT 3", words: unit3WordsBook4 },
+                unit4: { name: "UNIT 4", words: unit4WordsBook4 },
+                unit5: { name: "UNIT 5", words: unit5WordsBook4 },
+                unit6: { name: "UNIT 6", words: unit6WordsBook4 }
+            } },
+            book5: { name: "选择性必修二", units: {
+                unit1: { name: "UNIT 1", words: unit1WordsBook5 },
+                unit2: { name: "UNIT 2", words: unit2WordsBook5 },
+                unit3: { name: "UNIT 3", words: unit3WordsBook5 },
+                unit4: { name: "UNIT 4", words: unit4WordsBook5 },
+                unit5: { name: "UNIT 5", words: unit5WordsBook5 },
+                unit6: { name: "UNIT 6", words: unit6WordsBook5 }
+            } },
+            book6: { name: "选择性必修三", units: {
+                unit1: { name: "UNIT 1", words: unit1WordsBook6 },
+                unit2: { name: "UNIT 2", words: unit2WordsBook6 },
+                unit3: { name: "UNIT 3", words: unit3WordsBook6 },
+                unit4: { name: "UNIT 4", words: unit4WordsBook6 },
+                unit5: { name: "UNIT 5", words: unit5WordsBook6 },
+                unit6: { name: "UNIT 6", words: unit6WordsBook6 }
+} }
+            
+        };
+
+        // 全局状态
+        let currentBookId = "book3";
+        let currentUnitId = "unit1";
+        let currentMode = "cn2en";
+        let currentCardIndex = 0;
+        let currentWordsList = [];
+        let currentAudio = null;
+
+        const selectBook = document.getElementById('select-book');
+        const selectUnit = document.getElementById('select-unit');
+        const wordCounterSpan = document.getElementById('word-counter');
+        const cardArea = document.getElementById('card-area');
+        const wordlistArea = document.getElementById('wordlist-area');
+        const cardPromptArea = document.getElementById('card-prompt-area');
+        const pronounceBtnArea = document.getElementById('pronounce-btn-area');
+        const answerDisplayDiv = document.getElementById('answer-display');
+        const revealBtn = document.getElementById('reveal-answer-btn');
+        const prevBtn = document.getElementById('prev-card');
+        const nextBtn = document.getElementById('next-card');
+        const cardProgressSpan = document.getElementById('card-progress');
+
+        function setActiveModeButton(modeId) {
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                const btnMode = btn.getAttribute('data-mode');
+                if (btnMode === modeId) {
+                    btn.classList.add('mode-tab-active');
+                    btn.classList.remove('mode-tab-inactive');
+                } else {
+                    btn.classList.add('mode-tab-inactive');
+                    btn.classList.remove('mode-tab-active');
+                }
+            });
+        }
+
+        function speakWord(wordText) {
+            if (!wordText) return;
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            const fullPhrase = wordText.trim();
+            const audioUrl = `https://dict.youdao.com/dictvoice?type=1&audio=${encodeURIComponent(fullPhrase)}`;
+            const audio = new Audio(audioUrl);
+            currentAudio = audio;
+            audio.play().catch(() => {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(fullPhrase);
+                    utterance.lang = 'en-GB';
+                    utterance.rate = 0.8;
+                    const voices = window.speechSynthesis.getVoices();
+                    const ukVoice = voices.find(v => v.lang.startsWith('en-GB'));
+                    if (ukVoice) utterance.voice = ukVoice;
+                    window.speechSynthesis.speak(utterance);
+                }
+            });
+            audio.onended = () => { if (currentAudio === audio) currentAudio = null; };
+        }
+
+        function autoSpeakIfNeeded() {
+            if (currentMode === "en2cn" || currentMode === "repeat") {
+                const item = currentWordsList[currentCardIndex];
+                if (item?.word) speakWord(item.word);
+            }
+        }
+
+        function loadCurrentWordList() {
+            const book = booksDB[currentBookId];
+            if (!book?.units[currentUnitId]) currentWordsList = [];
+            else currentWordsList = book.units[currentUnitId].words || [];
+            wordCounterSpan.innerText = currentWordsList.length;
+            currentCardIndex = Math.min(currentCardIndex, currentWordsList.length - 1);
+            if (currentCardIndex < 0) currentCardIndex = 0;
+            
+            if (currentWordsList.length === 0) {
+                cardPromptArea.innerHTML = `<div class="py-10 text-[#86868b]"><i class="fa-regular fa-folder-open text-4xl"></i><p>暂无词汇</p></div>`;
+                pronounceBtnArea.innerHTML = '';
+                answerDisplayDiv.innerHTML = '📭 暂无词条';
+                cardProgressSpan.innerText = `0 / 0`;
+                return;
+            }
+            // 根据当前模式刷新UI
+            if (currentMode === "wordlist") {
+                renderWordlist();
+            } else {
+                renderCardByMode();
+                updateProgressText();
+                autoSpeakIfNeeded();
+            }
+        }
+
+        function renderCardByMode() {
+            if (!currentWordsList.length) return;
+            const w = currentWordsList[currentCardIndex];
+            if (currentMode === "cn2en") {
+                cardPromptArea.innerHTML = `
+                    <div class="flex flex-col gap-5 items-center">
+                        <div class="text-4xl md:text-5xl font-bold text-[#1d1d1f]">${escapeHtml(w.meaning)}</div>
+                        ${w.type ? `<div class="part-of-speech">${escapeHtml(w.type)}</div>` : ''}
+                    </div>
+                `;
+                pronounceBtnArea.innerHTML = '';
+            } 
+            else if (currentMode === "en2cn") {
+                cardPromptArea.innerHTML = `
+                    <div class="flex flex-col gap-5 items-center">
+                        <div class="text-4xl md:text-5xl font-bold text-[#1d1d1f]">${escapeHtml(w.word)}</div>
+                        <div class="part-of-speech">${escapeHtml(w.type)}</div>
+                    </div>
+                `;
+                pronounceBtnArea.innerHTML = `<button id="dynamic-speak" class="mt-3 px-7 py-2.5 rounded-full bg-[#0071e3] text-white text-sm font-medium shadow-sm hover:bg-[#0077ed] transition flex items-center gap-2"><i class="fa-solid fa-volume-high"></i> 朗读单词</button>`;
+                const spBtn = document.getElementById('dynamic-speak');
+                if (spBtn) spBtn.onclick = (e) => { e.stopPropagation(); speakWord(w.word); };
+            } 
+            else if (currentMode === "repeat") {
+                cardPromptArea.innerHTML = `
+                    <div class="flex flex-col gap-6 items-center">
+                        <div class="text-3xl md:text-4xl font-bold text-[#1d1d1f]">${escapeHtml(w.word)}</div>
+                        <div class="text-3xl md:text-4xl font-medium text-[#1d1d1f]">${escapeHtml(w.meaning)}</div>
+                        <div class="part-of-speech">${escapeHtml(w.type)}</div>
+                    </div>
+                `;
+                pronounceBtnArea.innerHTML = `<button id="dynamic-repeat" class="mt-3 px-8 py-2.5 rounded-full bg-[#0071e3] text-white font-medium shadow-md flex items-center gap-2"><i class="fa-solid fa-ear-listen"></i> 播放单词 · 跟读</button>`;
+                const rpBtn = document.getElementById('dynamic-repeat');
+                if (rpBtn) rpBtn.onclick = (e) => { e.stopPropagation(); speakWord(w.word); };
+            }
+            answerDisplayDiv.innerHTML = '✨ 点击揭晓答案';
+            updateProgressText();
+        }
+
+        function revealCurrentAnswer() {
+            if (!currentWordsList.length) return;
+            const w = currentWordsList[currentCardIndex];
+            if (currentMode === "cn2en") answerDisplayDiv.innerHTML = `<span class="font-bold">📖 英文：</span> ${escapeHtml(w.word)}  <span class="text-[#86868b] ml-2">(${escapeHtml(w.type)})</span>`;
+            else if (currentMode === "en2cn") answerDisplayDiv.innerHTML = `<span class="font-bold">🇨🇳 中文：</span> ${escapeHtml(w.meaning)}`;
+            else if (currentMode === "repeat") answerDisplayDiv.innerHTML = `<span class="font-bold">📢 参考：</span> ${escapeHtml(w.word)} → ${escapeHtml(w.meaning)}`;
+        }
+
+        function updateProgressText() {
+            if (!currentWordsList.length) cardProgressSpan.innerText = `0 / 0`;
+            else cardProgressSpan.innerText = `${currentCardIndex+1} / ${currentWordsList.length}`;
+        }
+
+        function nextCard() {
+            if (!currentWordsList.length) return;
+            if (currentCardIndex + 1 < currentWordsList.length) {
+                currentCardIndex++;
+                renderCardByMode();
+                autoSpeakIfNeeded();
+            } else answerDisplayDiv.innerHTML = '🎉 已是最后单词';
+        }
+        function prevCard() {
+            if (!currentWordsList.length) return;
+            if (currentCardIndex - 1 >= 0) {
+                currentCardIndex--;
+                renderCardByMode();
+                autoSpeakIfNeeded();
+            } else answerDisplayDiv.innerHTML = '🔙 已是第一个单词';
+        }
+
+        function renderWordlist() {
+            const container = document.getElementById('wordlist-container');
+            if (!container) return;
+            if (!currentWordsList.length) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-[#86868b]">暂无单词</div>`;
+                return;
+            }
+            container.innerHTML = '';
+            currentWordsList.forEach(w => {
+                const div = document.createElement('div');
+                div.className = "apple-card p-4 flex justify-between items-center bg-white";
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="text-base font-bold text-[#1d1d1f]">${escapeHtml(w.word)}</span>
+                            <span class="part-of-speech text-sm">${escapeHtml(w.type)}</span>
+                        </div>
+                        <p class="text-sm text-[#515154] mt-1">${escapeHtml(w.meaning)}</p>
+                    </div>
+                    <button class="wordlist-speak ml-3 w-9 h-9 rounded-full bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#0071e3] flex items-center justify-center" data-word="${escapeAttr(w.word)}"><i class="fa-solid fa-volume-high"></i></button>
+                `;
+                container.appendChild(div);
+            });
+            document.querySelectorAll('.wordlist-speak').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.stopPropagation(); speakWord(btn.getAttribute('data-word')); });
+            });
+        }
+
+        function applyMode(mode) {
+            currentMode = mode;
+            setActiveModeButton(mode);
+            if (mode === "wordlist") {
+                cardArea.classList.add('hidden');
+                wordlistArea.classList.remove('hidden');
+                renderWordlist();
+            } else {
+                cardArea.classList.remove('hidden');
+                wordlistArea.classList.add('hidden');
+                renderCardByMode();
+                updateProgressText();
+                autoSpeakIfNeeded();
+            }
+        }
+
+        function onUnitChange() {
+            currentUnitId = selectUnit.value;
+            loadCurrentWordList();  // 内部根据当前模式刷新卡片或单词表
+            answerDisplayDiv.innerHTML = '✨ 已切换单元';
+        }
+
+        function bindEvents() {
+    // 监听教材切换
+    selectBook.addEventListener('change', () => {
+        currentBookId = selectBook.value;
+        loadCurrentWordList();
+        answerDisplayDiv.innerHTML = '✨ 已切换教材';
+    });
+    // 监听单元切换
+    selectUnit.addEventListener('change', onUnitChange);
+    // 按钮事件
+    revealBtn.addEventListener('click', revealCurrentAnswer);
+    prevBtn.addEventListener('click', prevCard);
+    nextBtn.addEventListener('click', nextCard);
+    // 模式按钮
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyMode(btn.getAttribute('data-mode')));
+    });
+    // 键盘快捷键
+    window.addEventListener('keydown', (e) => {
+        if (currentMode === "wordlist") return;
+        if (e.key === 'ArrowLeft') { prevCard(); e.preventDefault(); }
+        else if (e.key === 'ArrowRight') { nextCard(); e.preventDefault(); }
+        else if (e.key === ' ' || e.key === 'Spacebar') { revealCurrentAnswer(); e.preventDefault(); }
+        else if (e.key === 'Enter' && (currentMode === 'en2cn' || currentMode === 'repeat')) {
+            const item = currentWordsList[currentCardIndex];
+            if (item) speakWord(item.word); e.preventDefault();
+        }
+    });
+}
+
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+        function escapeAttr(str) { return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;'); }
+
+        function init() {
+            currentBookId = selectBook.value;
+            currentUnitId = selectUnit.value;
+            bindEvents();
+            loadCurrentWordList();
+            applyMode("cn2en");
+}
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>English Learning Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f7;
+            font-family: 'Times New Roman', Georgia, '宋体', SimSun, '微软雅黑', serif;
+            color: #1d1c1f;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+        }
+
+        .hero {
+            background: #ffffff;
+            padding: 2.5rem 2rem 1.8rem;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f2;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1c1c1e, #3a3a44);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero .subhead {
+            font-size: 1.1rem;
+            color: #6e6e73;
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        .creator-card {
+            background: #f9f9fb;
+            border-radius: 2rem;
+            padding: 1rem 1.8rem;
+            margin: 1.5rem auto 0;
+            max-width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+            border: 0.5px solid rgba(0,0,0,0.04);
+        }
+
+        .creator-card span { font-size: 2rem; }
+        .creator-card .creator-text strong { font-weight: 600; color: #1c1c1e; }
+        .creator-card .creator-text p { font-size: 0.85rem; color: #5e5e66; max-width: 500px; }
+
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            background: #ffffff;
+            padding: 0 1.2rem;
+            gap: 0.2rem;
+            border-bottom: 1px solid #e9e9ef;
+            align-items: center;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.9rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #6e6e73;
+            transition: all 0.2s ease;
+            border-radius: 1.5rem;
+            font-family: inherit;
+        }
+
+        .tab-btn:hover { color: #007aff; background: #f5f5f7; }
+        .tab-btn.active { color: #007aff; background: #f0f2f8; font-weight: 600; }
+
+        /* 单词书下拉组件 (保留原风格，独立于tab) */
+        .wordbook-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin-left: 0.2rem;
+        }
+        .wordbook-btn {
+            background: transparent;
+            border: none;
+            padding: 0.9rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #6e6e73;
+            transition: all 0.2s ease;
+            border-radius: 1.5rem;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .wordbook-btn:hover {
+            color: #007aff;
+            background: #f5f5f7;
+        }
+        .wordbook-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: white;
+            border-radius: 1.2rem;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.02);
+            min-width: 210px;
+            overflow: hidden;
+            z-index: 1000;
+            border: 0.5px solid #e9e9ef;
+            backdrop-filter: blur(0px);
+            display: none;
+        }
+        .wordbook-dropdown.show {
+            display: block;
+            animation: fadeIn 0.15s ease;
+        }
+        .dropdown-item {
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1c1c1e;
+            cursor: pointer;
+            transition: background 0.15s;
+            border-bottom: 0.5px solid #f0f0f2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .dropdown-item:hover {
+            background: #f5f5f7;
+            color: #007aff;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .panels { padding: 2rem 2rem 2.5rem; background: #ffffff; }
+        .panel { display: none; animation: fadeIn 0.25s ease; }
+        .panel.active-panel { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: #1c1c1e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .item-list {
+            list-style: none;
+            margin: 1rem 0 2rem;
+            background: #ffffff;
+            border-radius: 1.5rem;
+        }
+
+        .list-item {
+            background: #ffffff;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.6rem;
+            border-radius: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            border: 0.5px solid #e9e9ef;
+            transition: all 0.2s;
+        }
+
+        .list-item:hover {
+            border-color: #c6c6c8;
+            background: #fefefe;
+        }
+
+        .item-content { flex: 1; font-size: 0.95rem; }
+        .item-content strong { color: #007aff; font-weight: 600; margin-right: 8px; }
+
+        .grammar-item {
+            cursor: pointer;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: #8e8e93;
+            background: #fbfbfd;
+            border-radius: 1.5rem;
+        }
+
+        .grammar-detail-area {
+            margin-top: 1.5rem;
+            border-top: 1px solid #e9e9ef;
+            padding-top: 1.5rem;
+        }
+        .detail-tabs, .writing-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+        }
+        .detail-tab-btn, .writing-tab-btn {
+            background: #f2f2f5;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #2c3e50;
+            font-family: inherit;
+        }
+        .detail-tab-btn.active, .writing-tab-btn.active {
+            background: #007aff;
+            color: white;
+        }
+        .detail-content {
+            background: #f9f9fb;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            line-height: 1.6;
+        }
+        .explanation-text { font-size: 1rem; color: #1c1c1e; }
+        .explanation-text strong { color: #007aff; }
+        .exercise-question {
+            background: white;
+            padding: 12px;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #eef2f6;
+        }
+        .option-label { display: block; margin: 6px 0; cursor: pointer; }
+        .check-btn {
+            background: #007aff;
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 4px 14px;
+            cursor: pointer;
+            margin-top: 6px;
+            font-family: inherit;
+        }
+        .feedback { margin-left: 10px; font-size: 0.85rem; display: inline-block; }
+        .explanation-feedback {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eef2ff;
+            border-radius: 12px;
+            color: #1e3a8a;
+            display: none;
+        }
+
+        /* 应用文写作布局（无添加表单） */
+        .writing-layout {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .writing-types-sidebar {
+            flex: 0 0 240px;
+            background: #f9f9fb;
+            border-radius: 1.2rem;
+            padding: 1rem;
+        }
+        .writing-types-list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+        .writing-type-item {
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            border-radius: 0.8rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            background: white;
+            border: 0.5px solid #e9e9ef;
+            font-family: inherit;
+        }
+        .writing-type-item:hover, .writing-type-item.active {
+            background: #007aff;
+            color: white;
+            border-color: #007aff;
+        }
+        .writing-content-area {
+            flex: 1;
+            min-width: 260px;
+        }
+        .writing-pane {
+            background: #f9f9fb;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-family: 'Times New Roman', Georgia, serif;
+        }
+        .writing-pane h4 {
+            margin: 0.8rem 0 0.4rem;
+            color: #1c1c1e;
+        }
+        .writing-pane p, .writing-pane li {
+            margin-bottom: 0.5rem;
+        }
+        .sample-essay {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid #007aff;
+        }
+        footer {
+            background: #f9f9fb;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.75rem;
+            color: #8e8e93;
+            border-top: 0.5px solid #efeff4;
+        }
+        @media (max-width: 680px) {
+            body { padding: 1rem; }
+            .tabs-nav { overflow-x: auto; flex-wrap: nowrap; }
+            .panels { padding: 1.5rem; }
+            .hero h1 { font-size: 2rem; }
+            .writing-layout { flex-direction: column; }
+            .writing-types-sidebar { flex: auto; }
+            .wordbook-dropdown { right: 0; left: auto; min-width: 180px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>English Learning Platform</h1>
+        <div class="subhead">Vocabulary · Grammar · Writing · Insights Sharing ｜ Here, English comes alive</div>
+        <div class="creator-card">
+            <span>🧑‍🏫</span>
+            <div class="creator-text">
+                <strong>黄文伟</strong>
+                <p>香港中文大学翻译系硕士 | 东北师范大学附属中学深圳学校高中英语老师<br>外研社·国才杯国赛银奖 / 外研社杯写作省二等奖 / LSCAT笔译一等奖<br>✨ 用技术赋能语言学习，与你共同成长</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="vocab">📖 词汇</button>
+        <button class="tab-btn" data-tab="grammar">📐 语法</button>
+        <button class="tab-btn" data-tab="practical">✉️ 应用文</button>
+        <!-- 单词书跳转组件 - 放置在应用文后面，完全独立，不影响任何原有面板 -->
+        <div class="wordbook-wrapper">
+            <button class="wordbook-btn" id="wordbookTriggerBtn">📚 单词书 ▼</button>
+            <div class="wordbook-dropdown" id="wordbookDropdown">
+                <div class="dropdown-item" data-url="3500.html">📘 高中英语3500</div>
+                <div class="dropdown-item" data-url="englishbookVF.html">📖 外研社英语教材单词</div>
+            </div>
+        </div>
+        <button class="tab-btn" data-tab="continuation">📖 续写</button>
+        <button class="tab-btn" data-tab="misc">🌀 乱七八糟</button>
+    </div>
+
+    <div class="panels">
+        <!-- 词汇面板（只展示） -->
+        <div id="vocabPanel" class="panel active-panel">
+            <div class="section-title"><i>📚</i> 词汇库 · Word Bank</div>
+            <ul id="vocabList" class="item-list"></ul>
+        </div>
+
+        <!-- 语法面板 -->
+        <div id="grammarPanel" class="panel">
+            <div class="section-title"><i>⚙️</i> 语法精讲 · Grammar</div>
+            <ul id="grammarList" class="item-list"></ul>
+            <div id="grammarDetailArea" class="grammar-detail-area" style="display: none;">
+                <div class="detail-tabs" id="grammarDetailTabs"></div>
+                <div id="grammarDetailContent" class="detail-content"></div>
+            </div>
+        </div>
+
+        <!-- 应用文面板 - 无添加表单，仅展示现有类别 -->
+        <div id="practicalPanel" class="panel">
+            <div class="section-title"><i>✉️</i> 应用文 · Practical Writing</div>
+            <div class="writing-layout">
+                <!-- 左侧类型列表（无添加按钮） -->
+                <div class="writing-types-sidebar">
+                    <div style="font-weight: 600; margin-bottom: 8px;">📌 写作类型</div>
+                    <ul id="writingTypeList" class="writing-types-list"></ul>
+                </div>
+                <!-- 右侧内容区 -->
+                <div class="writing-content-area">
+                    <div class="writing-tabs" id="writingTabs"></div>
+                    <div id="writingPane" class="writing-pane"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 续写面板 -->
+        <div id="continuationPanel" class="panel">
+            <div class="section-title"><i>📖</i> 读后续写 · Continuation Writing</div>
+            <ul id="continuationList" class="item-list"></ul>
+        </div>
+
+        <!-- 乱七八糟面板 -->
+        <div id="miscPanel" class="panel">
+            <div class="section-title"><i>🌀</i> 乱七八糟 · Insights & Fun</div>
+            <ul id="miscList" class="item-list"></ul>
+        </div>
+    </div>
+    <footer>🌟 点击语法条目查看详解、模拟题、真题 | 应用文左侧可切换写作类型，右侧三个板块包含模版、好词好句、练习范文 | 点击「单词书」直达词库页面</footer>
+</div>
+
+<script>
+    // ---------- 词汇、语法、续写、乱七八糟的静态数据（只展示）----------
+    const defaultVocab = [
+        { word: "Analyze", definition: "分析 (examine in detail)" },
+        { word: "Beneficial", definition: "有益的 (advantageous)" },
+        { word: "Consequently", definition: "因此，所以 (as a result)" },
+        { word: "Diligent", definition: "勤奋的 (hardworking)" },
+        { word: "Eloquent", definition: "流利的，有说服力的" }
+    ];
+    const defaultGrammar = [
+        { name: "定语从句", description: "关系代词(who/whom/which/that/whose) + 关系副词(when/where/why)；限制性与非限制性" },
+        { name: "现在完成时", description: "have/has + 过去分词，表示过去对现在的影响" },
+        { name: "非谓语动词", description: "不定式、动名词、分词作状语/定语" },
+        { name: "倒装句", description: "否定词或Only+状语开头引起的部分倒装" }
+    ];
+    const defaultContinuation = [
+        { title: "情感递进", tip: "从紧张到释然： heart pounded → a wave of relief washed over him" },
+        { title: "环境烘托", tip: "用天气 / 景物暗示情绪： the gloomy clouds mirrored his despair" },
+        { title: "对话留白", tip: "\"I never thought...\" her voice trailed off, leaving the sentence unfinished." },
+        { title: "呼应前文", tip: "回扣原文细节，让续写浑然一体" }
+    ];
+    const defaultMisc = [
+        { title: "英式幽默", tip: "Understatement is key: 'That went well.' (when everything went wrong)" },
+        { title: "拉丁语短语", tip: "per se (本身), vice versa (反之亦然), ad hoc (特别的)" },
+        { title: "词源小故事", tip: "salary 源自拉丁语 salarium (买盐的钱)" },
+        { title: "英语冷知识", tip: "The most common noun in English is 'time'." }
+    ];
+
+    // ---------- 应用文写作数据 (只有建议信，后续您可通过后端增加) ----------
+    let writingTypes = [
+        {
+            id: "suggestion",
+            name: "建议信",
+            template: `Dear _____ ,\n\nI’m sorry to hear that you are having trouble with ______（对方的问题）. I understand it can be frustrating. Here are some suggestions that might help you.\n\nTo begin with, it would be a good idea to ______（建议1）, which can ______（理由）. For example, ______（举例说明）. In addition, I highly recommend that you ______（建议2）. By doing so, you will be able to ______（带来的好处）. Last but not least, why not ______（建议3）? This way, you can ______（结果）.\n\nI hope you will find these suggestions practical. Please let me know if I can help further. Looking forward to your good news.\n\nYours sincerely,\nLi Hua`,
+            goodSentences: `✅ 常用动词/短语\n建议: suggest / recommend / advise / propose\n做某事: do sth / take action / follow the advice\n有帮助: be helpful / be beneficial / make a difference\n解决: solve / deal with / cope with / handle\n\n✅ 开头常用句（表达共情+引出建议）\n- I'm sorry to learn that you are having difficulty in...\n- You have asked me for my advice about..., and I'll try to make some suggestions.\n- Here are a few suggestions that might be of help to you.\n\n✅ 提出建议的句型（高分句式）\n- It would be a good idea to...\n- I strongly recommend that you (should) do...\n- If I were you, I would...\n- Why not consider doing...?\n- It is beneficial for you to...\n\n✅ 解释理由的句型\n- This way, you can...\n- By doing so, you will be able to...\n- The reason is that...\n- This will not only... but also...\n\n✅ 结尾常用句\n- I hope you will find these suggestions useful/practical.\n- I would be delighted if you take my advice into consideration.\n- I'm sure you will make progress if you follow my advice.`,
+            exerciseAndModel: `📝 练习题目\n假设你是李华，你的朋友王明来信说他在高中英语学习中遇到了困难，尤其是单词记不住、阅读理解做不完。请你写一封建议信，给他提出两到三条建议。词数100左右。\n\n✅ 范文\n\nDear Wang Ming,\n\nI'm sorry to learn that you are having trouble with your English study, especially with memorizing words and reading comprehension. I'm writing to offer you some practical suggestions.\n\nTo begin with, I recommend that you use the "spaced repetition" method to remember words. For example, you can review new words after one hour, one day, and one week, through which you will be able to remember them for a longer time. Besides, when doing reading comprehension, try to read the questions first and then the passage. By doing so, you will save time and find answers more quickly. Also, practice reading every day for 15 minutes to improve your speed.\n\nI hope these suggestions will be helpful to you. Let me know if you have any other questions. I am looking forward to your early reply.\n\nYours sincerely,\nLi Hua`
+        },
+        
+        {
+            id: "invitation",
+            name: "邀请信",
+            template: `Dear _____ ,\n\nKnowing that_______（活动背景）, I am writing to invite you to ______（活动名称）, which will be held at/in ______（地点） on ______（时间）.\n\nHere is some information about the activity. To begin with, we will ______（活动内容1）. Besides, ______（活动内容2）, which I think you will enjoy because ______（理由）. Finally, there will be ______（活动内容3）. It would be a great pleasure if you could join us. Your presence will definitely make the occasion more memorable.\n\nPlease let me know whether you can come at your earliest convenience. I am looking forward to your reply.\n\nYours sincerely,\nLi Hua`,
+            goodSentences: `✅ 常用动词/短语\n邀请: invite / extend an invitation to\n举办: hold / take place / be organized / be hosted\n参加: attend / join / participate in / take part in\n荣幸: It's an honor to... / We would be honored if...\n亮点: highlight / attractive activity\n机会: opportunity / chance\n确认出席: confirm attendance / let me know your decision\n\n✅ 开头常用句（发出邀请）\n- I am delighted to invite you to...\n- On behalf of our school/class, I am writing to invite you to...\n- It is my great pleasure to invite you to...\n\n✅ 主体段描述活动安排\n- The activity will start at... and last for about...\n- During the event, there will be a variety of programs, such as...\n- You will have a chance to experience / enjoy / learn...\n- Not only will you..., but you will also...\n- What makes this event special is that...\n\n✅ 结尾邀请与期待回复\n- We would be very happy if you could come.\n- I do hope you will be able to join us.\n- Your participation would mean a lot to us.\n- Please reply whether you are available or not.\n- I would appreciate it if you could confirm your attendance soon.\n- Looking forward to seeing you there.`,
+            exerciseAndModel: `📝 练习题目（高考模拟题）\n假设你是李华，你校将于下周六下午2点在学校体育馆举办一场“英语戏剧节”（English Drama Festival）。届时将有学生表演《哈姆雷特》《百万英镑》等经典片段。请你写一封邀请信给你的外国朋友Mike，邀请他来观看。词数100左右。\n\n✅ 范文（邀请信）\n\nDear Mike,\n\nI am writing to invite you to join in the English Drama Festival in our school, which will be held in the school gymnasium at 2:00 p.m. next Saturday.\n\nHere is some information about the activity. To begin with, students will perform famous scenes from classic plays such as Hamlet and The Million Pound Note. Besides, there will be an interactive session where you can share your insights about the performances. In addition, as far as I am concerned, this event offers us a great opportunity to experience English literature in a lively way.\n\nIt would be a great pleasure if you could join us. Your presence will surely make the event more exciting. Please let me know whether you can come. Looking forward to your reply.\n\nYours sincerely,\nLi Hua`
+        },
+        {
+            id: "proposal",
+            name: "倡议信",
+            template: `Dear _____ ,\n\nI'm _____ (你的身份). I'm writing to call on everyone to take part in... The purpose is to _____ (活动目的).\n\nTo begin with, _____ (倡议一), which can enable us to _____ (益处). Additionally, it is of great importance to _____ (倡议二). Last but not least, _____ (倡议三).\n\nThese acts may seem small, but together we can make a huge difference. Only when we _____ (点题) can we _____ (参加活动带来的好处).\n\nYours sincerely,\nLi Hua`,
+            goodSentences: `✅ 常用动词/短语\n发起倡议 launch an initiative / call on\n呼吁某人做某事 appeal to sb to do sth\n采取行动 take action / take measures\n贡献一份力量 make a contribution / do one's bit\n提高意识 raise awareness of\n响应号召 respond to the call\n从我做起 start from ourselves\n\n✅ 开头常用句（说明背景+目的）\n- In recent years, ... has become a serious problem.\n- I am writing to call on everyone to take part in ...\n- It is our duty to do something for ...\n- Faced with ..., we should take immediate action.\n\n✅ 主体段（具体倡议+理由）\n- To begin with, it is highly recommended that we should ...\n- Besides, let's make it a habit to ...\n- Only when we work together can we make a difference.\n- Small actions can add up to big results.\n\n✅ 结尾段（呼吁+信心）\n- Let's join hands and take action right now!\n- I firmly believe that with our joint efforts, things will get better.\n- Your participation will make a difference.\n- Together, we can create a better future.`,
+            exerciseAndModel: `📝 练习题目 1\n假设你是学生会主席李华，请你针对校园里浪费食物（food waste）的现象，写一封倡议信，呼吁同学们节约粮食。内容包括：\n1. 浪费现象严重；\n2. 节约粮食的意义；\n3. 提出2-3条具体建议。\n\n✅ 范文\n\nDear fellow students,\n\nI am writing to call on everyone to take action against food waste in our school canteen. Every day, we see large amounts of uneaten food being thrown away, which is really a great waste.\n\nAs we all know, food does not come easily. Wasting food means wasting resources and the hard work of farmers. It is our duty to respect food and develop the habit of saving. To make a change, here is what we can do. First, always take only the amount of food you can finish. Second, if you are not sure, choose smaller portions. Finally, remind your friends to avoid waste as well.\n\nLet's start from now and from ourselves. One small action can make a big difference. I believe our joint efforts will create a better campus.\n\nYours sincerely,\nLi Hua\n\n---\n\n📝 练习题目 2\n假如你是学生会主席李华，你校正在开展"Value Your Nap Time"活动。请你写一则倡议信，号召同学们珍惜午休时间，不写作业、不打闹，安静休息。内容包括：\n1. 活动目的；\n2. 具体建议；\n3. 呼吁全体同学积极参与。\n\n✅ 范文\n\nDear fellow students,\n\nI'm writing to call on everyone to value our nap time, which plays an important role in our physical and mental health. However, some students still use the time to do homework or chat, making it hard for others to rest.\n\nTo improve the situation, I suggest that we follow the school schedule, put away our books and phones, and keep quiet during the nap break. Let's create a comfortable environment for all of us.\n\nLet's start from today and get well-prepared for the afternoon classes. I believe a good rest leads to better study. Thank you for your cooperation!\n\nYours sincerely,\nLi Hua`
+    }
+    ];
+
+    // ---------- 语法详细数据（保持不变）----------
+    const grammarDetails = {
+        "定语从句": {
+            explanation: `<div class="explanation-text"><strong>📌 定语从句核心概念</strong><br>定语从句在复合句中修饰名词或代词，被修饰的词叫<strong>先行词</strong>，引导词叫<strong>关系词</strong>（关系代词/关系副词）。<br><br><strong>🔹 关系代词引导的从句 (重点)</strong><br><strong>who</strong> (指人，作主语/宾语)：<em>The teacher who teaches us is kind.</em><br><strong>whom</strong> (指人，作宾语，正式)：<em>He is the man whom I met.</em><br><strong>which</strong> (指物，作主语/宾语)：<em>The book which inspired me is great.</em><br><strong>that</strong> (指人或物，可代替who/whom/which)：<em>She is the only student that can solve it.</em><br><strong>whose</strong> (指人或物，表“...的”)：<em>The girl whose hair is long is my sister.</em><br><br><strong>🔹 关系副词引导的从句</strong><br><strong>when</strong> (时间状语，=on/in which)：<em>I remember the day when we met.</em><br><strong>where</strong> (地点状语，=at/in which)：<em>This is the café where I work.</em><br><strong>why</strong> (原因状语，常与reason连用，=for which)：<em>Tell me the reason why you left.</em><br><br><strong>🔹 限制性 vs 非限制性</strong><br>✔ 限制性：无逗号，不可省略。<em>Students who don't study will fail.</em><br>✔ 非限制性：有逗号，补充信息，不可用that。<em>My father, who is 50, swims well.</em><br><br><strong>💡 使用步骤（口诀）</strong><br>1.找先行词 2.定关系词 3.看从句缺什么 4.注意有无逗号<br><strong>⚠️ 易错点提醒</strong>：关系代词作宾语时可省略；whose所有格；that不放非限制性从句；why只配reason。</div>`,
+            mockQuestions: [
+                { text: "The book ______ cover is blue belongs to my sister.", options: ["which", "whose", "that", "who"], answer: "whose", explanation: "表示“书的封面”，需要表示所属关系的whose。" },
+                { text: "This is the factory ______ I worked ten years ago.", options: ["which", "that", "where", "when"], answer: "where", explanation: "先行词factory是地点，缺地点状语。" }
+            ],
+            realQuestions: [
+                { text: "Beijing is also a place ______ welcomes the fast-paced development. (2023全国乙卷)", options: ["which", "where", "when", "who"], answer: "which", explanation: "作主语，指物用which。" },
+                { text: "The color she chose came in a box which had a picture of a woman ______ hair color looked just perfect. (2023全国乙卷)", options: ["whose", "who", "which", "that"], answer: "whose", explanation: "所属关系用whose。" }
+            ]
+        },
+        "现在完成时": {
+            explanation: "现在完成时表示过去对现在的影响或持续到现在的动作。结构：have/has + 过去分词。",
+            mockQuestions: [{ text: "I ______ my homework already.", options: ["have done", "did", "do", "was doing"], answer: "have done", explanation: "already提示完成时。" }],
+            realQuestions: [{ text: "The use of plastics ______ (increase) by 300% since 2019.", options: ["increased", "has increased", "had increased", "was increasing"], answer: "has increased", explanation: "since 2019用现在完成时。" }]
+        },
+        "非谓语动词": {
+            explanation: "非谓语动词包括不定式、动名词和分词，在句中充当非谓语成分。",
+            mockQuestions: [{ text: "______ from the top, the city looks magnificent.", options: ["Seeing", "Seen", "To see", "Having seen"], answer: "Seen", explanation: "被动关系用过去分词。" }],
+            realQuestions: [{ text: "The GPNP ______ (design) to reflect the guiding principle.", options: ["designs", "is designed", "designed", "was designed"], answer: "is designed", explanation: "一般现在时的被动。" }]
+        },
+        "倒装句": {
+            explanation: "倒装将谓语部分或全部置于主语前，常见于否定词或only+状语开头。",
+            mockQuestions: [{ text: "Never ______ I seen such a performance.", options: ["have", "did", "had", "was"], answer: "have", explanation: "Never倒装，完成时态。" }],
+            realQuestions: [{ text: "Not only ______ (do) the students enjoy the class, but teachers also loved it.", options: ["did", "do", "have", "had"], answer: "did", explanation: "倒装用一般过去时。" }]
+        }
+    };
+
+    // DOM 元素 & 原有渲染逻辑 (保持不变)
+    const vocabListEl = document.getElementById('vocabList');
+    const grammarListEl = document.getElementById('grammarList');
+    const continuationListEl = document.getElementById('continuationList');
+    const miscListEl = document.getElementById('miscList');
+    const grammarDetailArea = document.getElementById('grammarDetailArea');
+    const grammarDetailTabs = document.getElementById('grammarDetailTabs');
+    const grammarDetailContent = document.getElementById('grammarDetailContent');
+    const writingTypeListEl = document.getElementById('writingTypeList');
+    const writingTabsEl = document.getElementById('writingTabs');
+    const writingPaneEl = document.getElementById('writingPane');
+    let currentWritingTypeId = null;
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/\n/g, '<br>');
+    }
+
+    function renderWritingTypes() { /* 原有完整实现 */ 
+        if (!writingTypes.length) { writingTypeListEl.innerHTML = '<div class="empty-message">暂无写作类型</div>'; return; }
+        let html = '';
+        writingTypes.forEach(type => { html += `<li class="writing-type-item" data-id="${type.id}">${escapeHtml(type.name)}</li>`; });
+        writingTypeListEl.innerHTML = html;
+        document.querySelectorAll('.writing-type-item').forEach(li => {
+            li.addEventListener('click', () => {
+                const id = li.getAttribute('data-id');
+                const selected = writingTypes.find(t => t.id === id);
+                if (selected) {
+                    currentWritingTypeId = id;
+                    document.querySelectorAll('.writing-type-item').forEach(item => item.classList.remove('active'));
+                    li.classList.add('active');
+                    renderWritingTabsAndContent(selected);
+                }
+            });
+        });
+        if (writingTypes.length > 0 && !currentWritingTypeId) {
+            const first = writingTypes[0];
+            currentWritingTypeId = first.id;
+            const firstItem = document.querySelector('.writing-type-item');
+            if (firstItem) firstItem.classList.add('active');
+            renderWritingTabsAndContent(first);
+        }
+    }
+    function renderWritingTabsAndContent(type) {
+        const tabs = ['模版格式', '好词好句', '练习+范文'];
+        writingTabsEl.innerHTML = '';
+        tabs.forEach((tab, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'writing-tab-btn';
+            if (idx === 0) btn.classList.add('active');
+            btn.textContent = tab;
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.writing-tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                showWritingContent(tab, type);
+            });
+            writingTabsEl.appendChild(btn);
+        });
+        showWritingContent('模版格式', type);
+    }
+    function showWritingContent(tab, type) {
+        let content = '';
+        if (tab === '模版格式') content = `<div style="white-space: pre-wrap; background: white; padding: 12px; border-radius: 1rem;">${escapeHtml(type.template)}</div>`;
+        else if (tab === '好词好句') content = `<div style="white-space: pre-wrap;">${escapeHtml(type.goodSentences)}</div>`;
+        else content = `<div style="white-space: pre-wrap;">${escapeHtml(type.exerciseAndModel)}</div>`;
+        writingPaneEl.innerHTML = content;
+    }
+    function renderVocab() { /* 完整保留 */ 
+        if (!defaultVocab.length) { vocabListEl.innerHTML = `<div class="empty-message">✨ 暂无词汇</div>`; return; }
+        let html = '';
+        defaultVocab.forEach(item => { html += `<li class="list-item"><div class="item-content"><strong>${escapeHtml(item.word)}</strong> <span>${escapeHtml(item.definition)}</span></div></li>`; });
+        vocabListEl.innerHTML = html;
+    }
+    function renderGrammar() {
+        if (!defaultGrammar.length) { grammarListEl.innerHTML = `<div class="empty-message">📐 暂无语法点</div>`; return; }
+        let html = '';
+        defaultGrammar.forEach(item => { html += `<li class="list-item grammar-item" data-grammar-name="${escapeHtml(item.name)}"><div class="item-content"><strong>${escapeHtml(item.name)}</strong> <span>${escapeHtml(item.description)}</span></div></li>`; });
+        grammarListEl.innerHTML = html;
+        document.querySelectorAll('.grammar-item').forEach(li => { li.addEventListener('click', () => { const name = li.getAttribute('data-grammar-name'); showGrammarDetail(name); }); });
+    }
+    function showGrammarDetail(name) { /* 保留原始方法 */ 
+        const detail = grammarDetails[name];
+        if (!detail) { grammarDetailArea.style.display = 'block'; grammarDetailTabs.innerHTML = ''; grammarDetailContent.innerHTML = `<p>暂无数据</p>`; return; }
+        grammarDetailArea.style.display = 'block';
+        const tabs = ['语法详解', '模拟题练习', '真题练习'];
+        grammarDetailTabs.innerHTML = '';
+        tabs.forEach((tab, idx) => {
+            const btn = document.createElement('button'); btn.className = 'detail-tab-btn'; if (idx === 0) btn.classList.add('active');
+            btn.textContent = tab;
+            btn.addEventListener('click', () => { document.querySelectorAll('#grammarDetailTabs .detail-tab-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderDetailContent(tab, detail); });
+            grammarDetailTabs.appendChild(btn);
+        });
+        renderDetailContent('语法详解', detail);
+    }
+    function renderDetailContent(tab, detail) { /* 完整保留 */ 
+        let html = '';
+        if (tab === '语法详解') html = `<div class="explanation-text">${detail.explanation}</div>`;
+        else if (tab === '模拟题练习') {
+            const qs = detail.mockQuestions || [];
+            if (!qs.length) html = '<p>暂无模拟题</p>';
+            else { qs.forEach((q, idx) => { html += `<div class="exercise-question" data-answer="${q.answer}" data-explanation="${escapeHtml(q.explanation)}"><strong>${idx+1}. ${q.text}</strong><br>`; q.options.forEach(opt => { html += `<label class="option-label"><input type="radio" name="mock_${idx}" value="${opt}"> ${opt}</label>`; }); html += `<div><button class="check-btn">核对答案</button><span class="feedback"></span></div><div class="explanation-feedback"></div></div>`; }); }
+        } else {
+            const qs = detail.realQuestions || [];
+            if (!qs.length) html = '<p>暂无真题</p>';
+            else { qs.forEach((q, idx) => { html += `<div class="exercise-question" data-answer="${q.answer}" data-explanation="${escapeHtml(q.explanation)}"><strong>${idx+1}. ${q.text}</strong><br>`; q.options.forEach(opt => { html += `<label class="option-label"><input type="radio" name="real_${idx}" value="${opt}"> ${opt}</label>`; }); html += `<div><button class="check-btn">核对答案</button><span class="feedback"></span></div><div class="explanation-feedback"></div></div>`; }); }
+        }
+        grammarDetailContent.innerHTML = html;
+        grammarDetailContent.querySelectorAll('.check-btn').forEach(btn => { btn.addEventListener('click', (e) => { const container = btn.closest('.exercise-question'); const answer = container.getAttribute('data-answer'); const explanation = container.getAttribute('data-explanation'); const radios = container.querySelectorAll('input[type="radio"]'); let selected = null; for (let r of radios) if (r.checked) { selected = r.value; break; } const feedbackSpan = container.querySelector('.feedback'); const explanationDiv = container.querySelector('.explanation-feedback'); if (!selected) { feedbackSpan.innerText = '请选择一个选项'; feedbackSpan.style.color = '#ff9f0a'; explanationDiv.style.display = 'none'; return; } if (selected === answer) { feedbackSpan.innerText = '✓ 正确！'; feedbackSpan.style.color = '#34c759'; } else { feedbackSpan.innerText = `✗ 错误，正确答案是 ${answer}`; feedbackSpan.style.color = '#ff3b30'; } if (explanation) { explanationDiv.innerHTML = `📖 解析：${explanation}`; explanationDiv.style.display = 'block'; } else { explanationDiv.style.display = 'none'; } }); });
+    }
+    function renderContinuation() { let html = ''; defaultContinuation.forEach(item => { html += `<li class="list-item"><div class="item-content"><strong>✨ ${escapeHtml(item.title)}</strong> <span>${escapeHtml(item.tip)}</span></div></li>`; }); continuationListEl.innerHTML = html; }
+    function renderMisc() { let html = ''; defaultMisc.forEach(item => { html += `<li class="list-item"><div class="item-content"><strong>💬 ${escapeHtml(item.title)}</strong> <span>${escapeHtml(item.tip)}</span></div></li>`; }); miscListEl.innerHTML = html; }
+    function initTabs() { const tabs = document.querySelectorAll('.tab-btn'); const panels = document.querySelectorAll('.panel'); tabs.forEach(tab => { tab.addEventListener('click', () => { const target = tab.getAttribute('data-tab'); tabs.forEach(t => t.classList.remove('active')); tab.classList.add('active'); panels.forEach(p => p.classList.remove('active-panel')); document.getElementById(`${target}Panel`).classList.add('active-panel'); }); }); }
+
+    // 单词书下拉跳转逻辑 (新增)
+    function initWordbookDropdown() {
+        const triggerBtn = document.getElementById('wordbookTriggerBtn');
+        const dropdown = document.getElementById('wordbookDropdown');
+        if (!triggerBtn || !dropdown) return;
+        triggerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const url = item.getAttribute('data-url');
+                if (url) window.location.href = url;
+                dropdown.classList.remove('show');
+            });
+        });
+        document.addEventListener('click', function closeDropdown(e) {
+            if (!triggerBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    }
+
+    // 启动全部
+    renderVocab();
+    renderGrammar();
+    renderContinuation();
+    renderMisc();
+    renderWritingTypes();
+    initTabs();
+    initWordbookDropdown();
+</script>
+</body>
+</html>
